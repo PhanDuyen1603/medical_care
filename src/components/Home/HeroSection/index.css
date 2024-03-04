@@ -73,8 +73,12 @@
     }
   }
   
-  @media (max-height: 600px) {
+  @media (max-width: 600px) {
     #hero {
-      height: 110vh;
+      height: 60vh;
+    }
+    #hero .btn-get-started {
+      font-size: 12px;
+      padding: 8px 10px;
     }
   }

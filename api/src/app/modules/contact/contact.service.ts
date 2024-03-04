@@ -1,37 +1,37 @@
-import nodemailer from 'nodemailer';
-import config from '../../../config';
 import ApiError from '../../../errors/apiError';
 import httpStatus from 'http-status';
+import { Transporter } from '../../../helpers/Transporter';
 
-const contactUs = async (payload: any): Promise<{ message: string }> => {
-  const { email, firstName, lastName, subject, text } = payload;
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'huydinh8246@gmail.com',
-      pass: config.emailPass,
-    },
-  });
+interface ContactPayload {
+    email: string;
+    firstName: string;
+    lastName: string;
+    subject: string;
+    text: string;
+}
 
-  var mailOptions = {
-    from: `"${firstName + ' ' + lastName}" <${email}>`,
-    to: 'ujjalzaman+doctor@gmail.com',
-    subject: subject,
-    text: text,
-  };
+const contactUs = async (payload: ContactPayload): Promise<{ message: string }> => {
+    const { email, firstName, lastName, subject, text } = payload;
 
-  transporter.sendMail(mailOptions, function (error: any, info: any) {
-    if (error) {
-      throw new ApiError(httpStatus.NO_CONTENT, 'Unable to send message !');
-    } else {
-      return;
+    if (!email || !firstName || !lastName || !subject || !text) {
+        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Mising Email required fields!');
     }
-  });
-  return {
-    message: 'Successfull message has been sent !',
-  };
-};
+    try {
+        const mailOptions = {
+            from: `"${firstName + ' ' + lastName}" <${email}>`,
+            to: 'ujjalzaman+doctor@gmail.com',
+            subject: subject,
+            text: text
+        };
+        await Transporter.sendMail(mailOptions);
+        return {
+            message: "Successfull message has been sent !"
+        }
+    } catch (error) {
+        throw new ApiError(httpStatus.NO_CONTENT, "Unable to send message !")
+    }
+}
 
 export const ContactService = {
-  contactUs,
-};
+    contactUs
+}
