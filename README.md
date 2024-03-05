@@ -1,9 +1,7 @@
 # Doctor Appointment - Full Stack Appointment Website
 
-##### To Setup Project Follow `project_setup.txt` documentation
-
 ## About The Project
-The `DoctorOnCall` System facilitates patients in scheduling appointments with preferred doctors or Emergency Appointments set up via an online platform.
+The `Medical care` System facilitates patients in scheduling appointments with preferred doctors or Emergency Appointments set up via an online platform.
 Developed using the React, Nodejs, and Prisma stack, it offers a professional website with dynamic functionalities. Key features include dynamic home, Email Notification, Filtering doctors, Setting up appointments and patients/doctors dashboards, secure user login with validation mechanisms, appointment scheduling with access to doctor details, patient appointment management, doctor selection, and overall industries level code splitting followed.
 
 ## What Features Will You Find Here:
@@ -24,10 +22,10 @@ Developed using the React, Nodejs, and Prisma stack, it offers a professional we
 
 <!-- GETTING STARTED -->
 ## Getting Started
-To begin using the DoctorOnCall System, follow these simple steps:
+To begin using the Medical care System, follow these simple steps:
 
 ### Prerequisites
-Before getting started with the DoctorOnCall System, ensure that you have the following prerequisites installed and set up:
+Before getting started with the Medical care System, ensure that you have the following prerequisites installed and set up:
 * Install Node.js (globally)
   ```sh
   npm install npm@latest -g
@@ -42,14 +40,10 @@ Before getting started with the DoctorOnCall System, ensure that you have the fo
   ```
 
 ## Installation
-To begin using the DoctorOnCall System, follow these simple steps:
+To begin using the Medical care System, follow these simple steps:
 ### The front-end and Backend code are in the same directory, with the Backend API located at the ./api directory
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Ujjalzaman/repo_name.git
-   ```
- ### Install Front-End
+#### Install Front-End
 
   ```sh
    npm install
@@ -82,46 +76,72 @@ To begin using the DoctorOnCall System, follow these simple steps:
 To set up an Express API in the "./api" directory of a project, you can follow these steps:
  ##### Navigate to the /api directory:
 
- 1.  Install Dependencies:
+1. Install Dependencies:
    ```sh
    npm install
    ```
-2.  Database Setup
+
+2. Setting up the Environment for Backend:
+  Create Environment Files:
+  * In the /api directory root level create the `.env` file
+    Make Sure to create setup `database_url`
+    ```sh
+    DATABASE_URL=YOUR DATABASE URL
+    JWT=W16aQUoCDwHm8AAAAadWpqYWx6YW1hbkBERVNLVE9QLUlLNkVITkUBdfdf
+    PORT=5000
+    NODE_ENV=development
+    JWT_SCRET=f9Hr6v38sK2nA5xGt4wDcR7uJ1mZlP0b
+    JWT_EXPIRED_IN=30d
+    JWT_REFRESH_SECRET=f9Hr6v38sK2nA5xGt4wDcR7uJ1mZlP0b
+    JWT_SCRET_SALT_ROUND=10
+    DOCTOR_PASS=@doctor123
+    PATIENT_PASS=@patient
+    CLOUND_NAME=YOUR_CLOUD_NAME
+    API_KEY=YOUR_CLOUDINARY_API_KEY
+    API_SECRET=YOUR_CLOUDINARY_API_SECRET
+    EMAIL_PASS=YOUR_EMAIL_APP_PASSWORD
+    ```
+
+3. Database Setup
   ```
-   Ensure that your Postgresql database is running. If not, create one locally or use a railway or render database.
-   ```
-3. Run the Backend:
+    Create a PostgreSQL Database (Railway if you don't have one installed locally):
+    - Create an account at https://railway.app/.
+    - Navigate to the New Section > Database > Add PostgreSQL.
+    - Select your created database and go to the Variables tab.
+    - Copy DATABASE_PRIVATE_URL.
+    - Paste the database URL into the .env file.
+  ```
+
+4. Install Prisma
+   - npm install -g prisma
+   - npx prisma generate
+
+   **only run when update db**
+   - npx prisma migrate dev
+
+5. Setup Google App Password (For Email Notification)
+  ```
+  1. Go to Google Account settings at https://myaccount.google.com/security?hl=en.
+  2. Navigate to Security > 2-Step Verification.
+  3. Scroll to the bottom of the page and find App passwords.
+  4. Select your project name and copy the generated password.
+  5. Paste the app password into .env as EMAIL_PASS.
+  ```
+
+6. Setup Cloudinary to Upload Image
+  ```
+  1. Create a Cloudinary Account at https://cloudinary.com/.
+  2. Login to your Cloudinary Account and copy all the credentials (e.g., Cloud name, API key, API secret).
+  3. Paste those credentials into the .env file.
+  ```
+
+7. Run the Backend:
    ```sh
     npm start
    ```
-4. Setting up the Environment for Backend:
-  Create Environment Files:
-     * In the /api directory root level create the `.env` file
-    Make Sure to create setup `database_url`
-       ```sh
-        DATABASE_URL=YOUR DATABASE URL
-        JWT=W16aQUoCDwHm8AAAAadWpqYWx6YW1hbkBERVNLVE9QLUlLNkVITkUBdfdf
-        PORT=5000
-        NODE_ENV=development
-        JWT_SCRET=f9Hr6v38sK2nA5xGt4wDcR7uJ1mZlP0b
-        JWT_EXPIRED_IN=30d
-        JWT_REFRESH_SECRET=f9Hr6v38sK2nA5xGt4wDcR7uJ1mZlP0b
-        JWT_SCRET_SALT_ROUND=10
-        DOCTOR_PASS=@doctor123
-        PATIENT_PASS=@patient
-        CLOUND_NAME=YOUR_CLOUD_NAME
-        API_KEY=YOUR_CLOUDINARY_API_KEY
-        API_SECRET=YOUR_CLOUDINARY_API_SECRET
-        EMAIL_PASS=YOUR_EMAIL_APP_PASSWORD
-       ```
 
-   5. Verify Backend Installation:
+   1. Verify Backend Installation:
    Once the backend server is running, you can verify its installation by accessing the defined endpoints through a tool like Postman or by integrating it with the frontend application.
-
-Note: Please note that these are general instructions for setting up an Express API, and the specific implementation details may vary depending on your project's requirements. Before starting, make sure to read the project's documentation or readme file to obtain any specific instructions or requirements.
-
- 
- This system offers a comprehensive and dynamic platform for managing doctor appointments, treatments, and patient interactions while maintaining high standards of code quality and user experience.
 
 #### What Technology are Using In This Projects
 
@@ -136,6 +156,7 @@ Note: Please note that these are general instructions for setting up an Express 
 - **Express.js:** A web application framework for Node.js, used for building robust APIs and web applications
 - TypeScript: A superset of JavaScript that adds static typing, enhancing code quality and maintainability.
 - **Prisma**: A modern database toolkit for Node.js and TypeScript, used for database access and management.
+- **Cloudinary**: 
 
  
 # Sign In Page (In this component Especial for me becaouse i have did everthing functionaliy via vanila Javascript and Make this strong Pass and Validation )
