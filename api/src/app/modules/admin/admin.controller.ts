@@ -3,6 +3,8 @@ import catchAsync from "../../../shared/catchAsync";
 import { AdminService } from './admin.service'
 import { Admin } from "@prisma/client";
 import sendResponse from "../../../shared/sendResponse";
+import pick from "../../../shared/pick";
+import { adminFiltersData, adminOptions } from "./admin.interface";
 
 const getAdmin = catchAsync(async (req: Request, res: Response) => {
   const result = await AdminService.getAdmin(req.params.id);
@@ -14,8 +16,16 @@ const getAdmin = catchAsync(async (req: Request, res: Response) => {
   })                                                                                                                                                                                                                                                                                                             
 })
 
-const getAllUser = catchAsync(async (req: Request, res: Response) => {
-  
+const getAllUserAdmin = catchAsync(async (req: Request, res: Response) => {
+  const filter = pick(req.query, adminFiltersData);
+  const options = pick(req.query, adminOptions);
+  const result = await AdminService.getAllUserAdmins(filter, options);
+  sendResponse(res, {
+    statusCode: 200,
+    message: 'Successfully Retrieve Admins!!',
+    success: true,
+    data: result,
+  })
 })
 
 const AdminRegister = catchAsync(async (req: Request, res: Response) => {
@@ -52,5 +62,6 @@ export const AdminController = {
   AdminRegister,
   deleteAdmin,
   updateAdmin,
-  getAdmin
+  getAdmin,
+  getAllUserAdmin
 }

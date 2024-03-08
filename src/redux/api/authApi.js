@@ -33,6 +33,13 @@ export const authApi = baseApi.injectEndpoints({
                 data,
             }),
         }),
+        adminSignUp: build.mutation({
+            query: (data) => ({
+                url: `/admin`,
+                method: 'POST',
+                data,
+            }),
+        }),
         resetPassword: build.mutation({
             query: (data) => ({
                 url: `${AUTH_URL}/reset-password`,

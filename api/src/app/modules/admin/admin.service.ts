@@ -11,20 +11,21 @@ import calculatePagination, { IOption } from "../../../shared/paginationHelper";
 const create = async (payload: any): Promise<any> => {
   const data = await prisma.$transaction(async (tx) => {
     const { password, ...othersData } = payload;
-    const { email } = othersData
+    const { email = null } = othersData
+    if (!email) throw new Error("wrong Email !!")
     const existEmail = await tx.auth.findUnique({ where: { email } });
     if (existEmail) {
       throw new Error("Email Already Exist !!")
     }
-    const admin = tx.admin.create({ data: othersData })
+    const admin = await prisma.admin.create({ data: othersData })
     await tx.auth.create({
       data: {
-          email: email,
-          password: password && await bcrypt.hashSync(password, 12),
-          role: UserRole.admin,
-          userId: admin.id
+        email: email,
+        password: password && await bcrypt.hashSync(password, 12),
+        role: UserRole.admin,
+        userId: admin.id
       },
-    }); 
+    });
     return admin
   })
   return data;
@@ -39,7 +40,7 @@ const remove = async (id: string): Promise<any> => {
     });
     await tx.auth.delete({
       where: {
-          email: admin.email
+        email: admin.email
       }
     })
     return admin
@@ -51,8 +52,8 @@ const update = async (req: Request): Promise<any> => {
   const file = req.file as IUpload;
   const id = req.params.id as string;
   const user = JSON.parse(req.body.data);
-  
-  if(file) {
+
+  if (file) {
     const uploadImage = await CloudinaryHelper.uploadFile(file);
     if (uploadImage) {
       user.img = uploadImage.secure_url
@@ -67,16 +68,16 @@ const update = async (req: Request): Promise<any> => {
   return res
 }
 
-const getAllUserAdmins = async (filters: any, options: IOption ) => {
+const getAllUserAdmins = async (filters: any, options: IOption) => {
   const { limit, page, skip } = calculatePagination(options);
-  const { searchTerm, max, min, specialist, ...filterData } = filters;
+  // const { searchTerm, max, min, specialist, ...filterData } = filters;
   const result = await prisma.admin.findMany();
   const total = await prisma.admin.count();
   return {
     meta: {
-        page,
-        limit,
-        total,
+      page,
+      limit,
+      total,
     },
     data: result
   }
