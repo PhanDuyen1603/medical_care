@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import Footer from "../Shared/Footer/Footer";
-import Header from "../Shared/Header/Header";
-import CheckoutPage from "../Booking/BookingCheckout/CheckoutPage";
-import PersonalInformation from "../Booking/PersonalInformation";
+import Footer from "@/components/Shared/Footer/Footer";
+import Header from "@/components/Shared/Header/Header";
+import CheckoutPage from "@/components/Booking/BookingCheckout/CheckoutPage";
+import PersonalInformation from "@/components/Booking/PersonalInformation";
 import { Button, Steps, message } from "antd";
 import moment from "moment";
 import SelectApppointment from "./SelectApppointment";
-import useAuthCheck from "../../redux/hooks/useAuthCheck";
-import { useCreateAppointmentByUnauthenticateUserMutation } from "../../redux/api/appointmentApi";
+import SelectDoctor from "./SelectDoctor";
+import useAuthCheck from "@/redux/hooks/useAuthCheck";
+import { useCreateAppointmentByUnauthenticateUserMutation } from "@/redux/api/appointmentApi";
 import { useDispatch } from "react-redux";
-import { addInvoice } from "../../redux/feature/invoiceSlice";
+import { addInvoice } from "@/redux/feature/invoiceSlice";
 import { useNavigate } from "react-router-dom";
 
 let initialValue = {
@@ -30,7 +31,7 @@ let initialValue = {
 }
 const AppointmentPage = () => {
   const dispatch = useDispatch();
-  const {data, role} = useAuthCheck();
+  const { data, role } = useAuthCheck();
   const [current, setCurrent] = useState(0);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectTime, setSelectTime] = useState('');
@@ -39,9 +40,10 @@ const AppointmentPage = () => {
   const [IsDisable, setIsDisable] = useState(true);
   const [isConfirmDisable, setIsConfirmDisable] = useState(true);
   const [patientId, setPatientId] = useState('');
+  const [doctorId, setDoctorId] = useState("");
   const navigation = useNavigate();
 
-  const [createAppointmentByUnauthenticateUser, {data: appointmentData, isError, isSuccess, isLoading, error}] = useCreateAppointmentByUnauthenticateUserMutation()
+  const [createAppointmentByUnauthenticateUser, { data: appointmentData, isError, isSuccess, isLoading, error }] = useCreateAppointmentByUnauthenticateUserMutation()
 
   const handleChange = (e) => { setSelectValue({ ...selectValue, [e.target.name]: e.target.value }) };
 
@@ -55,7 +57,7 @@ const AppointmentPage = () => {
     setIsDisable(isInputEmpty);
     setIsConfirmDisable(isConfirmInputEmpty);
   }, [selectValue, isCheck]);
-  
+
   const handleConfirmSchedule = () => {
     const obj = {};
     obj.patientInfo = {
@@ -66,6 +68,7 @@ const AppointmentPage = () => {
       patientId: role !== '' && role === 'patient' ? data.id : undefined,
       scheduleDate: selectedDate,
       scheduleTime: selectTime,
+      doctorId: doctorId
     }
     obj.payment = {
       paymentType: selectValue.paymentType,
@@ -81,15 +84,15 @@ const AppointmentPage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-        message.success("Succcessfully Appointment Scheduled")
-        setSelectValue(initialValue);
-        dispatch(addInvoice({ ...appointmentData }))
-        navigation(`/booking/success/${appointmentData?.id}`)
+      message.success("Succcessfully Appointment Scheduled")
+      setSelectValue(initialValue);
+      dispatch(addInvoice({ ...appointmentData }))
+      navigation(`/booking/success/${appointmentData?.id}`)
     }
     if (isError) {
-        message.error(error?.data?.message);
+      message.error(error?.data?.message);
     }
-}, [isSuccess, isError, isLoading, appointmentData])
+  }, [isSuccess, isError, isLoading, appointmentData])
 
   const handleDateChange = (date) => { setSelectedDate(moment(date).format('YYYY-MM-DD HH:mm:ss')) }
 
@@ -104,8 +107,12 @@ const AppointmentPage = () => {
       />
     },
     {
-      title: 'Patient Information',
-      content: <PersonalInformation handleChange={handleChange} selectValue={selectValue} setPatientId={setPatientId}/>
+      title: 'Doctor Select',
+      content: <SelectDoctor setDoctorId={setDoctorId} doctorId={doctorId} setSelectValue={setSelectValue} selectValue={selectValue} />
+    },
+    {
+      title: 'Information',
+      content: <PersonalInformation handleChange={handleChange} selectValue={selectValue} setPatientId={setPatientId} />
     },
     {
       title: 'Payment',
@@ -136,7 +143,7 @@ const AppointmentPage = () => {
           <div className='text-end mx-3' >
             {current < steps.length - 1 && (
               <Button type="primary" size="large"
-                disabled={current === 0 ? (selectTime ? false : true) : IsDisable || !selectTime}
+                disabled={current === 0 ? (selectTime ? false : true) : current === 1 ? (doctorId ? false : true) : IsDisable || (!selectTime || !doctorId)}
                 onClick={() => next()}>Next</Button>)}
 
             {current === steps.length - 1 && (<Button type="primary" size="large" disabled={isConfirmDisable} loading={isLoading} onClick={handleConfirmSchedule}>Confirm</Button>)}

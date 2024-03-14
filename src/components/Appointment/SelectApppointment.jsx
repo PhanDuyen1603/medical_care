@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import moment from 'moment';
 import './index.css';
-import { doctorTimeSlot } from '../../constant/global';
+import { doctorTimeSlot } from '@/constant/global';
 import { FaBriefcase, FaRegClock, FaLocationArrow, FaLink, FaCalendarAlt } from "react-icons/fa";
 
 const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSelectTime }) => {
@@ -13,6 +13,8 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
     const last5Days = Array.from({ length: 5 }, (_, index) =>
         moment().clone().subtract(index, 'days')
     )
+
+    const next5Days = Array.from({ length: 5 }, (_, index) => moment().clone().add(index, 'days'))
 
     return (
         <div style={{ marginTop: '5rem' }}>
@@ -51,7 +53,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                         </p>
                         <div className='info-date-card row'>
                             {
-                                last5Days.map((item, index) => (
+                                next5Days.map((item, index) => (
                                     <div key={index + 5} className="mb-3 col-md-6" onClick={() => handleDateChange(item)}>
                                         <div className={`p-3 mb-3 rounded text-center select-date ${moment(item).format('LL') === moment(selectedDate).format('LL') ? 'active' : ''}`}>
                                             <div className='select-month'>{moment(item).format('MMMM YYYY')}</div>
