@@ -1,80 +1,74 @@
 import React from 'react'
-import AdminLayout from '../AdminLayout/AdminLayout'
+import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
 import './Doctors.css';
-import { Space, Table, Tag } from 'antd';
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
+import { Table } from 'antd';
+import useSearchColumn from './useSearchColumn'
+import { useGetDoctorsQuery } from '@/redux/api/doctorApi';
+
 const data = [
     {
         key: '1',
         name: 'John Brown',
+        email: 'john@gmail.com',
         age: 32,
         address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
     },
     {
         key: '2',
-        name: 'Jim Green',
+        name: 'Joe Black',
+        email: 'john@gmail.com',
         age: 42,
         address: 'London No. 1 Lake Park',
-        tags: ['loser'],
     },
     {
         key: '3',
-        name: 'Joe Black',
-        age: 32,
+        name: 'Jim Green',
+        email: 'john@gmail.com',
+        age: 29,
         address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
+    },
+    {
+        key: '4',
+        name: 'Jim Red',
+        email: 'john@gmail.com',
+        age: 20,
+        address: 'London No. 2 Lake Park',
     },
 ];
 
 const Doctors = () => {
+    const query = {};
+
+    const { getColumnSearchProps } = useSearchColumn()
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            width: '30%',
+            ...getColumnSearchProps('name'),
+        },
+        {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+            width: '20%',
+            sorter: (a, b) => b.age - a.age,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Address',
+            dataIndex: 'address',
+            key: 'address',
+            ...getColumnSearchProps('address'),
+            sorter: (a, b) => a.address.length - b.address.length,
+            sortDirections: ['descend', 'ascend'],
+        },
+    ];
+
+    const { data: doctorData, isLoading, isError } = useGetDoctorsQuery({ ...query })
+    const doctors = doctorData?.doctors;
+
     return (
         <>
             <AdminLayout >
