@@ -166,7 +166,7 @@ const Schedule = () => {
     return (
         <>
             <DashboardLayout>
-                <div className="w-100 mb-3 rounded p-3" style={{ background: '#f8f9fa', height:'90vh' }}>
+                <div className="w-100 mb-3 rounded p-3" style={{ background: '#f8f9fa', height: '90vh' }}>
                     <h5 className='text-title'>Schedule Timings</h5>
                     <TabForm content={content} data={data} handleOnSelect={handleOnSelect} showEditModal={showEditModal} showModal={showModal} />
                 </div>
@@ -185,14 +185,14 @@ const Schedule = () => {
                                         <div className="row form-row">
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
-                                                    <label>Start Time</label>
-                                                    <TimePicer handleFunction={handleEditStartTime} time={item.startTime} id={item.id} />
+                                                    <label>Start Time 2</label>
+                                                    <TimePicer handleFunction={handleEditStartTime} time={item.startTime} id={item.id} minuteStep={30} />
                                                 </div>
                                             </div>
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>End Time</label>
-                                                    <TimePicer handleFunction={handleEditEndTime} time={item.startTime} id={item.id} />
+                                                    <TimePicer handleFunction={handleEditEndTime} time={item.startTime} id={item.id} minuteStep={30} />
                                                 </div>
                                             </div>
                                         </div>
@@ -224,13 +224,13 @@ const Schedule = () => {
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>Start Time</label>
-                                                    <TimePicer handleFunction={handleStartTime} time={item.startTime} id={item.id} />
+                                                    <TimePicer handleFunction={handleStartTime} time={item.startTime} id={item.id} minuteStep={30} />
                                                 </div>
                                             </div>
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>End Time</label>
-                                                    <TimePicer handleFunction={handleEndTime} time={item.endTime} id={item.id} />
+                                                    <TimePicer handleFunction={handleEndTime} time={item.endTime} id={item.id} minuteStep={30} />
                                                 </div>
                                             </div>
                                         </div>

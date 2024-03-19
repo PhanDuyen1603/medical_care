@@ -3,12 +3,12 @@ import { FaClock, FaEnvelope, FaLocationArrow, FaPhoneAlt } from "react-icons/fa
 import React from 'react';
 import img from '@/images/doc/doctor 3.jpg';
 
-const CardDoctor = ({ item }) => {
+const CardDoctor = ({ item, isActive }) => {
   return (
-    <div className="w-100 mb-3 rounded p-3 text-center" style={{ background: '#f8f9fa' }}>
+    <div className="w-100 mb-3 rounded p-3 text-center" style={{ background: isActive ? '#e8ebed' : '#f8f9fa' }}>
       <div className="">
         <div className="my-3 patient-img">
-          <img src={img} alt="" />
+          <img src={item.img ? item.img : img} alt="" />
         </div>
         <div className="patients-info mt-4">
           <h5>{item?.firstName + ' ' + item?.lastName}</h5>

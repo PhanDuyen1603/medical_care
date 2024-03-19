@@ -55,7 +55,7 @@ const SelectDoctor = ({ doctorId, setDoctorId, selectValue, setSelectValue }) =>
       {
         doctorsData && doctorsData?.map((item, id) => (
           <div className='col-md-12 col-lg-4 cursor-pointer' key={id} onClick={() => handleSelectDoctor(item)}>
-            <CardDoctor item={item} />
+            <CardDoctor item={item} isActive={doctorId === item.id} />
           </div>
         ))
       }

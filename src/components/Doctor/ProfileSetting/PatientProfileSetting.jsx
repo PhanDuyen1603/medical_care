@@ -21,7 +21,7 @@ const PatientProfileSetting = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [file, setFile] = useState(null);
 
-    const onChange = (date, dateString) => { 
+    const onChange = (date, dateString) => {
         setDate(moment(dateString).format());
     };
 
@@ -72,7 +72,7 @@ const PatientProfileSetting = () => {
                                     <img src={selectedImage ? selectedImage : data?.img || pImage} alt="" />
                                 </Link>
                                 <div className="mt-3">
-                                    <ImageUpload setSelectedImage={setSelectedImage} setFile={setFile}/>
+                                    <ImageUpload setSelectedImage={setSelectedImage} setFile={setFile} />
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ const PatientProfileSetting = () => {
                     <div className="col-md-6">
                         <div className="form-group mb-2 card-label">
                             <label>Email <span className="text-danger">*</span></label>
-                            <input defaultValue={data?.email} disabled className="form-control" />
+                            <input defaultValue={data?.email} readOnly disabled className="form-control" />
                         </div>
                     </div>
 

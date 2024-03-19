@@ -32,7 +32,7 @@ const DoctorProfileSetting = () => {
     const handleChange = (e) => {
         setSelectValue({ ...selectValue, [e.target.name]: e.target.value })
     }
-    const onChange = (date, dateString) => { 
+    const onChange = (date, dateString) => {
         setDate(moment(dateString).format());
     };
 
@@ -94,7 +94,7 @@ const DoctorProfileSetting = () => {
                     <div className="col-md-6">
                         <div className="form-group mb-2 card-label">
                             <label>Email</label>
-                            <input defaultValue={data?.email} {...register("email")} className="form-control" />
+                            <input defaultValue={data?.email} readOnly disabled className="form-control" />
 
                         </div>
                     </div>

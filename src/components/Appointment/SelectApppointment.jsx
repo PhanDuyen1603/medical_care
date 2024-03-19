@@ -30,7 +30,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                             </div>
                             <div className='d-flex gap-3'>
                                 <FaRegClock className='icon' />
-                                <p>30 Min</p>
+                                <p>15 Min</p>
                             </div>
                             <div className='d-flex gap-3'>
                                 <FaLocationArrow className='icon' />

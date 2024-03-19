@@ -44,7 +44,7 @@ const BookingSuccess = () => {
                                 </div>
                                 <div className='d-flex gap-3 mb-1'>
                                     <FaRegClock style={{ fontSize: '1rem' }} />
-                                    <p>30 Min</p>
+                                    <p>15 Min</p>
                                 </div>
                                 <div className='d-flex gap-3 mb-1'>
                                     <div><FaLocationArrow style={{ fontSize: '1rem' }} /></div>
@@ -61,7 +61,7 @@ const BookingSuccess = () => {
                             </div>
                         </div>
                         :
-                        <div className='rounded p-3 d-flex flex-column justify-content-center align-items-center' style={{ background: "#f8f9fa",marginTop: '8rem', marginBottom: '5rem' }} >
+                        <div className='rounded p-3 d-flex flex-column justify-content-center align-items-center' style={{ background: "#f8f9fa", marginTop: '8rem', marginBottom: '5rem' }} >
                             <Empty />
                             <h6 className='p-2 my-3'>You will be redirect to homepage !</h6>
                         </div>
