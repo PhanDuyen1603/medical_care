@@ -17,24 +17,37 @@ export const genderOptions = gender.map((data) => {
 })
 export const daysArray = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
+// icons https://www.flaticon.com/packs/medical-specialties-3
 export const doctorSpecialistArray = [
-    { id: 1, value: "Cardiologist" },
-    { id: 2, value: "Dermatologist" },
-    { id: 3, value: "Orthopedic Surgeon", },
-    { id: 4, value: "Gynecologist" },
-    { id: 5, value: "Neurologist" },
-    { id: 6, value: "Ophthalmologist" },
-    { id: 7, value: "Pediatrician" },
-    { id: 8, value: "Endocrinologist" },
-    { id: 9, value: "Gastroenterologist" },
-    { id: 10, value: "Pulmonologist" },
-    { id: 11, value: "Orthopedic" }
+    // tim mach
+    { id: 1, value: "Cardiologist", img: 'Cardiologist' },
+    // da lieu
+    { id: 2, value: "Dermatologist", img: 'Dermatologist' },
+    // chan thuong chinh hinh
+    { id: 3, value: "Orthopedic Surgeon", img: 'Orthopedic Surgeon' },
+    // phụ khoa
+    { id: 4, value: "Gynecologist", img: 'Gynecologist' },
+
+    { id: 5, value: "Neurologist", img: 'Neurologist' },
+    // nhãn khoa
+    { id: 6, value: "Ophthalmologist", img: 'Ophthalmologist' },
+    // nhi khoa
+    { id: 7, value: "Pediatrician", img: 'Pediatrician' },
+    // nội tiết
+    { id: 8, value: "Endocrinologist", img: 'Endocrinologist' },
+    // tiêu hóa
+    { id: 9, value: "Gastroenterologist", img: 'Gastroenterologist' },
+    // phổi
+    { id: 10, value: "Pulmonologist", img: 'Pulmonologist' },
+    // chỉnh hình
+    { id: 11, value: "Orthopedic", img: 'Orthopedic' }
 ]
 
 export const doctorSpecialistOptions = doctorSpecialistArray.map(data => {
     return {
         label: data.value,
-        value: data.value
+        value: data.value,
+        img: data.img
     }
 });
 

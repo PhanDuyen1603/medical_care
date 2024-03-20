@@ -186,13 +186,13 @@ const Schedule = () => {
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>Start Time 2</label>
-                                                    <TimePicer handleFunction={handleEditStartTime} time={item.startTime} id={item.id} minuteStep={30} />
+                                                    <TimePicer handleFunction={handleEditStartTime} time={item.startTime} id={item.id} minuteStep={15} />
                                                 </div>
                                             </div>
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>End Time</label>
-                                                    <TimePicer handleFunction={handleEditEndTime} time={item.startTime} id={item.id} minuteStep={30} />
+                                                    <TimePicer handleFunction={handleEditEndTime} time={item.startTime} id={item.id} minuteStep={15} />
                                                 </div>
                                             </div>
                                         </div>
@@ -224,13 +224,13 @@ const Schedule = () => {
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>Start Time</label>
-                                                    <TimePicer handleFunction={handleStartTime} time={item.startTime} id={item.id} minuteStep={30} />
+                                                    <TimePicer handleFunction={handleStartTime} time={item.startTime} id={item.id} minuteStep={15} />
                                                 </div>
                                             </div>
                                             <div className="col-12 col-md-6">
                                                 <div className="form-group">
                                                     <label>End Time</label>
-                                                    <TimePicer handleFunction={handleEndTime} time={item.endTime} id={item.id} minuteStep={30} />
+                                                    <TimePicer handleFunction={handleEndTime} time={item.endTime} id={item.id} minuteStep={15} />
                                                 </div>
                                             </div>
                                         </div>

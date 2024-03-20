@@ -43,3 +43,69 @@
     background-color: #1977cc;
     color: white !important;
 }
+
+.image-checkbox .ant-radio-inner {
+    display: none;
+}
+.image-checkbox input[type="radio"] {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    /* opacity: 0; */
+    top: -60px;
+    left: 20px;
+}
+.image-checkbox label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+}
+.image-checkbox label::before {
+    background-color: #fff;
+    color: #fff;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    border: 1px solid grey;
+    top: -5px;
+    left: -5px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+}
+.image-checkbox label img {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+}
+.image-checkbox > span {
+    text-align: center;
+}
+.image-checkbox.ant-radio-wrapper-checked label {
+    border-color: #ddd;
+} 
+.image-checkbox.ant-radio-wrapper-checked label::before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
+} 
+.image-checkbox.ant-radio-wrapper-checked label img {
+    transform: scale(0.9);
+    /* box-shadow: 0 0 5px #333; */
+    z-index: -1;
+} 
+
+.ant-radio-group-row {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-around;
+    gap: 16px;
+}

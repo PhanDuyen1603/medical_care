@@ -7,6 +7,7 @@ import { Button, Steps, message } from "antd";
 import moment from "moment";
 import SelectApppointment from "./SelectApppointment";
 import SelectDoctor from "./SelectDoctor";
+import SelectSpecialist from "./SelectSpecialist";
 import useAuthCheck from "@/redux/hooks/useAuthCheck";
 import { useCreateAppointmentByUnauthenticateUserMutation } from "@/redux/api/appointmentApi";
 import { useDispatch } from "react-redux";
@@ -41,6 +42,7 @@ const AppointmentPage = () => {
   const [isConfirmDisable, setIsConfirmDisable] = useState(true);
   const [patientId, setPatientId] = useState('');
   const [doctorId, setDoctorId] = useState("");
+  const [specialist, setSpecialist] = useState('')
   const navigation = useNavigate();
 
   const [createAppointmentByUnauthenticateUser, { data: appointmentData, isError, isSuccess, isLoading, error }] = useCreateAppointmentByUnauthenticateUserMutation()
@@ -98,7 +100,7 @@ const AppointmentPage = () => {
 
   const steps = [
     {
-      title: 'Select Appointment Date & Time',
+      title: 'Select Date & Time',
       content: <SelectApppointment
         handleDateChange={handleDateChange}
         selectedDate={selectedDate}
@@ -107,8 +109,12 @@ const AppointmentPage = () => {
       />
     },
     {
+      title: 'Specialist Select',
+      content: <SelectSpecialist specialist={specialist} setSpecialist={setSpecialist} />
+    },
+    {
       title: 'Doctor Select',
-      content: <SelectDoctor setDoctorId={setDoctorId} doctorId={doctorId} setSelectValue={setSelectValue} selectValue={selectValue} />
+      content: <SelectDoctor specialist={specialist} setDoctorId={setDoctorId} doctorId={doctorId} setSelectValue={setSelectValue} selectValue={selectValue} />
     },
     {
       title: 'Information',
@@ -143,7 +149,11 @@ const AppointmentPage = () => {
           <div className='text-end mx-3' >
             {current < steps.length - 1 && (
               <Button type="primary" size="large"
-                disabled={current === 0 ? (selectTime ? false : true) : current === 1 ? (doctorId ? false : true) : IsDisable || (!selectTime || !doctorId)}
+                disabled={current === 0 ? (selectTime ? false : true)
+                  : current === 1 ? (specialist ? false : true)
+                    : current === 2 ? (doctorId ? false : true)
+                      : IsDisable || (!selectTime || !doctorId)
+                }
                 onClick={() => next()}>Next</Button>)}
 
             {current === steps.length - 1 && (<Button type="primary" size="large" disabled={isConfirmDisable} loading={isLoading} onClick={handleConfirmSchedule}>Confirm</Button>)}
