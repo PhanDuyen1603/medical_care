@@ -37,7 +37,7 @@ const SearchDoctor = () => {
         query["max"] = max;
     }
 
-    const resetFilter = () =>{
+    const resetFilter = () => {
         setPage(1);
         setSize(10);
         setSortOrder("");
@@ -54,7 +54,7 @@ const SearchDoctor = () => {
     const doctorsData = data?.doctors;
     const meta = data?.meta;
 
-    //what to render
+    // render
     let content = null;
     if (isLoading) content = <>Loading ...</>;
     if (!isLoading && isError) content = <div>Something Went Wrong !</div>

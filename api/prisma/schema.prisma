@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator dbml {
+  provider   = "prisma-dbml-generator"
+  output     = "../dbml"
+  outputName = "table.dbml"
+  projectName = "medical care"
+  projectDatabaseType = "PostgreSQL"
+}
+
 model Auth {
   id       String   @id @default(uuid())
   email    String   @unique
@@ -36,7 +44,7 @@ model ForgotPassword {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("forgot-password")
+  @@map("ForgotPassword")
 }
 
 model Patient {
@@ -63,6 +71,28 @@ model Patient {
 
   @@map("Patient")
 }
+
+model Admin {
+  id                     String           @id @default(uuid())
+  firstName              String
+  lastName               String
+  email                  String           @unique
+  img                    String?
+  phone                  String?
+  gender                 Gender?
+
+  @@map("Admin")
+}
+
+model Specialist {
+  id          String          @id @default(uuid())
+  name        String
+  slug        String
+  doctors     Doctor[]
+
+  @@map("Specialist")
+}
+
 
 model Doctor {
   id                     String           @id @default(uuid())
@@ -100,6 +130,10 @@ model Doctor {
   verified               Boolean?         @default(false)
   createdAt              DateTime         @default(now())
   updatedAt              DateTime         @updatedAt
+
+  specialistId           String?
+  specialist             Specialist?  @relation(fields: [specialistId], references: [id])
+
   appointments           Appointments[]
   prescription           Prescription[]
   favourites             Favourites[]

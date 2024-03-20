@@ -5,6 +5,8 @@ import httpStatus from 'http-status';
 import ApiError from './errors/apiError';
 import router from './app/routes';
 import config from './config';
+import swaggerUi from "swagger-ui-express"
+import swaggerDocument from './swagger.json'
 
 const app: Application = express();
 
@@ -18,6 +20,8 @@ app.use(express.static('public'));
 app.get('/favicon.ico', (req: Request, res: Response) => {
     res.status(204).end();
 })
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req: Request, res: Response) => {
     res.send(config.clientUrl)
@@ -33,6 +37,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
             message: 'Something Went Wrong',
         });
     }
+    console.log(`${req.method} ${req.url}`)
     next();
 })
 

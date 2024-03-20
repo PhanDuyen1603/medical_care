@@ -17,45 +17,67 @@ export const genderOptions = gender.map((data) => {
 })
 export const daysArray = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
+// icons https://www.flaticon.com/packs/medical-specialties-3
 export const doctorSpecialistArray = [
-    { id: 1, value: "Cardiologist" },
-    { id: 2, value: "Dermatologist" },
-    { id: 3, value: "Orthopedic Surgeon", },
-    { id: 4, value: "Gynecologist" },
-    { id: 5, value: "Neurologist" },
-    { id: 6, value: "Ophthalmologist" },
-    { id: 7, value: "Pediatrician" },
-    { id: 8, value: "Endocrinologist" },
-    { id: 9, value: "Gastroenterologist" },
-    { id: 10, value: "Pulmonologist" },
-    { id: 11, value: "Orthopedic" }
+    // tim mach
+    { id: 1, value: "Cardiologist", img: 'Cardiologist' },
+    // da lieu
+    { id: 2, value: "Dermatologist", img: 'Dermatologist' },
+    // chan thuong chinh hinh
+    { id: 3, value: "Orthopedic Surgeon", img: 'Orthopedic Surgeon' },
+    // phụ khoa
+    { id: 4, value: "Gynecologist", img: 'Gynecologist' },
+
+    { id: 5, value: "Neurologist", img: 'Neurologist' },
+    // nhãn khoa
+    { id: 6, value: "Ophthalmologist", img: 'Ophthalmologist' },
+    // nhi khoa
+    { id: 7, value: "Pediatrician", img: 'Pediatrician' },
+    // nội tiết
+    { id: 8, value: "Endocrinologist", img: 'Endocrinologist' },
+    // tiêu hóa
+    { id: 9, value: "Gastroenterologist", img: 'Gastroenterologist' },
+    // phổi
+    { id: 10, value: "Pulmonologist", img: 'Pulmonologist' },
+    // chỉnh hình
+    { id: 11, value: "Orthopedic", img: 'Orthopedic' }
 ]
 
 export const doctorSpecialistOptions = doctorSpecialistArray.map(data => {
     return {
         label: data.value,
-        value: data.value
+        value: data.value,
+        img: data.img
     }
 });
 
 export const doctorTimeSlot = [
     "08:00 AM",
+    "08:15 AM",
     "08:30 AM",
     "09:00 AM",
+    "09:15 AM",
     "09:30 AM",
     "10:00 AM",
+    "10:15 AM",
     "10:30 AM",
     "11:00 AM",
+    "11:15 AM",
     "11:30 AM",
     "01:00 PM",
+    "01:15 PM",
     "01:30 PM",
     "02:00 PM",
+    "02:15 PM",
     "02:30 PM",
     "03:00 PM",
+    "03:15 PM",
     "03:30 PM",
     "04:00 PM",
+    "04:15 PM",
     "04:30 PM",
-    "05:00 PM"
+    "05:00 PM",
+    "05:15 PM"
 ]
 
 const appointmentStatus = [

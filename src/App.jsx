@@ -41,6 +41,7 @@ import ViewAppointment from './components/Doctor/Appointments/ViewAppointment';
 import ForgotPassword from './components/Login/ForgotPassword';
 import Dashboard from './components/Doctor/Dashboard/Dashboard';
 import PrivateOutlet from './components/Shared/PrivateOutlet';
+import Adminmiddleware from './components/Shared/AdminMiddleware';
 import NotFound from './components/UI/NotFound';
 
 function App() {
@@ -82,14 +83,16 @@ function App() {
         <Route path='/booking/success/:id' element={<BookingSuccess />} />
         <Route path='/booking/invoice/:id' element={<BookingInvoice />} />
         {/* Admin Dashboard  */}
-        <Route path='/admin/dashboard' element={<AdminDashboard />} />
-        <Route path='/admin/appointments' element={<AdminAppointments />} />
-        <Route path='/admin/doctors' element={<Doctors />} />
-        <Route path='/admin/patients' element={<Patients />} />
-        <Route path='/admin/profile' element={<Profile />} />
-        <Route path='/admin/reviews' element={<AdminReviews />} />
-        <Route path='/admin/transaction' element={<Transactions />} />
-        <Route path='/admin/specialites' element={<Specialites />} />
+        <Route element={<Adminmiddleware />}>
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
+          <Route path='/admin/appointments' element={<AdminAppointments />} />
+          <Route path='/admin/doctors' element={<Doctors />} />
+          <Route path='/admin/patients' element={<Patients />} />
+          <Route path='/admin/profile' element={<Profile />} />
+          <Route path='/admin/reviews' element={<AdminReviews />} />
+          <Route path='/admin/transaction' element={<Transactions />} />
+          <Route path='/admin/specialites' element={<Specialites />} />
+        </Route>
 
         <Route path='*' element={<NotFound/>}/>
       </Routes>

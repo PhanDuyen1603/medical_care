@@ -82,7 +82,7 @@ a:focus {
 
 .ant-radio-group {
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: column;
 }
 
 .card-label>label {
@@ -225,4 +225,8 @@ a:focus {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
