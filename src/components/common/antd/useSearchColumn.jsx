@@ -10,7 +10,7 @@ const useSearchColumn = () => {
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
+    ;
   };
 
   const handleReset = (clearFilters) => {
@@ -90,8 +90,12 @@ const useSearchColumn = () => {
         }}
       />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilter: (value, record) => {
+      console.log({
+        value, record
+      })
+      return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+    },
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
