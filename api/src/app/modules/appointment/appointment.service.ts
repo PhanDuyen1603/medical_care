@@ -32,13 +32,11 @@ console.log(1)
         throw new ApiError(httpStatus.NOT_FOUND, 'Doctor Account is not found !!')
     }
     patientInfo['paymentStatus'] = paymentStatus.paid;
-    console.log(1)
     const result = await prisma.$transaction(async (tx) => {
         const previousAppointment = await tx.appointments.findFirst({
             orderBy: { createdAt: 'desc' },
             take: 1
         });
-        console.log(2)
         const appointmentLastNumber = (previousAppointment?.trackingId ?? '').slice(-3);
         const lastDigit = (Number(appointmentLastNumber) + 1 || 0).toString().padStart(3, '0');
 
@@ -60,7 +58,6 @@ console.log(1)
                 patient: true
             }
         });
-        console.log(3, appointment);
         const { paymentMethod, paymentType } = payment;
         const docFee = Number(isDoctorExist.price);
         const vat = (15 / 100) * (docFee + 10)

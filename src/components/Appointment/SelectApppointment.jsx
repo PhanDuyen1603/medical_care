@@ -5,7 +5,7 @@ import { doctorTimeSlot } from '@/constant/global';
 import { FaBriefcase, FaRegClock, FaLocationArrow, FaLink, FaCalendarAlt } from "react-icons/fa";
 
 const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSelectTime }) => {
-    const handleSelectTime = (date) => { setSelectTime(date) }
+    const handleSelectTime = (date) => { setSelectTime(date.toLowerCase()) }
 
     const amTimeSlot = doctorTimeSlot.filter((item) => item.includes('AM'));
     const pmTimeSlot = doctorTimeSlot.filter((item) => item.includes('PM'));
@@ -76,7 +76,13 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                                 {
                                     amTimeSlot.map((item, id) => (
                                         <div className="col-md-4 col-sm-6" key={id + 155}>
-                                            <Button type={item === selectTime ? "primary" : "default"} shape="" size='small' className='mb-3' onClick={() => handleSelectTime(item)}>{item}</Button>
+                                            <Button
+                                                type={item.toLowerCase() === selectTime ? "primary" : "default"}
+                                                shape=""
+                                                size='small'
+                                                className='mb-3'
+                                                onClick={() => handleSelectTime(item)}
+                                            >{item}</Button>
                                         </div>
                                     ))
                                 }
@@ -89,7 +95,13 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                                 {
                                     pmTimeSlot.map((item, id) => (
                                         <div className="col-md-4" key={id + 155}>
-                                            <Button type={item === selectTime ? "primary" : "default"} shape="" size='small' className='mb-3' onClick={() => handleSelectTime(item)}> {item} </Button>
+                                            <Button
+                                                type={item.toLowerCase() === selectTime ? "primary" : "default"}
+                                                shape=""
+                                                size='small'
+                                                className='mb-3'
+                                                onClick={() => handleSelectTime(item)}
+                                            > {item} </Button>
                                         </div>
                                     ))
                                 }
