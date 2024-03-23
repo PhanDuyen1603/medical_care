@@ -11,7 +11,22 @@ export const doctorApi = baseApi.injectEndpoints({
                 method: 'GET',
                 params: arg
             }),
-            transformResponse: (response) =>{
+            transformResponse: (response) => {
+                return {
+                    doctors: response.data,
+                    meta: response.meta
+                }
+            },
+            providesTags: [tagTypes.doctor]
+        }),
+        getDoctorsAvailable: build.query({
+            query: (arg) => ({
+                url: `${DOC_URL}/available`,
+                method: 'GET',
+                params: arg
+            }),
+            transformResponse: (response) => {
+                console.log(JSON.stringify(response))
                 return {
                     doctors: response.data,
                     meta: response.meta
@@ -40,4 +55,4 @@ export const doctorApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useGetDoctorsQuery, useGetDoctorQuery, useUpdateDoctorMutation } = doctorApi
+export const { useGetDoctorsQuery, useGetDoctorsAvailableQuery, useGetDoctorQuery, useUpdateDoctorMutation } = doctorApi

@@ -3,10 +3,6 @@ import { doctorSpecialistOptions } from '@/constant/global';
 import './index.css'
 
 const options = [
-  {
-    value: 0,
-    label: 'All',
-  },
   ...doctorSpecialistOptions
 ]
 
@@ -32,7 +28,7 @@ const SelectSpecialist = ({ specialist, setSpecialist }) => {
                     options.map((item, id) => (
                       <Radio value={item.value} key={id} className='image-checkbox'>
                         <label for="myCheckbox1">
-                          <Image src={`/images/specialist/${item.img}.png`} width={120} height={120} />
+                          <Image src={`/images/specialist/${item.img}.png`} preview={false} width={120} height={120} />
                         </label>
                         {item.label}
                       </Radio>

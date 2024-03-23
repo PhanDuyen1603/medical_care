@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import bcrypt from 'bcrypt';
 import ApiError from "../../../errors/apiError";
 import httpStatus from "http-status";
-import { DoctorSearchableFields, IDoctorFilters } from "./doctor.interface";
+import { DoctorSearchableFields, IDoctorFilters, IDoctorFiltersWithAppointment } from "./doctor.interface";
 import calculatePagination, { IOption } from "../../../shared/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { Request } from "express";
@@ -29,12 +29,12 @@ const sendVerificationEmail = async (data: Doctor) => {
     })
     if (verficationData) {
         const pathName = path.join(__dirname, '../../../../template/verify.html',)
-        const obj = {link: url};
+        const obj = { link: url };
         const subject = "Email Verification"
         const toMail = data.email;
-        try{
-            await EmailtTransporter({pathName, replacementObj: obj, toMail, subject})
-        }catch(err){
+        try {
+            await EmailtTransporter({ pathName, replacementObj: obj, toMail, subject })
+        } catch (err) {
             console.log(err);
             throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Unable to send email !');
         }
@@ -176,10 +176,52 @@ const updateDoctor = async (req: Request): Promise<Doctor> => {
     return result;
 }
 
+const getDoctorsAvaliable = async (filters: IDoctorFiltersWithAppointment, options: IOption) => {
+    const { limit, page, skip } = calculatePagination(options);
+    const { specialist, appointmentDate, time } = filters;
+    // TODO: get doctors by date and time
+
+    const doctorsBySpecialist = await getAllDoctors({ specialist }, { limit: 1000 })
+    const data = [...doctorsBySpecialist.data];
+    let res = []
+    if (data && Array.isArray(data) && data.length > 0) {
+        const ids = data.map(x => x.id)
+        for (let i = 0; i < ids.length; i++) {
+            const p = await prisma.appointments.count({
+                where: {
+                    doctorId: ids[i],
+                    scheduleTime: {
+                        contains: time.toLocaleLowerCase()
+                    },
+                    scheduleDate: {
+                        contains: moment(appointmentDate).format('YYYY-MM-DD').toString()
+                    }
+                }
+            })
+            const index = data.findIndex(x => x.id === ids[i])
+            res[index] = {
+                ...data[index],
+                appointmentAvailable: p && p < 4 ? true : false,
+                appointmentsCount: p
+            }
+        }
+    }
+    return {
+        meta: {
+            page,
+            limit,
+            total: doctorsBySpecialist.data.length,
+        },
+        data: res
+    }
+
+}
+
 export const DoctorService = {
     create,
     updateDoctor,
     deleteDoctor,
     getAllDoctors,
-    getDoctor
+    getDoctor,
+    getDoctorsAvaliable
 }

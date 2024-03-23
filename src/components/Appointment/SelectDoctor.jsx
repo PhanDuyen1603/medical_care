@@ -1,42 +1,22 @@
 import React, { useState } from 'react';
 import { Empty, Pagination } from 'antd';
-import { useGetDoctorsQuery } from '@/redux/api/doctorApi';
+import { useGetDoctorsAvailableQuery } from '@/redux/api/doctorApi';
 import CardDoctor from '@/components/Appointment/CardDoctor';
-import { useSearchParams } from 'react-router-dom';
 
-const SelectDoctor = ({ specialist, doctorId, setDoctorId, selectValue, setSelectValue }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = {};
+const SelectDoctor = ({ specialist, doctorId, setDoctorId, time, appointmentDate }) => {
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
-  // const [specialist, setSpecialist] = useState(0);
+  const [size, setSize] = useState(1000);
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const appointmentQuery = {}
+  appointmentQuery["time"] = time;
+  appointmentQuery["appointmentDate"] = appointmentDate;
+  appointmentQuery["specialist"] = specialist;
+  appointmentQuery["limit"] = size;
+  appointmentQuery["page"] = page;
 
-  specialist !== '' && (query["specialist"] = specialist);
-
-  const handleSetQuery = (key, value) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set(key, value);
-    setSearchParams(newParams);
-  };
-
-  const resetFilter = () => {
-    setPage(1);
-    setSize(10);
-    setSortOrder("");
-    setSortOrder("");
-  }
-
-  const { data, isLoading, isError } = useGetDoctorsQuery({ ...query })
+  const { data, isLoading, isError } = useGetDoctorsAvailableQuery({ ...appointmentQuery })
   const doctorsData = data?.doctors;
   const meta = data?.meta;
-
 
   const handleSelectDoctor = (item) => {
     setDoctorId(item.id);

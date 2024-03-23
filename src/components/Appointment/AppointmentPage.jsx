@@ -114,7 +114,15 @@ const AppointmentPage = () => {
     },
     {
       title: 'Doctor Select',
-      content: <SelectDoctor specialist={specialist} setDoctorId={setDoctorId} doctorId={doctorId} setSelectValue={setSelectValue} selectValue={selectValue} />
+      content: <SelectDoctor
+        specialist={specialist}
+        setDoctorId={setDoctorId}
+        doctorId={doctorId}
+        setSelectValue={setSelectValue}
+        selectValue={selectValue}
+        time={selectTime}
+        appointmentDate={selectedDate}
+      />
     },
     {
       title: 'Information',

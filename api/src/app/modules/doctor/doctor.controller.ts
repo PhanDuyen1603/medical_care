@@ -4,7 +4,8 @@ import sendResponse from "../../../shared/sendResponse";
 import { Doctor } from "@prisma/client";
 import { DoctorService } from "./doctor.service";
 import pick from "../../../shared/pick";
-import { IDoctorFiltersData, IDoctorOptions } from "./doctor.interface";
+import { IDoctorFiltersData, IDoctorOptions, IDoctorFiltersWithAppointment } from "./doctor.interface";
+
 
 const createDoctor = catchAsync(async (req: Request, res: Response) => {
     const result = await DoctorService.create(req.body);
@@ -23,6 +24,23 @@ const getAllDoctors = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
         statusCode: 200,
         message: 'Successfully Retrieve doctors !!',
+        success: true,
+        data: result,
+    })
+})
+
+const getDoctorsAvaliable = catchAsync(async (req: Request, res: Response) => {
+    const query = req.query
+    const filter: IDoctorFiltersWithAppointment = {
+        specialist: query.specialist as string,
+        appointmentDate: query.appointmentDate as string,
+        time: query.time as string,
+    }
+    const options = pick(req.query, IDoctorOptions);
+    const result = await DoctorService.getDoctorsAvaliable(filter, options);
+    sendResponse(res, {
+        statusCode: 200,
+        message: 'Successfully Retrieve doctors by apponments !!',
         success: true,
         data: result,
     })
@@ -63,5 +81,6 @@ export const DoctorController = {
     updateDoctor,
     deleteDoctor,
     getAllDoctors,
-    getDoctor
+    getDoctor,
+    getDoctorsAvaliable
 }
