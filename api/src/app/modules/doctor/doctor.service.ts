@@ -199,11 +199,12 @@ const getDoctorsAvaliable = async (filters: IDoctorFiltersWithAppointment, optio
                 }
             })
             const index = data.findIndex(x => x.id === ids[i])
-            res[index] = {
-                ...data[index],
-                appointmentAvailable: p && p < 4 ? true : false,
-                appointmentsCount: p
-            }
+            if (p && p < 4) res.push(data[index])
+            // res[index] = {
+            //     ...data[index],
+            //     appointmentAvailable: p && p < 4 ? true : false,
+            //     appointmentsCount: p
+            // }
         }
     }
     return {
