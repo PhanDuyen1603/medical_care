@@ -43,7 +43,7 @@ const sendVerificationEmail = async (data: Doctor) => {
 
 const create = async (payload: any): Promise<any> => {
     const data = await prisma.$transaction(async (tx) => {
-        const { password, ...othersData } = payload;
+        const { password = 'P@ssw0rd1', ...othersData } = payload;
         const existEmail = await tx.auth.findUnique({ where: { email: othersData.email } });
 
         if (existEmail) {

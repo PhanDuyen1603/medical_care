@@ -81,3 +81,23 @@
     color: #333;
     font-weight: 600;
 }
+.modal-doctor {
+    background: rgb(219,237,251);
+    background: linear-gradient(180deg, rgba(219,237,251,1) 0%, rgba(255,255,255,1) 100%);
+}
+.custom-form {
+    display: flex;
+    flex-wrap: wrap;
+}
+.custom-form .ant-steps {
+    width: 22%;
+}
+.custom-form .custom-form-content {
+    width: 74%;
+}
+.custom-form .custom-form-btns {
+    width: 74%;
+}
+.ant-select-dropdown {
+    z-index: 9999;
+}
