@@ -1,7 +1,7 @@
-import { Button, Form, Input, Select, InputNumber } from 'antd';
+import { Form, Input, Select, InputNumber } from 'antd';
 import { doctorSpecialistArray } from '@/constant/global'
 
-const FormBasicInfo = (form) => {
+const FormBasicInfo = ({ submitType = 'create' }) => {
   return (
     <>
       <div className="row">
@@ -46,7 +46,7 @@ const FormBasicInfo = (form) => {
               },
             ]}
           >
-            <Input />
+            <Input disabled={submitType === 'update'} />
           </Form.Item>
         </div>
         <div className="col-6">
@@ -83,8 +83,8 @@ const FormBasicInfo = (form) => {
           >
             <Select>
               {
-                doctorSpecialistArray.map(x => (
-                  <Select.Option value={x.value}>{x.value}</Select.Option>
+                doctorSpecialistArray.map((x, index) => (
+                  <Select.Option value={x.value} key={`select_${index}`}>{x.value}</Select.Option>
                 ))
               }
             </Select>

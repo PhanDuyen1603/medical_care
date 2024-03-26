@@ -13,7 +13,7 @@ router.get('/:id', DoctorController.getDoctor);
 router.delete('/:id', auth(AuthUser.DOCTOR), DoctorController.deleteDoctor);
 router.patch('/:id',
     CloudinaryHelper.upload.single('file'),
-    auth(AuthUser.DOCTOR),
+    auth(AuthUser.DOCTOR, AuthUser.ADMIN),
     (req: Request, res: Response, next: NextFunction) => {
         return DoctorController.updateDoctor(req, res, next);
     }
