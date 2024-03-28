@@ -6,13 +6,10 @@ const SPE_URL = '/specialist'
 export const specialistApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createSpecialist: build.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: `${SPE_URL}`,
         method: 'POST',
         data: data,
-        headers: {
-          'Content-Type':'multipart/form-data',
-        },
       }),
       invalidatesTags: [tagTypes.specialist]
     }),
@@ -21,12 +18,6 @@ export const specialistApi = baseApi.injectEndpoints({
         url: `${SPE_URL}`,
         method: 'GET'
       }),
-      transformResponse: (response) => {
-        return {
-          specialists: response.data,
-          meta: response.meta
-        }
-      },
       providesTags: [tagTypes.specialist]
     }),
     updateSpecialist: build.mutation({
@@ -34,9 +25,9 @@ export const specialistApi = baseApi.injectEndpoints({
         url: `${SPE_URL}/${id}`,
         method: 'PATCH',
         data: data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
       }),
       invalidatesTags: [tagTypes.specialist]
     }),
@@ -53,6 +44,6 @@ export const specialistApi = baseApi.injectEndpoints({
 export const {
   useCreateSpecialistMutation,
   useGetSpecialistsQuery,
-  useUpdateSpecialistMutation, 
-  useRemoveSpecialistMutation 
+  useUpdateSpecialistMutation,
+  useRemoveSpecialistMutation
 } = specialistApi

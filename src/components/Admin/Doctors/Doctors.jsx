@@ -8,7 +8,7 @@ import FormEducationInfo from './FormEducationInfo';
 import FormBasicInfo from './FormBasicInfo';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
 import { useGetDoctorsQuery } from '@/redux/api/doctorApi';
-import { useDoctorSignUpMutation, usePatientSignUpMutation } from '@/redux/api/authApi';
+import { useDoctorSignUpMutation } from '@/redux/api/authApi';
 import { useUpdateDoctorMutation } from '@/redux/api/doctorApi';
 import './Doctors.css';
 
