@@ -3,7 +3,8 @@ import { Specialist } from '@prisma/client'
 import prisma from "../../../shared/prisma";
 
 const create = async (req: Request): Promise<Specialist> => {
-  const data = JSON.parse(req.body.data);
+  let data = req.body.data
+  if (typeof data === 'string') data = JSON.parse(data)
   return await prisma.specialist.create({ data });
 }
 
@@ -16,7 +17,8 @@ const deleteSpecialist = async (id: string): Promise<Specialist | null> => {
 }
 
 const updateSpecialist = async (req: Request): Promise<Specialist | null> => {
-  const data = JSON.parse(req.body.data);
+  let data = req.body;
+  data = typeof data === 'string' ? JSON.parse(data) : data;
   const id = req.params.id as string;
   const result = await prisma.specialist.update({
     where: { id },

@@ -43,7 +43,7 @@ const sendVerificationEmail = async (data: Doctor) => {
 
 const create = async (payload: any): Promise<any> => {
     const data = await prisma.$transaction(async (tx) => {
-        const { password, ...othersData } = payload;
+        const { password = 'P@ssw0rd1', ...othersData } = payload;
         const existEmail = await tx.auth.findUnique({ where: { email: othersData.email } });
 
         if (existEmail) {
@@ -159,8 +159,8 @@ const deleteDoctor = async (id: string): Promise<any> => {
 const updateDoctor = async (req: Request): Promise<Doctor> => {
     const file = req.file as IUpload;
     const id = req.params.id as string;
-    const user = JSON.parse(req.body.data);
-
+    let user = req.body.data ? req.body.data : req.body
+    if (typeof user === 'string') user = JSON.parse(user);
     if (file) {
         const uploadImage = await CloudinaryHelper.uploadFile(file);
         if (uploadImage) {
