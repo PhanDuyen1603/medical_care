@@ -5,32 +5,32 @@ import { Card } from 'antd';
 const chartData = [
   {
     name: '12-2023',
-    uv: 4000,
-    pv: 2400,
+    old: 4000,
+    new: 2400,
     amt: 2400,
   },
   {
     name: '01-2024',
-    uv: 3000,
-    pv: 1398,
+    old: 3000,
+    new: 1398,
     amt: 2210,
   },
   {
     name: '02-2024',
-    uv: 2000,
-    pv: 9800,
+    old: 2000,
+    new: 9800,
     amt: 2290,
   },
   {
     name: '03-2024',
-    uv: 2780,
-    pv: 3908,
+    old: 2780,
+    new: 3908,
     amt: 2000,
   },
   {
     name: '04-2024',
-    uv: 1890,
-    pv: 4800,
+    old: 1890,
+    new: 4800,
     amt: 2181,
   },
 ]
@@ -59,7 +59,7 @@ const ChartArea = ({
   };
 
   return (
-    <Card>
+    <Card className='card-full'>
       <h5 className='mb-5'>Patients Statictics</h5>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
@@ -73,14 +73,12 @@ const ChartArea = ({
             bottom: 5,
           }}
         >
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <CartesianAxis x={2} width={1} />
           <XAxis dataKey="name" className='custom-x' />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="bumpX" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="bumpX" dataKey="uv" stroke="#82ca9d" />
+          <Line type="bumpX" dataKey="new" strokeWidth={3} stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="bumpX" dataKey="old" strokeWidth={3} stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
     </Card>

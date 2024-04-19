@@ -2,18 +2,29 @@ import React from 'react'
 import AdminLayout from '../AdminLayout/AdminLayout'
 import userImg from '../../../images/avatar.jpg';
 import './Dashboard.css';
+import { Flex } from 'antd'
 import ChartArea from './ChartArea'
 import CharRevenue from './ChartRevenue'
 import CardPatient from './CardPatient'
 import CardDoctor from './CardDoctor'
 import CardRevenue from './CardRevenue';
+import CardAppointment from './CardAppointment';
 
 const AdminDashboard = () => {
     return (
         <>
             <AdminLayout >
+                <Flex gap={24} className='mb-3' >
+                    <CardPatient />
+                    <CardDoctor />
+                    <CardAppointment />
+                    <CardRevenue />
+                </Flex>
+                <Flex>
+                    <ChartArea />
+                </Flex>
                 <div className="row mb-3">
-                    <div className="col-12 col-lg-12 row">
+                    {/* <div className="col-12 col-lg-12 row">
                         <div className='col-12 col-md-6 col-xl-4'>
                             <CardPatient />
                         </div>
@@ -23,30 +34,10 @@ const AdminDashboard = () => {
                         <div className='col-6 col-md-3 col-xl-2'>
                             <CardRevenue />
                         </div>
-                        {/* <div className='col-12 col-xl-3'>
-                            <CardRevenue />
-                        </div> */}
-
-                        {/* <div className="col-xl-4 col-sm-6 col-12">
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="dash-widget-header">
-                                        <span className="dash-widget-icon text-danger border-danger">
-                                            <i className="fe fe-money"></i>
-                                        </span>
-                                        <div className="dash-count">
-                                            <h3>485</h3>
-                                            <h6 className="text-muted">Appointment</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         */}
                         <div className='col-12 mt-3'>
                             <ChartArea />
                         </div>
-                    </div>
+                    </div> */}
                     {/* <div className="col-12 col-lg-4">
                         <div className="card">
                             <div className="card-body">

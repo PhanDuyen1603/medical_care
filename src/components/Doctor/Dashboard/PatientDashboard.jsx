@@ -14,7 +14,7 @@ const PatientDashboard = () => {
     const { data, isLoading: pIsLoading } = useGetPatientAppointmentsQuery();
     const { data: prescriptionData, prescriptionIsLoading } = useGetPatientPrescriptionQuery();
     const { data: invoices, isLoading: InvoicesIsLoading } = useGetPatientInvoicesQuery();
-    
+
     const InvoiceColumns = [
         {
             title: 'Doctor',
@@ -97,13 +97,13 @@ const PatientDashboard = () => {
             title: 'Appointment Id',
             dataIndex: "appointment",
             key: 1,
-            render: ({trackingId}) =>{
+            render: ({ trackingId }) => {
                 return (
                     <Tooltip title="Copy Tracking Id">
-                            <Button>
-                                <h6><Tag color="#87d068" className='ms-2 text-uppercase' onClick={() => clickToCopyClipBoard(trackingId)}>{trackingId}</Tag></h6>
-                            </Button>
-                        </Tooltip>
+                        <Button>
+                            <h6><Tag color="#87d068" className='ms-2 text-uppercase' onClick={() => clickToCopyClipBoard(trackingId)}>{trackingId}</Tag></h6>
+                        </Button>
+                    </Tooltip>
                 )
             }
         },
@@ -128,8 +128,8 @@ const PatientDashboard = () => {
             title: 'Archived',
             dataIndex: "isArchived",
             key: 4,
-            render: function ({isArchived}) {
-                return <Tag color={isArchived ? "#f50" : "#108ee9"}>{isArchived ? "Yes" :"Under Treatment"}</Tag>;
+            render: function ({ isArchived }) {
+                return <Tag color={isArchived ? "#f50" : "#108ee9"}>{isArchived ? "Yes" : "Under Treatment"}</Tag>;
             }
         },
         {
@@ -199,7 +199,7 @@ const PatientDashboard = () => {
             key: 24,
             width: 100,
             render: function (data) {
-                return <Tag color="#f50">{data?.status}</Tag>
+                return <Tag color="#f50">{data?.status === 'pending' ? 'booking' : data?.status}</Tag>
             }
         },
         {

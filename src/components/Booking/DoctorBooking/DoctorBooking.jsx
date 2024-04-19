@@ -35,7 +35,7 @@ const DoctorBooking = () => {
         cardExpiredYear: '',
         cvv: '',
     }
-    const {data:loggedInUser, role} = useAuthCheck();
+    const { data: loggedInUser, role } = useAuthCheck();
     const [current, setCurrent] = useState(0);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectDay, setSelecDay] = useState('');
@@ -52,12 +52,12 @@ const DoctorBooking = () => {
     const [IsdDisable, setIsDisable] = useState(true);
     const [IsConfirmDisable, setIsConfirmDisable] = useState(true);
 
-    const handleChange = (e) => { setSelectValue({ ...selectValue, [e.target.name]: e.target.value }) }
+    const handleChange = (e) => { setSelectValue({ ...selectValue, [e.target.name]: e.target.value }); console.log({ selectValue }) }
 
     useEffect(() => {
-        const { firstName, lastName, email, phone, nameOnCard, cardNumber, expiredMonth, cardExpiredYear, cvv, reasonForVisit } = selectValue;
+        const { firstName, lastName, email, phone, nameOnCard, cardNumber, expiredMonth, cardExpiredYear, cvv, reasonForVisit, paymentType } = selectValue;
         const isInputEmpty = !firstName || !lastName || !email || !phone || !reasonForVisit;
-        const isConfirmInputEmpty = !nameOnCard || !cardNumber || !expiredMonth || !cardExpiredYear || !cvv || !isCheck;
+        const isConfirmInputEmpty = paymentType === 'creditCard' ? !nameOnCard || !cardNumber || !expiredMonth || !cardExpiredYear || !cvv : !isCheck;
         setIsDisable(isInputEmpty);
         setIsConfirmDisable(isConfirmInputEmpty);
     }, [selectValue, isCheck])
@@ -120,7 +120,7 @@ const DoctorBooking = () => {
         },
         {
             title: 'Patient Information',
-            content: <PersonalInformation handleChange={handleChange} selectValue={selectValue} setPatientId={setPatientId}/>
+            content: <PersonalInformation handleChange={handleChange} selectValue={selectValue} setPatientId={setPatientId} />
         },
         {
             title: 'Payment',
@@ -187,7 +187,9 @@ const DoctorBooking = () => {
                         disabled={current === 0 ? (selectTime ? false : true) : IsdDisable || !selectTime}
                         onClick={() => next()}>Next</Button>)}
 
-                    {current === steps.length - 1 && (<Button type="primary" disabled={IsConfirmDisable} loading={createIsLoading} onClick={handleConfirmSchedule}>Confirm</Button>)}
+                    {current === steps.length - 1 && (
+                        <Button type="primary" disabled={IsConfirmDisable} loading={createIsLoading} onClick={handleConfirmSchedule}>Confirm</Button>
+                    )}
                     {current > 0 && (<Button style={{ margin: '0 8px', }} onClick={() => prev()} >Previous</Button>)}
                 </div>
             </div>
