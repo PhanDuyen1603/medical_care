@@ -64,7 +64,7 @@ To begin using the Medical care System, follow these simple steps:
      * For Development Environment (env.development):
        ```sh
         REACT_APP_NODE_ENV=development
-        REACT_APP_API_BASE_URL=http://localhost:5000/api/v1
+        REACT_APP_API_BASE_URL=http://localhost:5001/api/v1
        ```
      * For Production Environment (env.production):
        ```sh
@@ -88,7 +88,7 @@ To set up an Express API in the "./api" directory of a project, you can follow t
     ```sh
     DATABASE_URL=YOUR DATABASE URL
     JWT=W16aQUoCDwHm8AAAAadWpqYWx6YW1hbkBERVNLVE9QLUlLNkVITkUBdfdf
-    PORT=5000
+    PORT=5001
     NODE_ENV=development
     JWT_SCRET=f9Hr6v38sK2nA5xGt4wDcR7uJ1mZlP0b
     JWT_EXPIRED_IN=30d
