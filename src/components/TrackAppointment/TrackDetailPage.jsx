@@ -16,9 +16,9 @@ const TrackDetailPage = ({ data, setShowInfo }) => {
   return (
     <>
       <div className="container mb-2" style={{ marginTop: '8rem' }}>
-        <Button type="primary" 
-        icon={<FaArrowAltCircleLeft />} size='medium'
-        onClick={() => setShowInfo(false)}
+        <Button type="primary"
+          icon={<FaArrowAltCircleLeft />} size='medium'
+          onClick={() => setShowInfo(false)}
         >
           Back
         </Button>
@@ -61,7 +61,7 @@ const TrackDetailPage = ({ data, setShowInfo }) => {
           </div>
 
           <div className='col-md-8'>
-            <h4 className='text-center text-capitalized'>Status : {data?.status}</h4>
+            <h4 className='text-center text-capitalized'>Status : {data?.status === 'pending' ? 'booking' : data?.status}</h4>
             <p className='px-5 form-text text-center'>{appointStatusDsc.appointment[data?.status]}</p>
 
             <div className='d-flex justify-content-center mt-4'>

@@ -182,3 +182,11 @@
 .custom-x .recharts-cartesian-axis-tick-line {
     display: none;
 }
+
+.custom-y line {
+    display: none;
+}
+
+.custom-y .recharts-text {
+    margin-right: .5rem;
+}

@@ -17,6 +17,7 @@ type ILginResponse = {
 
 const loginUser = async (user: any): Promise<ILginResponse> => {
     const { email: IEmail, password } = user;
+    console.log({ user })
     const isUserExist = await prisma.auth.findUnique({
         where: { email: IEmail }
     })
@@ -107,7 +108,7 @@ const resetPassword = async (payload: any): Promise<{ message: string }> => {
                 uniqueString: resetLink
             }
         });
-        
+
         if (forgotPassword) {
             const pathName = path.join(__dirname, '../../../../template/resetPassword.html')
             const obj = {

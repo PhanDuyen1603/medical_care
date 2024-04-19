@@ -74,7 +74,7 @@ const ChartArea = ({
           }}
         >
           <XAxis dataKey="name" className='custom-x' />
-          <YAxis />
+          <YAxis className='custom-y' />
           <Tooltip />
           <Legend />
           <Line type="bumpX" dataKey="new" strokeWidth={3} stroke="#8884d8" activeDot={{ r: 8 }} />

@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     return (
         <>
             <AdminLayout >
-                <Flex gap={24} className='mb-3' >
+                <Flex gap={24} wrap='wrap' className='mb-3' >
                     <CardPatient />
                     <CardDoctor />
                     <CardAppointment />
@@ -23,51 +23,6 @@ const AdminDashboard = () => {
                 <Flex>
                     <ChartArea />
                 </Flex>
-                <div className="row mb-3">
-                    {/* <div className="col-12 col-lg-12 row">
-                        <div className='col-12 col-md-6 col-xl-4'>
-                            <CardPatient />
-                        </div>
-                        <div className='col-6 col-md-3 col-xl-2'>
-                            <CardDoctor />
-                        </div>
-                        <div className='col-6 col-md-3 col-xl-2'>
-                            <CardRevenue />
-                        </div>
-                        <div className='col-12 mt-3'>
-                            <ChartArea />
-                        </div>
-                    </div> */}
-                    {/* <div className="col-12 col-lg-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 class="card-title">Revenue this month</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">$62523</h6>
-                                <CharRevenue />
-                            </div>
-                        </div>
-                    </div> */}
-                </div>
-                <div className='row mb-3'>
-                    {/* <div className='col-12 col-lg-6'>
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 class="card-title">Appointment</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <ChartArea />
-                            </div>
-                        </div>
-                    </div> */}
-                    {/* <div className='col-12 col-lg-6'>
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 class="card-title">Appointment</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <ChartArea />
-                            </div>
-                        </div>
-                    </div> */}
-                </div>
                 <div className="row mb-3">
                     <div className="col-md-12 col-lg-6">
                         <div className="card card-chart">
@@ -81,8 +36,6 @@ const AdminDashboard = () => {
 
                     </div>
                     <div className="col-md-12 col-lg-6">
-
-
                         <div className="card card-chart">
                             <div className="card-header">
                                 <h4 className="card-title">Status</h4>

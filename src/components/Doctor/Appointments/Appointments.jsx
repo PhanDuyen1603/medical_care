@@ -34,7 +34,7 @@ const Appointments = () => {
 
     let content = null;
     if (!isLoading && isError) content = <div>Something Went Wrong !</div>
-    if (!isLoading && !isError && data?.length === 0) content = <Empty/>
+    if (!isLoading && !isError && data?.length === 0) content = <Empty />
     if (!isLoading && !isError && data?.length > 0) content =
         <>
             {
@@ -62,7 +62,7 @@ const Appointments = () => {
                                     </div>
                                 </div>
                                 <div className='appointment-status card p-3 border-primary'>
-                                    <p>Current Status - <Tag color="#f50" className='text-uppercase'>{item?.status}</Tag></p>
+                                    <p>Current Status - <Tag color="#f50" className='text-uppercase'>{item?.status === 'pending' ? 'booking' : item?.status}</Tag></p>
                                     <p>Patient Status - <Tag color="#2db7f5" className='text-uppercase'>{item?.patientType}</Tag></p>
                                     <p>Is Follow Up - <Tag color="#f50" className='text-uppercase'>{item?.isFollowUp ? "Yes" : "No"}</Tag></p>
                                     <p> Is Paid - <Tag color="#87d068" className='text-uppercase'>{item?.paymentStatus}</Tag></p>

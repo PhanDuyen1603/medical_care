@@ -32,22 +32,22 @@ const TreatmentOverview = ({ data, isAppointment = false }) => {
                         </div>
 
                         <div className="text-start mt-3">
-                            <h6>Patient Type : 
+                            <h6>Patient Type :
                                 <span className="btn-status btn-st-success">
                                     <Tag color="#87d068" className='ms-2 text-uppercase'>{isAppointment ? data?.appointment?.patientType : data?.patientType}</Tag>
                                 </span>
                             </h6>
-                            <h6>Current Status : 
+                            <h6>Current Status :
                                 <span className="btn-status btn-st-danger">
-                                    <Tag color="#f50" className='ms-2 text-uppercase'>{isAppointment ? data?.appointment?.status : data?.status}</Tag>
+                                    <Tag color="#f50" className='ms-2 text-uppercase'>{isAppointment ? data?.appointment?.status : data?.status === 'pending' ? 'booking' : data?.status}</Tag>
                                 </span>
                             </h6>
-                            <h6>Payment Status : 
+                            <h6>Payment Status :
                                 <span className="btn-status btn-st-success">
                                     <Tag color="#87d068" className='ms-2 text-uppercase'>{isAppointment ? data?.appointment?.paymentStatus : data?.paymentStatus}</Tag>
                                 </span>
                             </h6>
-                            <h6>Prescription Status : 
+                            <h6>Prescription Status :
                                 <span className="btn-status btn-st-danger">
                                     <Tag color="#2db7f5" className='ms-2 text-uppercase'>{isAppointment ? data?.appointment?.prescriptionStatus : data?.prescriptionStatus}</Tag>
                                 </span>
