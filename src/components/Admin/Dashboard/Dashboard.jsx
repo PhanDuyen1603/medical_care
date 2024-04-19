@@ -2,100 +2,83 @@ import React from 'react'
 import AdminLayout from '../AdminLayout/AdminLayout'
 import userImg from '../../../images/avatar.jpg';
 import './Dashboard.css';
+import ChartArea from './ChartArea'
+import CharRevenue from './ChartRevenue'
+import CardPatient from './CardPatient'
+import CardDoctor from './CardDoctor'
+import CardRevenue from './CardRevenue';
 
 const AdminDashboard = () => {
     return (
         <>
             <AdminLayout >
-                <div className="row">
-                    <div className="col-xl-3 col-sm-6 col-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="dash-widget-header">
-                                    <span className="dash-widget-icon text-primary border-primary">
-                                        <i className="fe fe-users"></i>
-                                    </span>
-                                    <div className="dash-count">
-                                        <h3>168</h3>
-                                    </div>
-                                </div>
-                                <div className="dash-widget-info">
-                                    <h6 className="text-muted">Doctors</h6>
-                                    <div className="progress progress-sm">
-                                        <div className="progress-bar bg-primary w-50"></div>
-                                    </div>
-                                </div>
-                            </div>
+                <div className="row mb-3">
+                    <div className="col-12 col-lg-12 row">
+                        <div className='col-12 col-md-6 col-xl-4'>
+                            <CardPatient />
                         </div>
-                    </div>
-                    <div className="col-xl-3 col-sm-6 col-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="dash-widget-header">
-                                    <span className="dash-widget-icon text-success">
-                                        <i className="fe fe-credit-card"></i>
-                                    </span>
-                                    <div className="dash-count">
-                                        <h3>487</h3>
-                                    </div>
-                                </div>
-                                <div className="dash-widget-info">
+                        <div className='col-6 col-md-3 col-xl-2'>
+                            <CardDoctor />
+                        </div>
+                        <div className='col-6 col-md-3 col-xl-2'>
+                            <CardRevenue />
+                        </div>
+                        {/* <div className='col-12 col-xl-3'>
+                            <CardRevenue />
+                        </div> */}
 
-                                    <h6 className="text-muted">Patients</h6>
-                                    <div className="progress progress-sm">
-                                        <div className="progress-bar bg-success w-50"></div>
+                        {/* <div className="col-xl-4 col-sm-6 col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="dash-widget-header">
+                                        <span className="dash-widget-icon text-danger border-danger">
+                                            <i className="fe fe-money"></i>
+                                        </span>
+                                        <div className="dash-count">
+                                            <h3>485</h3>
+                                            <h6 className="text-muted">Appointment</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                         */}
+                        <div className='col-12 mt-3'>
+                            <ChartArea />
+                        </div>
                     </div>
-                    <div className="col-xl-3 col-sm-6 col-12">
+                    {/* <div className="col-12 col-lg-4">
                         <div className="card">
                             <div className="card-body">
-                                <div className="dash-widget-header">
-                                    <span className="dash-widget-icon text-danger border-danger">
-                                        <i className="fe fe-money"></i>
-                                    </span>
-                                    <div className="dash-count">
-                                        <h3>485</h3>
-                                    </div>
-                                </div>
-                                <div className="dash-widget-info">
-
-                                    <h6 className="text-muted">Appointment</h6>
-                                    <div className="progress progress-sm">
-                                        <div className="progress-bar bg-danger w-50"></div>
-                                    </div>
-                                </div>
+                                <h5 class="card-title">Revenue this month</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">$62523</h6>
+                                <CharRevenue />
                             </div>
                         </div>
-                    </div>
-                    <div className="col-xl-3 col-sm-6 col-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="dash-widget-header">
-                                    <span className="dash-widget-icon text-warning border-warning">
-                                        <i className="fe fe-folder"></i>
-                                    </span>
-                                    <div className="dash-count">
-                                        <h3>$62523</h3>
-                                    </div>
-                                </div>
-                                <div className="dash-widget-info">
-
-                                    <h6 className="text-muted">Revenue</h6>
-                                    <div className="progress progress-sm">
-                                        <div className="progress-bar bg-warning w-50"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="row">
+                <div className='row mb-3'>
+                    {/* <div className='col-12 col-lg-6'>
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 class="card-title">Appointment</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <ChartArea />
+                            </div>
+                        </div>
+                    </div> */}
+                    {/* <div className='col-12 col-lg-6'>
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 class="card-title">Appointment</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <ChartArea />
+                            </div>
+                        </div>
+                    </div> */}
+                </div>
+                <div className="row mb-3">
                     <div className="col-md-12 col-lg-6">
-
-                     
                         <div className="card card-chart">
                             <div className="card-header">
                                 <h4 className="card-title">Revenue</h4>
@@ -108,7 +91,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="col-md-12 col-lg-6">
 
-                     
+
                         <div className="card card-chart">
                             <div className="card-header">
                                 <h4 className="card-title">Status</h4>
@@ -120,7 +103,7 @@ const AdminDashboard = () => {
 
                     </div>
                 </div>
-                <div className="row">
+                <div className="row mb-3">
                     <div className="col-md-6 d-flex">
                         <div className="card card-table flex-fill">
                             <div className="card-header">
@@ -141,7 +124,7 @@ const AdminDashboard = () => {
                                             <tr>
                                                 <td>
                                                     <h2 className="table-avatar">
-                                                        <a className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt=""/></a>
+                                                        <a className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt="" /></a>
                                                         <a>Dr. Ruby Perrin</a>
                                                     </h2>
                                                 </td>
@@ -183,7 +166,7 @@ const AdminDashboard = () => {
                                             <tr>
                                                 <td>
                                                     <h2 className="table-avatar">
-                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt=""/></a>
+                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt="" /></a>
                                                         <a href="profile.html">Charlene Reed </a>
                                                     </h2>
                                                 </td>
@@ -191,7 +174,7 @@ const AdminDashboard = () => {
                                                 <td>20 Oct 2019</td>
                                                 <td className="text-right">$100.00</td>
                                             </tr>
-                                           
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -200,7 +183,7 @@ const AdminDashboard = () => {
 
                     </div>
                 </div>
-                <div className="row">
+                <div className="row mb-3">
                     <div className="col-md-12">
 
                         <div className="card card-table">
@@ -224,22 +207,22 @@ const AdminDashboard = () => {
                                             <tr>
                                                 <td>
                                                     <h2 className="table-avatar">
-                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt=""/></a>
+                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt="" /></a>
                                                         <a href="profile.html">Dr. Ruby Perrin</a>
                                                     </h2>
                                                 </td>
                                                 <td>Dental</td>
                                                 <td>
                                                     <h2 className="table-avatar">
-                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt=""/></a>
+                                                        <a href="profile.html" className="avatar avatar-sm mr-2"><img className="avatar-img rounded-circle" src={userImg} alt="" /></a>
                                                         <a href="profile.html">Charlene Reed </a>
                                                     </h2>
                                                 </td>
                                                 <td>9 Nov 2019 <span className="text-primary d-block">11.00 AM - 11.15 AM</span></td>
                                                 <td>
                                                     <div className="status-toggle">
-                                                        <input type="checkbox" id="status_1" className="check" checked/>
-                                                            <label for="status_1" className="checktoggle">checkbox</label>
+                                                        <input type="checkbox" id="status_1" className="check" checked />
+                                                        <label for="status_1" className="checktoggle">checkbox</label>
                                                     </div>
                                                 </td>
                                                 <td className="text-right">

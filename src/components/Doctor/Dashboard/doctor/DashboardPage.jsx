@@ -49,7 +49,7 @@ const DashboardPage = () => {
                         <a className="avatar avatar-sm mr-2 d-flex gap-2">
                             <img className="avatar-img rounded-circle" src={img} alt="" />
                             <div>
-                                <p className='p-0 m-0 text-nowrap'>{data?.patient?.firstName + ' ' + data?.patient?.lastName}</p>
+                                <p className='p-0 m-0 text-nowrap'>{data?.firstName + ' ' + data?.lastName}</p>
                                 <p className='p-0 m-0'>{data?.patient?.designation}</p>
                             </div>
                         </a>
@@ -72,7 +72,7 @@ const DashboardPage = () => {
             key: '4',
             width: 100,
             render: function (data) {
-                return <div>{data?.status}</div>
+                return <div>{data?.status && data?.status === 'pending' ? 'Booking' : data?.status}</div>
             }
         },
         {
