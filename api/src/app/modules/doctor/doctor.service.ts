@@ -183,7 +183,7 @@ const getDoctorsAvaliable = async (filters: IDoctorFiltersWithAppointment, optio
 
     const doctorsBySpecialist = await getAllDoctors({ specialist }, { limit: 1000 })
     const data = [...doctorsBySpecialist.data];
-    let res = []
+    const res = []
     if (data && Array.isArray(data) && data.length > 0) {
         const ids = data.map(x => x.id)
         for (let i = 0; i < ids.length; i++) {
@@ -199,7 +199,8 @@ const getDoctorsAvaliable = async (filters: IDoctorFiltersWithAppointment, optio
                 }
             })
             const index = data.findIndex(x => x.id === ids[i])
-            if (p && p < 4) res.push(data[index])
+            if (p < 4) res.push({ ...data[index] })
+
             // res[index] = {
             //     ...data[index],
             //     appointmentAvailable: p && p < 4 ? true : false,

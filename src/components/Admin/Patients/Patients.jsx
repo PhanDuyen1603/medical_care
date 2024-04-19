@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
 import { useGetPatientsQuery } from '@/redux/api/patientApi';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
-import { Table, Space } from 'antd';
+import { Table, Space, Flex, Input } from 'antd';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
 import './Patients.css';
 
@@ -14,6 +14,7 @@ const transformData = (data) => {
 }
 
 const Patients = () => {
+    const [searchName, setSearchName] = useState('')
     const { getColumnSearchProps } = useSearchColumn()
     const columns = [
         {
@@ -22,6 +23,7 @@ const Patients = () => {
             key: 'fullName',
             width: '30%',
             ...getColumnSearchProps('fullName'),
+            filteredValue: [searchName],
         },
         {
             title: 'Email Address',
@@ -58,6 +60,12 @@ const Patients = () => {
     return (
         <>
             <AdminLayout >
+                <Flex gap={20}>
+                    {/* <button className='btn btn-primary' onClick={() => handleShow('create')}>
+                        <FaPlus />
+                    </button> */}
+                    <Input.Search size="large" placeholder="large size" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
+                </Flex>
                 <Table columns={columns} dataSource={transformData(data)} loading={isLoading} />
             </AdminLayout>
         </>

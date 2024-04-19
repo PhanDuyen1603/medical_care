@@ -1,6 +1,8 @@
 import moment from 'moment';
 import img from '../../../images/doc/doctor 3.jpg';
 import { Link } from 'react-router-dom';
+// import { Flex } from 'antd';
+import { Col, Row } from 'antd';
 import './BookingCheckout.css';
 
 const CheckoutPage = ({ handleChange, selectValue, isCheck, setIsChecked, data, selectedDate, selectTime }) => {
@@ -43,36 +45,43 @@ const CheckoutPage = ({ handleChange, selectValue, isCheck, setIsChecked, data, 
                                     Cash
                                 </label>
                             </div>
-                            <di mb-3v className="col-md-6">
-                                <div className="form-group card-label mb-3">
-                                    <label htmlFor="card_name">Name on Card</label>
-                                    <input className="form-control" id="card_name" value={nameOnCard && nameOnCard} type="text" onChange={(e) => handleChange(e)} name='nameOnCard' />
-                                </div>
-                            </di>
-                            <div className="col-md-6">
-                                <div className="form-group card-label mb-3">
-                                    <label htmlFor="card_number">Card Number</label>
-                                    <input className="form-control" id="card_number" value={cardNumber && cardNumber} placeholder="1234  5678  9876  5432" type="number" onChange={(e) => handleChange(e)} name='cardNumber' />
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-group card-label mb-3">
-                                    <label htmlFor="expiry_month">Expiry Month</label>
-                                    <input className="form-control" id="expiry_month" value={expiredMonth && expiredMonth} placeholder="MM" type="number" onChange={(e) => handleChange(e)} name='expiredMonth' />
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-group card-label mb-3">
-                                    <label htmlFor="expiry_year">Expiry Year</label>
-                                    <input className="form-control" id="expiry_year" value={cardExpiredYear && cardExpiredYear} placeholder="YY" type="number" onChange={(e) => handleChange(e)} name='cardExpiredYear' />
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-group card-label mb-3">
-                                    <label htmlFor="cvv">CVV</label>
-                                    <input className="form-control" id="cvv" type="number" value={cvv && cvv} onChange={(e) => handleChange(e)} name='cvv' />
-                                </div>
-                            </div>
+                            {
+                                paymentType === 'creditCard' &&
+                                (
+                                    <Row gutter={16}>
+                                        <Col span={12} mb-3v>
+                                            <div className="form-group card-label mb-3">
+                                                <label htmlFor="card_name">Name on Card</label>
+                                                <input className="form-control" id="card_name" value={nameOnCard && nameOnCard} type="text" onChange={(e) => handleChange(e)} name='nameOnCard' />
+                                            </div>
+                                        </Col>
+                                        <Col span={12}>
+                                            <div className="form-group card-label mb-3">
+                                                <label htmlFor="card_number">Card Number</label>
+                                                <input className="form-control" id="card_number" value={cardNumber && cardNumber} placeholder="1234  5678  9876  5432" type="number" onChange={(e) => handleChange(e)} name='cardNumber' />
+                                            </div>
+                                        </Col>
+                                        <Col span={8}>
+                                            <div className="form-group card-label mb-3">
+                                                <label htmlFor="expiry_month">Expiry Month</label>
+                                                <input className="form-control" id="expiry_month" value={expiredMonth && expiredMonth} placeholder="MM" type="number" onChange={(e) => handleChange(e)} name='expiredMonth' />
+                                            </div>
+                                        </Col>
+                                        <Col span={8}>
+                                            <div className="form-group card-label mb-3">
+                                                <label htmlFor="expiry_year">Expiry Year</label>
+                                                <input className="form-control" id="expiry_year" value={cardExpiredYear && cardExpiredYear} placeholder="YY" type="number" onChange={(e) => handleChange(e)} name='cardExpiredYear' />
+                                            </div>
+                                        </Col>
+                                        <Col span={8}>
+                                            <div className="form-group card-label mb-3">
+                                                <label htmlFor="cvv">CVV</label>
+                                                <input className="form-control" id="cvv" type="number" value={cvv && cvv} onChange={(e) => handleChange(e)} name='cvv' />
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                )
+                            }
                         </div>
 
                         <div className="d-flex gap-2 mt-3 mb-3">

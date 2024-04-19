@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
-import { Table, Space, Button, Form, Steps, Popover, message } from 'antd';
+import { Input, Flex, Table, Space, Button, Form, Steps, Popover, message } from 'antd';
 import swal from 'sweetalert';
+import { FaPlus } from "react-icons/fa";
 import Modal from 'react-bootstrap/Modal';
 import FormEducationInfo from './FormEducationInfo';
 import FormBasicInfo from './FormBasicInfo';
@@ -54,6 +55,7 @@ const Doctors = () => {
   const [submitType, setSubmitType] = useState('create')
   const [current, setCurrent] = useState(0);
   const [initialValues, setInitialValues] = useState(initData);
+  const [searchName, setSearchName] = useState('')
   // use api
   const [doctorCreate, { data: dData, isSuccess: dIsSuccess, isError: dIsError, error: dError, isLoading: dIsLoading }] = useDoctorSignUpMutation();
   const [updateDoctor, { isSuccess: updateSuccess, isError: updateIsError, error: updateError }] = useUpdateDoctorMutation()
@@ -99,6 +101,7 @@ const Doctors = () => {
       key: 'fullName',
       width: '30%',
       ...getColumnSearchProps('fullName'),
+      filteredValue: [searchName],
     },
     {
       title: 'Email Address',
@@ -136,7 +139,7 @@ const Doctors = () => {
     },
   ];
   const { data: doctorData, isLoading, isError } = useGetDoctorsQuery({ ...query })
-  const doctors = doctorData?.doctors;
+  const doctors = transformData(doctorData?.doctors);
   // end table
 
   // form 
@@ -192,21 +195,18 @@ const Doctors = () => {
     }
   })
 
-  // useEffect(() => {
-  //   if()
-  //   form.resetFields();
-  //   setInitialValues(initData)
-  // }, [showModal])
-
   return (
     <>
       <AdminLayout >
-        <button className='btn btn-primary' onClick={() => handleShow('create')}>
-          <PlusOutlined />
-        </button>
+        <Flex gap={20}>
+          <button className='btn btn-primary' style={{ display: 'flex', alignItems: 'center' }} onClick={() => handleShow('create')}>
+            <FaPlus />
+          </button>
+          <Input.Search size="large" placeholder="large size" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
+        </Flex>
         <Table
           columns={columns}
-          dataSource={transformData(doctors)}
+          dataSource={doctors}
           loading={isLoading}
         />
         <Modal

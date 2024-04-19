@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout';
 import './Specialites.css';
-import { Space, Table, Form, Input, Button } from 'antd';
+import { Space, Table, Form, Input, Button, Flex } from 'antd';
 import swal from 'sweetalert';
 import Modal from 'react-bootstrap/Modal';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { FaPlus } from "react-icons/fa";
 import {
   useGetSpecialistsQuery,
   useCreateSpecialistMutation,
@@ -23,6 +24,7 @@ const Specialites = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [initialValues, setInitialValues] = useState(initData);
   const [target, setTarget] = useState({})
+  const [searchName, setSearchName] = useState('')
   const [specialistCreate, {
     data: sData,
     isSuccess: sIsSuccess,
@@ -123,7 +125,9 @@ const Specialites = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      filteredValue: [searchName],
       render: (text) => <a>{text}</a>,
+      onFilter: (value, record) => record.name.toString().toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: 'Slug',
@@ -140,9 +144,15 @@ const Specialites = () => {
   return (
     <>
       <AdminLayout>
-        <button className='btn btn-primary' onClick={() => handleShow('create')}>
+        {/* <button className='btn btn-primary' onClick={() => handleShow('create')}>
           <PlusOutlined />
-        </button>
+        </button> */}
+        <Flex gap={20}>
+          <button className='btn btn-primary' style={{ display: 'flex', alignItems: 'center' }} onClick={() => handleShow('create')}>
+            <FaPlus />
+          </button>
+          <Input.Search size="large" placeholder="large size" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
+        </Flex>
         <Table columns={columns} dataSource={specialistData} />
 
         <Modal

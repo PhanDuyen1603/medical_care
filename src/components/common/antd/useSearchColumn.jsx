@@ -8,13 +8,13 @@ const useSearchColumn = () => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
     setSearchText(selectedKeys[0]);
     ;
   };
 
-  const handleReset = (clearFilters) => {
+  const handleReset = (clearFilters, confirm) => {
     clearFilters();
+    confirm();
     setSearchText('');
   };
 
@@ -50,7 +50,7 @@ const useSearchColumn = () => {
             Search
           </Button>
           <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
+            onClick={() => clearFilters && handleReset(clearFilters, confirm)}
             size="small"
             style={{
               width: 90,
@@ -91,9 +91,6 @@ const useSearchColumn = () => {
       />
     ),
     onFilter: (value, record) => {
-      console.log({
-        value, record
-      })
       return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
     },
     onFilterDropdownOpenChange: (visible) => {
