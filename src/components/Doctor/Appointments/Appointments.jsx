@@ -9,6 +9,7 @@ import { FaEye, FaCheck, FaTimes } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaClock, FaEnvelope, FaLocationArrow, FaPhoneAlt, FaBriefcaseMedical } from "react-icons/fa";
 import { clickToCopyClipBoard } from '../../../utils/copyClipBoard';
+import { statusColor, paymentStatusColor, prescriptionStatusColor } from "@/constant/global"
 
 const Appointments = () => {
     const { data, isError, isLoading } = useGetDoctorAppointmentsQuery({});
@@ -62,11 +63,11 @@ const Appointments = () => {
                                     </div>
                                 </div>
                                 <div className='appointment-status card p-3 border-primary'>
-                                    <p>Current Status - <Tag color="#f50" className='text-uppercase'>{item?.status === 'pending' ? 'booking' : item?.status}</Tag></p>
+                                    <p>Current Status - <Tag color={statusColor[item.status]} className='text-uppercase'>{item?.status === 'pending' ? 'booking' : item?.status}</Tag></p>
                                     <p>Patient Status - <Tag color="#2db7f5" className='text-uppercase'>{item?.patientType}</Tag></p>
-                                    <p>Is Follow Up - <Tag color="#f50" className='text-uppercase'>{item?.isFollowUp ? "Yes" : "No"}</Tag></p>
-                                    <p> Is Paid - <Tag color="#87d068" className='text-uppercase'>{item?.paymentStatus}</Tag></p>
-                                    <p> Prescribed - <Tag color="#2db7f5" className='text-uppercase'>{item?.prescriptionStatus}</Tag></p>
+                                    <p>Is Follow Up - <Tag color={item?.isFollowUp ? '#87d068' : '#f51124'} className='text-uppercase'>{item?.isFollowUp ? "Yes" : "No"}</Tag></p>
+                                    <p> Is Paid - <Tag color={paymentStatusColor[item.paymentStatus]} className='text-uppercase'>{item?.paymentStatus}</Tag></p>
+                                    <p> Prescribed - <Tag color={prescriptionStatusColor[item.prescriptionStatus]} className='text-uppercase'>{item?.prescriptionStatus}</Tag></p>
                                 </div>
                             </div>
                             <div className='d-flex gap-2'>

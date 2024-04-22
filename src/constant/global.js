@@ -91,10 +91,33 @@ const appointmentStatus = [
     "archived"
 ]
 
+export const statusColor = {
+    pending: "#f50",
+    scheduled: "#108ee9",
+    cancel: "#f51124",
+    confirmed: "#87d068",
+    InProgress: "#2db7f5",
+    Completed: "#87d068",
+    FollowUp: "#2db7f5",
+    archived: "#2db7f5"
+}
+
+export const paymentStatusColor = {
+    paid: "#87d068",
+    unpaid: "#f51124"
+}
+
+export const prescriptionStatusColor = {
+    issued: "#87d068",
+    notIssued: "#2db7f5"
+}
+
+
 export const appointemntStatusOption = appointmentStatus.map((item) => {
     return {
         label: item,
-        value: item
+        value: item,
+        text: item === 'pending' ? 'booking' : item
     }
 })
 

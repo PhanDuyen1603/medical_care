@@ -151,7 +151,7 @@ const Specialites = () => {
           <button className='btn btn-primary' style={{ display: 'flex', alignItems: 'center' }} onClick={() => handleShow('create')}>
             <FaPlus />
           </button>
-          <Input.Search size="large" placeholder="large size" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
+          <Input.Search size="large" placeholder="Name" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
         </Flex>
         <Table columns={columns} dataSource={specialistData} />
 

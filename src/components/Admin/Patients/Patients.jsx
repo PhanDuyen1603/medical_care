@@ -64,7 +64,7 @@ const Patients = () => {
                     {/* <button className='btn btn-primary' onClick={() => handleShow('create')}>
                         <FaPlus />
                     </button> */}
-                    <Input.Search size="large" placeholder="large size" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
+                    <Input.Search size="large" placeholder="Patients name" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
                 </Flex>
                 <Table columns={columns} dataSource={transformData(data)} loading={isLoading} />
             </AdminLayout>

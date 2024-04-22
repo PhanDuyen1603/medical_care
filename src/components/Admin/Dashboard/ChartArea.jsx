@@ -59,7 +59,7 @@ const ChartArea = ({
   };
 
   return (
-    <Card className='card-full'>
+    <Card className='card-full card-custom'>
       <h5 className='mb-5'>Patients Statictics</h5>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart

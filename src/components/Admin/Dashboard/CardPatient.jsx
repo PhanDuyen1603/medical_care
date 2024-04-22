@@ -5,7 +5,7 @@ const CardPatient = () => {
   return (
     <>
       <Space direction="vertical" size={16}>
-        <Card style={{ width: '100%' }}>
+        <Card style={{ width: '100%' }} className='card-custom'>
           <h5>Total addmits Patient</h5>
           <Flex gap="middle" vertical>
             <div className='card-patient'>

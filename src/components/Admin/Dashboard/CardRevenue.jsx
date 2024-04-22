@@ -5,7 +5,7 @@ const CardRevenue = () => {
   return (
     <>
       <Space direction="vertical" size={16}>
-        <Card>
+        <Card className='card-custom'>
           <h5>Revenue</h5>
           <Flex gap="middle" vertical>
             <div className='card-patient'>

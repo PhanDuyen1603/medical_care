@@ -4,7 +4,7 @@ const CardDoctor = () => {
   return (
     <>
       <Space direction="vertical" size={16}>
-        <Card>
+        <Card className='card-custom'>
           <h5>Total doctors</h5>
           <Flex gap="middle" vertical>
             <div className='card-patient'>
