@@ -53,9 +53,9 @@ const AppointmentPage = () => {
   const prev = () => { setCurrent(current - 1) };
 
   useEffect(() => {
-    const { firstName, lastName, email, phone, nameOnCard, cardNumber, expiredMonth, cardExpiredYear, cvv, reasonForVisit } = selectValue;
+    const { firstName, lastName, email, phone, nameOnCard, cardNumber, expiredMonth, cardExpiredYear, cvv, reasonForVisit, paymentType } = selectValue;
     const isInputEmpty = !firstName || !lastName || !email || !phone || !reasonForVisit;
-    const isConfirmInputEmpty = !nameOnCard || !cardNumber || !expiredMonth || !cardExpiredYear || !cvv || !isCheck;
+    const isConfirmInputEmpty = paymentType === 'creditCard' ? !nameOnCard || !cardNumber || !expiredMonth || !cardExpiredYear || !cvv || !isCheck : !isCheck;
     setIsDisable(isInputEmpty);
     setIsConfirmDisable(isConfirmInputEmpty);
   }, [selectValue, isCheck]);

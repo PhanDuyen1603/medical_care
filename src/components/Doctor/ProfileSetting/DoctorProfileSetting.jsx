@@ -3,11 +3,11 @@ import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { Button, Select, message } from 'antd';
 import { Link } from 'react-router-dom';
-import { useUpdateDoctorMutation } from '../../../redux/api/doctorApi';
-import useAuthCheck from '../../../redux/hooks/useAuthCheck';
-import { doctorSpecialistOptions } from '../../../constant/global';
-import ImageUpload from '../../UI/form/ImageUpload';
-import dImage from '../../../images/avatar.jpg';
+import { useUpdateDoctorMutation } from '@/redux/api/doctorApi';
+import useAuthCheck from '@/redux/hooks/useAuthCheck';
+import { doctorSpecialistOptions } from '@/constant/global';
+import ImageUpload from '@/components/UI/form/ImageUpload';
+import dImage from '@/images/avatar.jpg';
 import { DatePicker } from 'antd';
 
 const DoctorProfileSetting = () => {

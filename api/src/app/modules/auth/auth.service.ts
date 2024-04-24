@@ -17,7 +17,6 @@ type ILginResponse = {
 
 const loginUser = async (user: any): Promise<ILginResponse> => {
     const { email: IEmail, password } = user;
-    console.log({ user })
     const isUserExist = await prisma.auth.findUnique({
         where: { email: IEmail }
     })
@@ -175,9 +174,33 @@ const PassworResetConfirm = async (payload: any): Promise<any> => {
     }
 }
 
+const changePassword = async (payload: any) => {
+    const { email, oldPassword, newPassword, role } = payload;
+    const isUserExist = await prisma.auth.findUnique({
+        where: { email }
+    })
+    if (!isUserExist) throw new ApiError(httpStatus.NOT_FOUND, "User is not Exist !");
+    const isPasswordMatched = await bcrypt.compare(oldPassword, isUserExist.password)
+    if (!isPasswordMatched) throw new ApiError(httpStatus.NOT_FOUND, "Password is not Matched !");
+    if (newPassword === oldPassword) throw new ApiError(httpStatus.NOT_FOUND, "Please use new password !");
+
+    await prisma.auth.update({
+        where: {
+            email
+        },
+        data: {
+            password: newPassword && await bcrypt.hashSync(newPassword, 12)
+        }
+    })
+    return {
+        message: "Password Changed Successfully !!"
+    }
+}
+
 export const AuthService = {
     loginUser,
     VerificationUser,
     resetPassword,
-    PassworResetConfirm
+    PassworResetConfirm,
+    changePassword
 }

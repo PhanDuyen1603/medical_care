@@ -45,6 +45,17 @@ const PasswordResetConfirm = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const changePassword = async (req: Request, res: Response) => {
+    console.log({ body: req.body })
+    const result = await AuthService.changePassword(req.body);
+    sendResponse(res, {
+        statusCode: 200,
+        message: 'Successfully Passwrod Changed!!',
+        success: true,
+        data: result,
+    })
+}
+
 const VerifyUser = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.params;
     const isUserExist = await prisma.doctor.findUnique({
@@ -103,5 +114,6 @@ export const AuthController = {
     Verified,
     VerficationExpired,
     resetPassword,
-    PasswordResetConfirm
+    PasswordResetConfirm,
+    changePassword
 }
