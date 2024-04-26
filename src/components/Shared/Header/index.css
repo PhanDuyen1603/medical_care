@@ -1,12 +1,13 @@
-.nav-popover h5{
+.nav-popover h5 {
     font-size: 18px;
     margin-bottom: 0;
 }
-.nav-popover a{
+
+.nav-popover a {
     margin: 0 0;
 }
 
-.profileImage img{
+.profileImage img {
     height: 30px;
     border-radius: 50%;
     width: 30px;
@@ -16,19 +17,22 @@
     border: 2px #1977cc solid;
     cursor: pointer;
 }
-.hideTopHeader{
+
+.hideTopHeader {
     display: none !important;
-    transition: 1s!important;
+    transition: 1s !important;
 }
-.stickyHeader{
+
+.stickyHeader {
     top: 0 !important;
-    transition: 1ms!important;
+    transition: 1ms !important;
 }
+
 #header {
     background: #fff;
     transition: all 0.5s;
     z-index: 997;
-    top: 40px;
+    top: 0;
     box-shadow: 0px 2px 15px rgba(25, 119, 204, 0.1);
 }
 
@@ -221,18 +225,22 @@
     font-size: 1.2rem;
     color: #1977cc !important;
 }
-.mobile-menu-nav .icon{
+
+.mobile-menu-nav .icon {
     font-size: 1.3rem;
     margin-right: 15px;
 
 }
-.mobile-menu-nav li{
+
+.mobile-menu-nav li {
     margin-bottom: 10px;
     padding: 5px;
 }
-.mobile-menu-nav li a{
+
+.mobile-menu-nav li a {
     padding: 5px;
 }
-.ant-drawer-body{
+
+.ant-drawer-body {
     background-color: #d2d2ff;
 }

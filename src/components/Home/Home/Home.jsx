@@ -21,11 +21,11 @@ const Home = () => {
             <Service />
             <ClinicAndSpecialities />
             <BookDoctor />
-            <Blog />
+            {/* <Blog /> */}
             <Availabe />
-            <OurDoctors/>
+            <OurDoctors />
             <Testimonial />
-            <Gallery/>
+            <Gallery />
             <Footer />
         </>
     );

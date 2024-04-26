@@ -25,16 +25,17 @@ const loginUser = async (user: any): Promise<ILginResponse> => {
         throw new ApiError(httpStatus.NOT_FOUND, "User is not Exist !");
     }
     // check Verified doctor or not
-    if (isUserExist.role === 'doctor') {
-        const getDoctorInfo = await prisma.doctor.findUnique({
-            where: {
-                email: isUserExist.email
-            }
-        })
-        if (getDoctorInfo && getDoctorInfo?.verified === false) {
-            throw new ApiError(httpStatus.NOT_FOUND, "Please Verify Your Email First !");
-        }
-    }
+    // TODO: verify doctor - move to patient
+    // if (isUserExist.role === 'doctor') {
+    //     const getDoctorInfo = await prisma.doctor.findUnique({
+    //         where: {
+    //             email: isUserExist.email
+    //         }
+    //     })
+    //     if (getDoctorInfo && getDoctorInfo?.verified === false) {
+    //         throw new ApiError(httpStatus.NOT_FOUND, "Please Verify Your Email First !");
+    //     }
+    // }
     const isPasswordMatched = await bcrypt.compare(password, isUserExist.password);
 
     if (!isPasswordMatched) {

@@ -13,6 +13,7 @@ import { MedicineRouter } from '../modules/medicines/medicine.route';
 import { ContactRouter } from '../modules/contact/contact.route';
 import { SpecialistRoutes } from '../modules/specialist/specialist.route';
 import { AdminRoutes } from '../modules/admin/admin.route';
+import { InitRouter } from '../modules/init/init.route'
 
 const router = express.Router();
 
@@ -68,7 +69,11 @@ const moduleRoutes = [
     {
         path: '/admin',
         route: AdminRoutes
-    }
+    },
+    {
+        path: '/test',
+        route: InitRouter
+    },
 ]
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
 export default router;

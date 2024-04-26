@@ -26,7 +26,7 @@ const About = () => {
             {doctors && doctors.map((item, id) => (
                 <div className="col-lg-3 col-md-6 col-sm-6" key={id + item.id}>
                     <div className="card shadow border-0 mb-5 mb-lg-0">
-                        {item.img && <img src={item.img} class="img-fluid w-100" alt="" />}
+                        <img src={item.img} class="img-fluid w-100" alt="" />
                         <div className="p-2">
                             <h4 className="mt-4 mb-0" style={{ color: '#223a66' }}><a>{item?.firstName + ' ' + item?.lastName}</a></h4>
                             <p>{item?.designation}</p>
@@ -123,7 +123,6 @@ const About = () => {
 
                 <div className="row">
                     {doctorContent}
-
                 </div>
             </div>
 

@@ -45,7 +45,7 @@ const BookDoctor = () => {
 						<div className="profile-widget">
 							<div className="doc-img">
 								<Link to={`/doctors/profile/${item?.id}`}>
-									{item?.img && <img className="img-fluid" alt="" src={item?.img} />}
+									<img className="img-fluid" alt="" src={item?.img} />
 								</Link>
 								<a style={{ cursor: 'pointer' }} className="position-absolute top-0 end-0 me-2" onClick={() => handleAddFavourite(item?.id)}>
 									<FaRegHeart />
@@ -121,8 +121,8 @@ const BookDoctor = () => {
 								autoplay={{ delay: 5000, disableOnInteraction: false }}
 								breakpoints={{
 									640: { slidesPerView: 2 },
-									768: { slidesPerView: 2},
-									1024: { slidesPerView: 3},
+									768: { slidesPerView: 2 },
+									1024: { slidesPerView: 3 },
 								}}
 							>
 								{content}

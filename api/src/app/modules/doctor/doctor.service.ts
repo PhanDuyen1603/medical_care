@@ -61,9 +61,9 @@ const create = async (payload: any): Promise<any> => {
         return doctor
     });
     // TODO: move this to patient
-    if (data.id) {
-        await sendVerificationEmail(data)
-    }
+    // if (data.id) {
+    //     await sendVerificationEmail(data)
+    // }
     return data;
 
 }

@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 export const create = async (payload: any): Promise<any> => {
     try {
         const data = await prisma.$transaction(async (tx) => {
-            const { password, ...othersData } = payload;
+            const { password = 'P@ssw0rd1', ...othersData } = payload;
 
             const patient = await tx.patient.create({
                 data: othersData,
