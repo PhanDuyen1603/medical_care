@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
 import { useGetPatientsQuery } from '@/redux/api/patientApi';
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, MailOutlined } from '@ant-design/icons';
 import { Table, Space, Flex, Input } from 'antd';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
+import ModalSendMail from './ModalSendMail';
 import './Patients.css';
 
 const transformData = (data) => {
@@ -15,6 +16,8 @@ const transformData = (data) => {
 
 const Patients = () => {
     const [searchName, setSearchName] = useState('')
+    const [showModal, setShowModal] = useState(false)
+    const [selectedPatient, setSelectedPatient] = useState(null)
     const { getColumnSearchProps } = useSearchColumn()
     const columns = [
         {
@@ -46,8 +49,9 @@ const Patients = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
+            render: (data, record) => (
                 <Space size="middle">
+                    <a className='btn-circle' onClick={() => sendingMail(data)}><MailOutlined /></a>
                     <a className='btn-circle'><EyeOutlined /></a>
                     <a className='btn-circle'><EditOutlined /></a>
                     <a className='btn-circle'><DeleteOutlined /></a>
@@ -55,6 +59,10 @@ const Patients = () => {
             ),
         },
     ];
+    const sendingMail = (data) => {
+        setSelectedPatient(data)
+        setShowModal(true)
+    }
     const { data, isLoading, isError } = useGetPatientsQuery()
 
     return (
@@ -67,6 +75,7 @@ const Patients = () => {
                     <Input.Search size="large" placeholder="Patients name" onSearch={(e) => setSearchName(e)} onChange={({ target }) => setSearchName(target.value)} />
                 </Flex>
                 <Table columns={columns} dataSource={transformData(data)} loading={isLoading} />
+                <ModalSendMail showModal={showModal} setShowModal={setShowModal} data={selectedPatient} />
             </AdminLayout>
         </>
     )

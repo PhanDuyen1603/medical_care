@@ -10,6 +10,7 @@ export const tagTypes = {
     medicine: 'medicine',
     admin: 'admin',
     specialist: 'specialist',
+    mail: 'mail'
 }
 
 export const tagTypeList = [
@@ -24,4 +25,5 @@ export const tagTypeList = [
     tagTypes.medicine,
     tagTypes.admin,
     tagTypes.specialist,
+    tagTypes.mail
 ]
