@@ -25,9 +25,10 @@ const PersonalInformation = ({ handleChange, selectValue, setPatientId = () => {
     return (
         <form className="rounded p-3 mt-5" style={{ background: "#f8f9fa" }}>
             <div className="row">
-                <Checkbox checked={checked} onChange={onChange}>
+                {/* TODO: auto choose patient account */}
+                {/* <Checkbox checked={checked} onChange={onChange}>
                     Allready Have an Account ?
-                </Checkbox>
+                </Checkbox> */}
 
                 <div className="col-md-6 col-sm-12">
                     <div className="form-group card-label mb-3">

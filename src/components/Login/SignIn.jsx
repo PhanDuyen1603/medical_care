@@ -75,7 +75,7 @@ const SignIn = ({ handleResponse }) => {
                             <Toast.Body>Use this account to sign in as a doctor <br />
                                 <hr />
                                 <div className='bg-dark text-white p-2 px-3 rounded'>
-                                    email : quanquanhtrongtoo@gmail.com <br />
+                                    email : doctorcare099@gmail.com <br />
                                     password : P@ssw0rd1 <br />
                                 </div>
                                 <hr />
