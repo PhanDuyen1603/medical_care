@@ -15,6 +15,7 @@ import { SpecialistRoutes } from '../modules/specialist/specialist.route';
 import { AdminRoutes } from '../modules/admin/admin.route';
 import { InitRouter } from '../modules/init/init.route'
 import { MailRouter } from '../modules/mail/mail.route';
+import { PaymentRouter } from '../modules/payment/payment.route'
 
 const router = express.Router();
 
@@ -78,6 +79,10 @@ const moduleRoutes = [
     {
         path: '/mail',
         route: MailRouter
+    },
+    {
+        path: '/payment',
+        route: PaymentRouter
     }
 ]
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

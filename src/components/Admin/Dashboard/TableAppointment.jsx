@@ -1,79 +1,88 @@
 import { Space, Table, Tag } from 'antd';
+import { statusColor, paymentStatusColor, appointemntStatusOption } from "@/constant/global"
+import useSearchColumn from '@/components/common/antd/useSearchColumn';
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
+const TableAppointment = ({ data }) => {
+  const { getColumnSearchProps } = useSearchColumn()
+  const columns = [
+    {
+      title: 'No',
+      dataIndex: 'key',
+      key: 'key',
+    },
+    {
+      title: 'Track Id',
+      dataIndex: 'trackingId',
+      key: 'trackingId',
+      ...getColumnSearchProps('trackingId'),
+    },
+    {
+      title: 'Patient Name',
+      dataIndex: 'patientFullname',
+      key: 'patientFullname',
+      ...getColumnSearchProps('patientFullname'),
+    },
+    {
+      title: 'Email Address',
+      dataIndex: 'email',
+      key: 'email',
+      ...getColumnSearchProps('email'),
+    },
+    {
+      title: 'Doctor Name',
+      dataIndex: 'doctorFullName',
+      key: 'doctorFullName',
+      ...getColumnSearchProps('doctorFullName'),
+    },
+    {
+      title: 'Date',
+      dataIndex: 'scheduleDate',
+      key: 'scheduleDate',
+    },
+    {
+      title: 'Time',
+      dataIndex: 'scheduleTime',
+      key: 'scheduleTime',
+    },
+    {
+      title: 'Payment',
+      dataIndex: 'paymentStatus',
+      key: 'paymentStatus',
+      filters: [
+        {
+          text: 'Paid',
+          value: 'paid',
+        },
+        {
+          text: 'Unpaid',
+          value: 'unpaid',
+        }
+      ],
+      onFilter: (value, record) => record.paymentStatus.indexOf(value) === 0,
+      render: (data) => (
+        <>
+          <Tag color={paymentStatusColor[data]} className='text-uppercase'>{data}</Tag>
+        </>
+      ),
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      filters: appointemntStatusOption,
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      render: (_, record) => statusTag(_, record),
+    },
+  ];
+
+  // status
+  const statusTag = (data, record) => {
+    return (
       <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
+        <Tag color={statusColor[data]} className='text-uppercase'>{data === 'pending' ? 'booking' : data}</Tag>
       </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
-
-
-const TableAppointment = () => {
+    )
+  }
   return (
     <>
       <Table dataSource={data} columns={columns} pagination={{

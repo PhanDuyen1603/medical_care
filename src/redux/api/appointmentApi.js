@@ -57,6 +57,14 @@ export const appointmentApi = baseApi.injectEndpoints({
             }),
             providesTags: [tagTypes.appointments]
         }),
+        getChartAppointments: build.query({
+            query: (arg) => ({
+                url: `${APPOINTMENT_URL}/chart`,
+                method: 'GET',
+                params: arg
+            }),
+            providesTags: [tagTypes.appointments]
+        }),
         getAppointmentedPaymentInfo: build.query({
             query: (id) => ({
                 url: `${APPOINTMENT_URL}/patient-payment-info/${id}`,
@@ -106,6 +114,7 @@ export const {
     useGetAppointmentedPaymentInfoQuery,
     useGetPatientInvoicesQuery,
     useGetDoctorInvoicesQuery,
+    useGetChartAppointmentsQuery,
     useUpdateAppointmentMutation,
     useCreateAppointmentByUnauthenticateUserMutation,
     useTrackAppointmentMutation

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, CartesianAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Card } from 'antd';
+import { Card, Select, Flex } from 'antd';
+import dayjs from 'dayjs';
 
 const chartData = [
   {
@@ -36,8 +37,21 @@ const chartData = [
 ]
 
 const ChartArea = ({
-  customTooltip = true, color = '#8884d8', showXAxis = false, xAxisKey = 'name', showYAxis, data = chartData
+  customTooltip = true, color = '#8884d8',
+  showXAxis = false, xAxisKey = 'name',
+  showYAxis, data = chartData,
+  setChartFilter, chartFilter,
+  refetch
 }) => {
+  const [dataBy, setDataBy] = useState('7days')
+  const handleChange = (value) => {
+    setDataBy(value)
+    setChartFilter({
+      ...chartFilter,
+      range: value
+    })
+    // refetch()
+  };
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -60,7 +74,26 @@ const ChartArea = ({
 
   return (
     <Card className='card-full card-custom'>
-      <h5 className='mb-5'>Patients Statictics</h5>
+      <Flex justify='space-between'>
+        <h5 className='mb-5'>Patients Statictics</h5>
+        <Select
+          defaultValue="7days"
+          style={{
+            width: 300,
+          }}
+          onChange={handleChange}
+          options={[
+            {
+              value: '7days',
+              label: '7 days',
+            },
+            {
+              value: '1month',
+              label: '1 month',
+            },
+          ]}
+        />
+      </Flex>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           width={500}
@@ -77,7 +110,7 @@ const ChartArea = ({
           <YAxis className='custom-y' />
           <Tooltip />
           <Legend />
-          <Line type="bumpX" dataKey="new" strokeWidth={3} stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="bumpX" dataKey="new" strokeWidth={3} stroke="#ffc658" activeDot={{ r: 8 }} />
           <Line type="bumpX" dataKey="old" strokeWidth={3} stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>

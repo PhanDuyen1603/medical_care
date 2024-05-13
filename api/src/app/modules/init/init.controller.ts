@@ -33,7 +33,7 @@ const initExampleDoctors = async (number: number) => {
       phone: faker.phone.number(),
       address: faker.location.streetAddress(),
       gender: faker.person.sex(),
-      price: faker.number.int({ min: 800, max: 1000 }) + ''
+      price: faker.number.int({ min: 800, max: 1500 }) + ''
     }
     return testData
   })
@@ -90,7 +90,7 @@ const initExampleAppointments = async ({ doctors, patients }: any) => {
       },
       payment: {
         paymentMethod: 'paypal' || '',
-        paymentType: 'creditCard' || '',
+        paymentType: getRandomElement(['creditCard', 'cash']),
         nameOnCard: '',
         cardNumber: '',
         expiredMonth: '',

@@ -3,6 +3,9 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { AppointmentService } from "./appointment.service";
 import { Appointments, Patient } from "@prisma/client";
+import pick from "../../../shared/pick";
+import moment from "moment";
+import { AppointmentsOptions, IAppointmentFilters, IDateRangeOptions } from './appointment.interface'
 
 const createAppointment = catchAsync(async (req: Request, res: Response) => {
     const result = await AppointmentService.createAppointment(req.body);
@@ -25,10 +28,32 @@ const createAppointmentByUnAuthenticateUser = catchAsync(async (req: Request, re
 
 
 const getAllAppointment = catchAsync(async (req: Request, res: Response) => {
-    const result = await AppointmentService.getAllAppointments();
+    const { start_date, end_date } = req.query
+    const filter: IAppointmentFilters = {
+        start_date: typeof start_date === 'string' ? start_date : undefined,
+        end_date: typeof end_date === 'string' ? end_date : undefined,
+    };
+    const options = pick(req.query, AppointmentsOptions);
+    const result = await AppointmentService.getAllAppointments(filter, options);
     sendResponse<Appointments[]>(res, {
         statusCode: 200,
         message: 'Successfully Retrieve All Appointment !!',
+        success: true,
+        data: result,
+    })
+})
+
+const getAppointmentDataFromRange = catchAsync(async (req: Request, res: Response) => {
+    const { date, range, isOldPatient } = req.query
+    const filter: IDateRangeOptions = {
+        date: date && typeof date === 'string' ? date : moment().format('YYYY-MM-DD'),
+        range: range && typeof range === 'string' && ['7days', '1month'].includes(range) ? range : '7days',
+        isOldPatient: isOldPatient && typeof isOldPatient === 'boolean' ? isOldPatient : false,
+    };
+    const result = await AppointmentService.countAppointments(filter)
+    sendResponse<Appointments[]>(res, {
+        statusCode: 200,
+        message: 'Successfully Retrieve chart data !!',
         success: true,
         data: result,
     })
@@ -158,5 +183,7 @@ export const AppointmentController = {
     getPatientPaymentInfo,
     getDoctorInvoices,
     createAppointmentByUnAuthenticateUser,
-    getAppointmentByTrackingId
+    getAppointmentByTrackingId,
+    // 
+    getAppointmentDataFromRange
 }

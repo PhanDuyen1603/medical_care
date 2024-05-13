@@ -5,7 +5,8 @@ import httpStatus from "http-status";
 import moment from 'moment';
 import { EmailtTransporter } from "../../../helpers/emailTransporter";
 import * as path from 'path';
-import config from "../../../config";
+import calculatePagination, { IOption } from "../../../shared/paginationHelper";
+import { IAppointmentFilters, IDateRangeOptions } from './appointment.interface'
 
 const createAppointment = async (payload: any): Promise<Appointments | null | any> => {
 
@@ -101,7 +102,7 @@ const createAppointment = async (payload: any): Promise<Appointments | null | an
         const replacementObj = appointmentObj;
         const subject = `Appointment Confirm With Dr ${appointment?.doctor?.firstName + ' ' + appointment?.doctor?.lastName} at ${appointment.scheduleDate} + ' ' + ${appointment.scheduleTime}`
         const toMail = `${appointment.email + ',' + appointment.doctor?.email}`;
-        EmailtTransporter({ pathName, replacementObj, toMail, subject })
+        // EmailtTransporter({ pathName, replacementObj, toMail, subject })
         return appointment;
     });
     return result;
@@ -176,8 +177,10 @@ const createAppointmentByUnAuthenticateUser = async (payload: any): Promise<Appo
     return result;
 }
 
-const getAllAppointments = async (): Promise<Appointments[] | null> => {
-    const result = await prisma.appointments.findMany({
+const getAllAppointments = async (filters: IAppointmentFilters, options: IOption): Promise<Appointments[] | null> => {
+    const { limit, page, skip } = calculatePagination(options);
+    const { start_date, end_date } = filters;
+    let query: any = {
         include: {
             doctor: {
                 select: {
@@ -188,10 +191,73 @@ const getAllAppointments = async (): Promise<Appointments[] | null> => {
                     degree: true,
                     services: true
                 }
+            },
+        },
+    }
+    if (start_date && !end_date) query.where = {
+        scheduleDate: {
+            gte: moment(start_date).format('YYYY-MM-DD HH:mm:ss'),
+        }
+    }
+    if (!start_date && end_date) query.where = {
+        scheduleDate: {
+            lte: moment(end_date).format('YYYY-MM-DD HH:mm:ss'),
+        }
+    }
+    if (start_date && end_date) query.where = {
+        scheduleDate: {
+            lte: moment(end_date).add(1, 'd').format('YYYY-MM-DD HH:mm:ss'),
+            gte: moment(start_date).format('YYYY-MM-DD HH:mm:ss'),
+        }
+    }
+    const result = limit ? await prisma.appointments.findMany({
+        ...query,
+        take: limit,
+    }) : await prisma.appointments.findMany(query)
+    return result;
+}
+
+const countAppointments = async (filters: IDateRangeOptions) => {
+    const { date, range = '7days', isOldPatient } = filters;
+    let query: any = {}
+    if (isOldPatient) query.where = {
+        ...query,
+        NOT: {
+            patientId: null
+        }
+    }
+    let res: any = []
+    const dateRange = range === '7days' ? 7 : range === '1month' ? 30 : 1
+    for (let index = 0; index < dateRange; index++) {
+        const appointmentDate = moment(date).subtract(index, 'd').format('YYYY-MM-DD')
+        const sQuery = {
+            where: {
+                ...query,
+                scheduleDate: {
+                    lte: moment(appointmentDate).add(1, 'd').format('YYYY-MM-DD HH:mm:ss'),
+                    gte: moment(appointmentDate).format('YYYY-MM-DD HH:mm:ss'),
+                },
+
             }
         }
-    });
-    return result;
+        const all = await prisma.appointments.count(sQuery)
+        const old = await prisma.appointments.count({
+            where: {
+                ...sQuery.where,
+                patientId: {
+                    not: null
+                }
+            }
+        })
+        res.push({
+            name: appointmentDate,
+            date: appointmentDate,
+            all,
+            old,
+            new: all - old,
+        })
+    }
+    return res.reverse();
 }
 
 const getAppointment = async (id: string): Promise<Appointments | null> => {
@@ -473,5 +539,6 @@ export const AppointmentService = {
     getPatientPaymentInfo,
     getDoctorInvoices,
     createAppointmentByUnAuthenticateUser,
-    getAppointmentByTrackingId
+    getAppointmentByTrackingId,
+    countAppointments
 }

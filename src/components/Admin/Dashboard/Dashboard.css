@@ -126,20 +126,23 @@
     padding-right: 12px;
 }
 
-.card-patient .total p {
+.card-patient .total p,
+.card-revenue .total p {
     font-size: 32px;
     font-weight: 700;
     margin: 0;
     color: #177dff;
 }
 
-.card-patient .total .down {
+.card-patient .total .down,
+.card-revenue .total .down {
     color: red;
     font-size: 14px;
     padding-top: 1rem;
 }
 
-.card-patient .total .up {
+.card-patient .total .up,
+.card-revenue .total .up {
     color: green;
     font-size: 14px;
     padding-top: 1rem;
@@ -173,6 +176,8 @@
 .card-patient .card-footer p {
     margin: 0;
 }
+
+.card-revenue {}
 
 .card-full {
     width: 100%;
