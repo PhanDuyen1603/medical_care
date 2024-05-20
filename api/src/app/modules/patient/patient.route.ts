@@ -7,6 +7,7 @@ import { CloudinaryHelper } from '../../../helpers/uploadHelper';
 const router = express.Router();
 
 router.get('/', PatientController.getAllPatients);
+router.get('/count/', PatientController.countPatients);
 router.post('/', PatientController.createPatient);
 router.get('/:id', PatientController.getPatient);
 router.delete('/:id', PatientController.deletePatient);

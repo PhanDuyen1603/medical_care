@@ -3,7 +3,7 @@ import prisma from "../../../shared/prisma";
 import bcrypt from 'bcrypt';
 import ApiError from "../../../errors/apiError";
 import httpStatus from "http-status";
-import { DoctorSearchableFields, IDoctorFilters, IDoctorFiltersWithAppointment } from "./doctor.interface";
+import { DoctorSearchableFields, IDoctorFilters, IDoctorFiltersWithAppointment, doctorSpecialists } from "./doctor.interface";
 import calculatePagination, { IOption } from "../../../shared/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { Request } from "express";
@@ -140,6 +140,22 @@ const getDoctor = async (id: string): Promise<Doctor | null> => {
     return result;
 }
 
+const countDoctors = async () => {
+    let result: any = {}
+    result.total = await prisma.doctor.count();
+    for (let index = 0; index < doctorSpecialists.length; index++) {
+        const element = doctorSpecialists[index];
+        result[doctorSpecialists[index].value] = await prisma.doctor.count({
+            where: {
+                services: {
+                    contains: element.value
+                }
+            }
+        })
+    }
+    return result;
+}
+
 const deleteDoctor = async (id: string): Promise<any> => {
     const result = await prisma.$transaction(async (tx) => {
         const patient = await tx.doctor.delete({
@@ -225,5 +241,6 @@ export const DoctorService = {
     deleteDoctor,
     getAllDoctors,
     getDoctor,
-    getDoctorsAvaliable
+    getDoctorsAvaliable,
+    countDoctors
 }

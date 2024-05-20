@@ -59,6 +59,25 @@ const getAppointmentDataFromRange = catchAsync(async (req: Request, res: Respons
     })
 })
 
+const countAppoimentsFromRange = catchAsync(async (req: Request, res: Response) => {
+    const { by = 'month' } = req.params
+    if (['year', 'month', 'week'].includes(by)) {
+        const result = await AppointmentService.countAppointmentsOfMonth(by)
+        sendResponse<any>(res, {
+            statusCode: 200,
+            message: 'Successfully Retrieve chart data!!',
+            success: true,
+            data: result,
+        })
+    } else {
+        sendResponse(res, {
+            statusCode: 400,
+            message: 'Invalid parameter: by',
+            success: false,
+        })
+    }
+})
+
 const getAppointment = catchAsync(async (req: Request, res: Response) => {
     const result = await AppointmentService.getAppointment(req.params.id);
     sendResponse<Appointments>(res, {
@@ -185,5 +204,6 @@ export const AppointmentController = {
     createAppointmentByUnAuthenticateUser,
     getAppointmentByTrackingId,
     // 
-    getAppointmentDataFromRange
+    getAppointmentDataFromRange,
+    countAppoimentsFromRange
 }

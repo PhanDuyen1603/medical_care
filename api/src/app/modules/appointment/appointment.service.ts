@@ -260,6 +260,55 @@ const countAppointments = async (filters: IDateRangeOptions) => {
     return res.reverse();
 }
 
+const countAppointmentsOfMonth = async (by: string) => {
+    const date = new Date();
+    const types = ['year', 'month', 'week']
+
+    var first = date.getDate() - date.getDay(); // First day is the day of the month - the day of the week
+    var last = first + 6; // last day is the first day + 6
+
+    var firstday = new Date(date.setDate(first)).toUTCString();
+    var lastday = new Date(date.setDate(last)).toUTCString();
+
+    // firstday
+    // "Sun, 06 Mar 2011 12:25:40 GMT"
+    // lastday
+    // "Sat, 12 Mar 2011 12:25:40 GMT"
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const appointmentStatus = [
+        "pending",
+        "scheduled",
+        "cancel",
+        "confirmed",
+        "InProgress",
+        "Completed",
+        "FollowUp",
+        "archived"
+    ]
+    let res: any = {}
+    const dateRangeFilter = {
+        gte: moment(firstDayOfMonth).format('YYYY-MM-DD HH:mm:ss'),
+        lte: moment(lastDayOfMonth).format('YYYY-MM-DD HH:mm:ss'),
+    }
+    res.total = await prisma.appointments.count({
+        where: {
+            scheduleDate: dateRangeFilter
+        }
+    })
+    for (let index = 0; index < appointmentStatus.length; index++) {
+        res[appointmentStatus[index].toLocaleLowerCase()] = await prisma.appointments.count({
+            where: {
+                scheduleDate: dateRangeFilter,
+                status: appointmentStatus[index]
+            }
+        })
+
+    }
+    // console.log({ res, firstday: moment(firstday).format('YYYY-MM-DD HH:mm:ss'), lastday: moment(lastday).format('YYYY-MM-DD HH:mm:ss') })
+    return res
+}
+
 const getAppointment = async (id: string): Promise<Appointments | null> => {
     const result = await prisma.appointments.findUnique({
         where: {
@@ -540,5 +589,6 @@ export const AppointmentService = {
     getDoctorInvoices,
     createAppointmentByUnAuthenticateUser,
     getAppointmentByTrackingId,
-    countAppointments
+    countAppointments,
+    countAppointmentsOfMonth
 }

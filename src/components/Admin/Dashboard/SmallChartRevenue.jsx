@@ -13,7 +13,6 @@ const sortPaymentData = (array) => {
 }
 
 const SmallChartRevenue = ({ data }) => {
-  console.log(data)
   let paymentData = data && typeof data === 'object' ? data : {};
   if (data) {
     paymentData = sortPaymentData(Object.keys(data).map((key) => ({

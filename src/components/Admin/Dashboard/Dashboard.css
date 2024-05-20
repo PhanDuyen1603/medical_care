@@ -195,3 +195,15 @@
 .custom-y .recharts-text {
     margin-right: .5rem;
 }
+
+.specialist {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.specialist p {
+    font-weight: 700;
+    color: #000;
+}

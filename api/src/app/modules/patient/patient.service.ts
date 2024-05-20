@@ -25,6 +25,12 @@ const getPatient = async (id: string): Promise<Patient | null> => {
     return result;
 }
 
+const countPatients = async () => {
+    let result: any = {}
+    result.total = await prisma.patient.count()
+    return result
+}
+
 const deletePatient = async (id: string): Promise<any> => {
     const result = await prisma.$transaction(async (tx) => {
         const patient = await tx.patient.delete({
@@ -66,5 +72,6 @@ export const PatientService = {
     updatePatient,
     getPatient,
     getAllPatients,
-    deletePatient
+    deletePatient,
+    countPatients
 }

@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/', DoctorController.getAllDoctors);
 router.post('/', DoctorController.createDoctor);
 router.get('/available/', DoctorController.getDoctorsAvaliable);
+router.get('/count', DoctorController.countDoctors);
 router.get('/:id', DoctorController.getDoctor);
 router.delete('/:id', auth(AuthUser.DOCTOR), DoctorController.deleteDoctor);
 router.patch('/:id',

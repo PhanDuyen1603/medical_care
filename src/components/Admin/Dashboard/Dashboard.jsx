@@ -8,8 +8,10 @@ import CardDoctor from './CardDoctor'
 import CardRevenue from './CardRevenue';
 import CardAppointment from './CardAppointment';
 import TableAppointment from './TableAppointment';
-import { useGetChartAppointmentsQuery, useGetAppointmentsQuery } from "@/redux/api/appointmentApi"
+import { useGetChartAppointmentsQuery, useGetAppointmentsQuery, useGetCountAppointmentsFromRangeQuery } from "@/redux/api/appointmentApi"
 import { useGetPaymentChartDataQuery } from '@/redux/api/payment';
+import { useGetCountDoctorsQuery } from '@/redux/api/doctorApi';
+import { useGetCountPatientsQuery } from '@/redux/api/patientApi';
 import dayjs from 'dayjs'
 
 const AdminDashboard = () => {
@@ -17,6 +19,9 @@ const AdminDashboard = () => {
         date: dayjs().format('MM/DD/YYYY'),
         range: '7days',
     })
+    const { data: count, isFetching: countLoading } = useGetCountAppointmentsFromRangeQuery();
+    const { data: doctorCount, isFetching: doctorCountLoading } = useGetCountDoctorsQuery();
+    const { data: patientCount, isFetching: patientCountLoading } = useGetCountPatientsQuery();
     const { data: appointments = [], isFetching: appoimentLoading } = useGetAppointmentsQuery({ limit: 10 });
     const { data: chartData = [], refetch, isFetching } = useGetChartAppointmentsQuery(chartFilter);
     const { data: paymentData = [] } = useGetPaymentChartDataQuery()
@@ -25,9 +30,9 @@ const AdminDashboard = () => {
         <>
             <AdminLayout >
                 <Flex gap={24} wrap='wrap' className='mb-3' >
-                    <CardPatient />
-                    <CardDoctor />
-                    <CardAppointment />
+                    <CardPatient data={patientCount} />
+                    {!doctorCountLoading && <CardDoctor data={doctorCount} />}
+                    <CardAppointment data={count} />
                     <CardRevenue paymentData={paymentData} />
                 </Flex>
                 <Flex className='mb-3'>

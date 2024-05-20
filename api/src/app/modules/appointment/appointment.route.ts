@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get('/', AppointmentController.getAllAppointment);
 router.get('/chart', AppointmentController.getAppointmentDataFromRange)
+router.get('/count', AppointmentController.countAppoimentsFromRange)
 
 router.get('/patient/appointments', auth(AuthUser.PATIENT), AppointmentController.getPatientAppointmentById);
 router.get('/patient/invoices', auth(AuthUser.PATIENT), AppointmentController.getPatientPaymentInfo);

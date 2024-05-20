@@ -19,6 +19,13 @@ export const patientApi = baseApi.injectEndpoints({
             }),
             providesTags: [tagTypes.patient]
         }),
+        getCountPatients: build.query({
+            query: () => ({
+                url: `${PAT_URL}/count`,
+                method: 'GET',
+            }),
+            providesTags: [tagTypes.patient]
+        }),
         updatePatient: build.mutation({
             query: ({ data, id }) => ({
                 url: `${PAT_URL}/${id}`,
@@ -33,4 +40,9 @@ export const patientApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useGetPatientQuery, useGetPatientsQuery, useUpdatePatientMutation } = patientApi
+export const {
+    useGetPatientQuery,
+    useGetPatientsQuery,
+    useGetCountPatientsQuery,
+    useUpdatePatientMutation
+} = patientApi

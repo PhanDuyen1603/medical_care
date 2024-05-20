@@ -56,6 +56,16 @@ const getDoctor = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const countDoctors = catchAsync(async (req: Request, res: Response) => {
+    const result = await DoctorService.countDoctors();
+    sendResponse<{ total: number }>(res, {
+        statusCode: 200,
+        message: 'Successfully Get Doctor !!',
+        success: true,
+        data: result,
+    })
+})
+
 const deleteDoctor = catchAsync(async (req: Request, res: Response) => {
     const result = await DoctorService.deleteDoctor(req.params.id);
     sendResponse<Doctor>(res, {
@@ -82,5 +92,6 @@ export const DoctorController = {
     deleteDoctor,
     getAllDoctors,
     getDoctor,
-    getDoctorsAvaliable
+    getDoctorsAvaliable,
+    countDoctors
 }

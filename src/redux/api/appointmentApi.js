@@ -100,6 +100,14 @@ export const appointmentApi = baseApi.injectEndpoints({
                 method: 'GET'
             }),
             providesTags: [tagTypes.appointments]
+        }),
+        getCountAppointmentsFromRange: build.query({
+            query: (arg) => ({
+                url: `${APPOINTMENT_URL}/count`,
+                method: 'GET',
+                params: arg
+            }),
+            providesTags: [tagTypes.appointments]
         })
     })
 })
@@ -115,6 +123,7 @@ export const {
     useGetPatientInvoicesQuery,
     useGetDoctorInvoicesQuery,
     useGetChartAppointmentsQuery,
+    useGetCountAppointmentsFromRangeQuery,
     useUpdateAppointmentMutation,
     useCreateAppointmentByUnauthenticateUserMutation,
     useTrackAppointmentMutation

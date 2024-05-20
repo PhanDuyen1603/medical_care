@@ -1,19 +1,20 @@
 import { Card, Space, Flex } from 'antd';
 import { FaMale, FaFemale, FaLongArrowAltDown } from "react-icons/fa";
 
-const CardPatient = () => {
+const CardPatient = ({ data = {} }) => {
+  const { total = 0 } = data;
   return (
     <>
       <Space direction="vertical" size={16}>
         <Card style={{ width: '100%' }} className='card-custom'>
-          <h5>Total addmits Patient</h5>
+          <h5>Total Patients</h5>
           <Flex gap="middle" vertical>
             <div className='card-patient'>
               <Flex gap={12} align="end" >
                 <div className='left'>
                   <Flex className='total' align="center">
-                    <p className=''>880</p>
-                    <span className='down'><FaLongArrowAltDown /> 2%</span>
+                    <p className=''>{total}</p>
+                    {/* <span className='down'><FaLongArrowAltDown /> 2%</span> */}
                   </Flex>
                   <Flex gap="middle" >
                     <Flex className='single' align="center" gap={10}>

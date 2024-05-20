@@ -41,6 +41,13 @@ export const doctorApi = baseApi.injectEndpoints({
             }),
             providesTags: [tagTypes.doctor]
         }),
+        getCountDoctors: build.query({
+            query: () => ({
+                url: `${DOC_URL}/count`,
+                method: 'GET'
+            }),
+            providesTags: [tagTypes.doctor]
+        }),
         updateDoctor: build.mutation({
             query: ({ data, id }) => ({
                 url: `${DOC_URL}/${id}`,
@@ -66,6 +73,7 @@ export const {
     useGetDoctorsQuery,
     useGetDoctorsAvailableQuery,
     useGetDoctorQuery,
+    useGetCountDoctorsQuery,
     useUpdateDoctorMutation,
     useDeleteDoctorMutation
 } = doctorApi

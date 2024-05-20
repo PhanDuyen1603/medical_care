@@ -51,6 +51,12 @@ const customDot = (dot, { status, index }) => (
 );
 
 const Doctors = () => {
+  // page pagination filter and search
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [searchTerm, setSearchTerm] = useState('');
+
+
   const [showModal, setShowModal] = useState(false)
   const [submitType, setSubmitType] = useState('create')
   const [current, setCurrent] = useState(0);
@@ -61,7 +67,14 @@ const Doctors = () => {
   const [updateDoctor, { isSuccess: updateSuccess, isError: updateIsError, error: updateError }] = useUpdateDoctorMutation()
 
   const query = {};
+  const pagination = {
+    total: 100,
+    current: page,
+    pageSize: size,
+  }
   const [form] = Form.useForm();
+  query['limit'] = size;
+  query['page'] = page;
 
   // modal
   const handleShow = (type = 'create') => {
@@ -140,6 +153,10 @@ const Doctors = () => {
   ];
   const { data: doctorData, isLoading, isError } = useGetDoctorsQuery({ ...query })
   const doctors = transformData(doctorData?.doctors);
+  const handleTableChange = (tablePagination, filters) => {
+    //  pageination
+    setPage(tablePagination.current)
+  }
   // end table
 
   // form 
@@ -208,6 +225,8 @@ const Doctors = () => {
           columns={columns}
           dataSource={doctors}
           loading={isLoading}
+          pagination={pagination}
+          onChange={handleTableChange}
         />
         <Modal
           show={showModal}
