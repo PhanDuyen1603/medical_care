@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import FormEducationInfo from './FormEducationInfo';
 import FormBasicInfo from './FormBasicInfo';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
-import { useGetDoctorsQuery } from '@/redux/api/doctorApi';
+import { useGetDoctorsQuery, useDeleteDoctorMutation } from '@/redux/api/doctorApi';
 import { useDoctorSignUpMutation } from '@/redux/api/authApi';
 import { useUpdateDoctorMutation } from '@/redux/api/doctorApi';
 import UseModal from '@/components/UI/UseModal';
@@ -56,7 +56,11 @@ const Doctors = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  // 
   const [showModal, setShowModal] = useState(false)
+  const [target, setTarget] = useState(null)
+
+  const [showRemoveModal, setShowRemoveModal] = useState(false)
   const [submitType, setSubmitType] = useState('create')
   const [current, setCurrent] = useState(0);
   const [initialValues, setInitialValues] = useState(initData);
@@ -64,6 +68,7 @@ const Doctors = () => {
   // use api
   const [doctorCreate, { data: dData, isSuccess: dIsSuccess, isError: dIsError, error: dError, isLoading: dIsLoading }] = useDoctorSignUpMutation();
   const [updateDoctor, { isSuccess: updateSuccess, isError: updateIsError, error: updateError }] = useUpdateDoctorMutation()
+  const [removeDoctor] = useDeleteDoctorMutation()
 
   const query = {};
   const pagination = {
@@ -80,6 +85,10 @@ const Doctors = () => {
     setShowModal(true)
     setSubmitType(type)
   }
+  const handleRemoveDoctor = () => {
+    removeDoctor(target.id)
+    setShowRemoveModal(false)
+  }
   const handleClose = () => {
     setShowModal(false)
 
@@ -90,7 +99,8 @@ const Doctors = () => {
   // table
   const listActions = (data, record) => {
     const onDelete = () => {
-      console.log('delete')
+      setShowRemoveModal(true)
+      setTarget(data)
     }
     // TODO: flow when click update button is clicked
     const onUpdate = () => {
@@ -286,6 +296,15 @@ const Doctors = () => {
               </div>
             </div>
           </div>
+        </UseModal>
+
+        <UseModal title="Remove doctor"
+          isModaOpen={showRemoveModal}
+          width={600}
+          handleCancel={() => setShowRemoveModal(false)}
+          handleOk={handleRemoveDoctor}
+        >
+
         </UseModal>
       </AdminLayout>
     </>

@@ -58,12 +58,19 @@ const FormSchedule = ({ doctorId = null }) => {
 
   const addField = (e) => {
     const getLastValue = timeSlot.length ? timeSlot[timeSlot.length - 1] : null
-    if (getLastValue) setSelectedTimeSlots([...selectedTimeSlots, {
-      id: getLastValue.id + 1,
-      // doctorTimeSlotId: getLastValue.doctorTimeSlotId,
-      startTime: moment().format('h:mm a'),
-      endTime: moment().format('h:mm a')
-    }])
+    if (getLastValue) {
+      setSelectedTimeSlots([...selectedTimeSlots, {
+        id: getLastValue.id + 1,
+        startTime: moment().format('h:mm a'),
+        endTime: moment().format('h:mm a')
+      }])
+    } else {
+      setSelectedTimeSlots([{
+        id: new Date().getTime(),
+        startTime: moment().format('h:mm a'),
+        endTime: moment().format('h:mm a')
+      }])
+    }
     e.preventDefault();
   }
 
@@ -73,12 +80,15 @@ const FormSchedule = ({ doctorId = null }) => {
 
   const handleOk = () => {
     const timeIds = timeSlot.map(x => x.id)
-    const times = selectedTimeSlots?.filter(item => {
+    const times = submitType === 'update' ? selectedTimeSlots?.filter(item => {
       return timeIds.includes(item.id)
     })?.map(x => {
       const { id, ...rest } = x;
       return rest;
-    }) || []
+    }) || [] : selectedTimeSlots.map(x => {
+      const { id, ...rest } = x;
+      return rest;
+    })
     const data = {
       doctorId,
       day,
