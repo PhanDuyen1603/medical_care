@@ -75,6 +75,16 @@ const deleteTimeSlot = async (id: string): Promise<DoctorTimeSlot | null> => {
     return result;
 }
 
+const deleteTimeShcedule = async (id: string) => {
+    const result = await prisma.scheduleDay.delete({
+        where: {
+            id: +id
+        }
+    })
+    return result;
+}
+
+
 const getTimeSlot = async (id: string): Promise<DoctorTimeSlot | null> => {
     const result = await prisma.doctorTimeSlot.findFirst({
         where: {
@@ -126,10 +136,14 @@ const getAllTimeSlot = async (filter: any): Promise<DoctorTimeSlot[] | null> => 
     return result;
 }
 const updateTimeSlot = async (user: any, id: string, payload: any): Promise<{ message: string }> => {
-    const { userId } = user;
+    const { userId = null } = user;
+    const { doctorId = null } = payload
+    if (!userId || !doctorId) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Doctor ID is not found !!')
+    }
     const isDoctor = await prisma.doctor.findUnique({
         where: {
-            id: userId
+            id: doctorId || userId
         }
     })
     if (!isDoctor) {
@@ -236,6 +250,7 @@ export const TimeSlotService = {
     getTimeSlot,
     createTimeSlot,
     deleteTimeSlot,
+    deleteTimeShcedule,
     getMyTimeSlot,
     getAppointmentTimeOfEachDoctor
 }

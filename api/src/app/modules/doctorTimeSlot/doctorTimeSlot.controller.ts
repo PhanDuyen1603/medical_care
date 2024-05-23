@@ -65,6 +65,17 @@ const deleteTimeSlot = catchAsync(async (req: Request, res: Response) => {
         data: result
     })
 })
+
+const deleteTimeShcedule = catchAsync(async (req: Request, res: Response) => {
+    const result = await TimeSlotService.deleteTimeShcedule(req.params.id);
+    sendResponse(res, {
+        statusCode: 200,
+        message: 'Successfully deleted Time Slot !!',
+        success: true,
+        data: result
+    })
+})
+
 const getAppointmentTimeOfEachDoctor = catchAsync(async (req: Request, res: Response) => {
     const result = await TimeSlotService.getAppointmentTimeOfEachDoctor(req.params.id, req.query);
     sendResponse<DoctorTimeSlot>(res, {
@@ -82,6 +93,7 @@ export const doctorTimeSlotController = {
     updateTimeSlot,
     createTimeSlot,
     deleteTimeSlot,
+    deleteTimeShcedule,
     getMyTimeSlot,
     getAppointmentTimeOfEachDoctor
 }

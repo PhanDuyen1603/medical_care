@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Space, Tag, Button, Empty, Tabs, Flex, message } from 'antd';
-import { useGetAllTimeSlotQuery, useCreateTimeSlotMutation, useUpdateTimeSlotMutation } from '../../../redux/api/timeSlotApi';
-import { FaWindowClose, FaPlus, FaEdit } from "react-icons/fa";
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { useGetAllTimeSlotQuery, useCreateTimeSlotMutation, useUpdateTimeSlotMutation, useDeleteTimeScheduleMutation } from '../../../redux/api/timeSlotApi';
+import { FaWindowClose, FaPlus, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import UseModal from '@/components/UI/UseModal';
 import TimePicer from '@/components/UI/form/TimePicer';
 import { daysArray } from '@/constant/global'
@@ -11,6 +12,10 @@ import './Doctors.css'
 const FormSchedule = ({ doctorId = null }) => {
   const [day, setDay] = useState('monday');
   const [isOpenModal, setIsOpenModal] = useState(false)
+  // remove
+  const [isRemoveShceduleModal, setIsRemoveShceduleModal] = useState(false)
+  const [removeTarget, setRemoveTarget] = useState(null)
+  // 
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([])
   const [submitType, setSubmitType] = useState('create')
@@ -18,10 +23,26 @@ const FormSchedule = ({ doctorId = null }) => {
   const { data, refetch, isLoading, isError } = useGetAllTimeSlotQuery({ doctorId });
   const [createTimeSlot, { isError: AIsError, error, isLoading: AIsLoading, isSuccess }] = useCreateTimeSlotMutation();
   const [UpdateTimeSlot, { isError: uIsError, error: uError, isLoading: UIsLoading, isSuccess: uIsSuccess }] = useUpdateTimeSlotMutation();
+  const [deleteTimeSchedule] = useDeleteTimeScheduleMutation();
 
-  const handleEditTime = (id, time, timeString) => {
-    console.log({ id, time, timeString })
+  const handleChangeStartTime = (id, time, timeString) => {
+    const target = selectedTimeSlots.find(x => x.id === id)
+    target.startTime = timeString
+  }
+  const handleChangeEndTime = (id, time, timeString) => {
+    const target = selectedTimeSlots.find(x => x.id === id)
+    target.endTime = timeString
+  }
 
+  // remove modal
+  const onOpenRemoveModal = (time) => {
+    setRemoveTarget(time)
+    setIsRemoveShceduleModal(true)
+  }
+
+  const removeSchedule = () => {
+    deleteTimeSchedule(removeTarget.id)
+    setIsRemoveShceduleModal(false)
   }
 
   useEffect(() => {
@@ -64,8 +85,20 @@ const FormSchedule = ({ doctorId = null }) => {
       timeSlot: times
     }
     if (submitType === 'create') createTimeSlot({ data });
-    else
-      setIsOpenModal(AIsLoading ? true : false)
+    else {
+      if (selectedTimeSlots.length > 0) {
+        const { toCreate, toUpdate } = selectedTimeSlots.reduce((acc, cur) => {
+          if (cur.doctorTimeSlotId) {
+            acc.toUpdate.push(cur);
+          } else {
+            acc.toCreate.push({ ...cur, day })
+          }
+          return acc;
+        }, { toCreate: [], toUpdate: [] });
+        UpdateTimeSlot({ timeSlot: toUpdate, create: toCreate, doctorId })
+      }
+    }
+    setIsOpenModal(AIsLoading ? true : false)
   }
 
   // message
@@ -92,7 +125,7 @@ const FormSchedule = ({ doctorId = null }) => {
   const onOpenTimeModal = (day) => {
     setSelectedTimeSlots([]);
     const times = timeSlot.filter((item) => item.day === day) || []
-    const type = selectedTimeSlots && selectedTimeSlots.length ? 'update' : 'create'
+    const type = times && times.length ? 'update' : 'create'
     setDay(day)
     setSubmitType(type)
     setSelectedTimeSlots(times)
@@ -107,7 +140,7 @@ const FormSchedule = ({ doctorId = null }) => {
           <Space size={[0, 'small']} wrap>
             {
               existTimeSlot.map((time, index) => (
-                <Tag bordered={false} closable color="#2db7f5" key={index + 2}>
+                <Tag bordered={false} color="#2db7f5" key={index + 2} closeIcon={<FaRegTimesCircle />} onClick={() => onOpenRemoveModal(time)}>
                   {time?.startTime} - {time?.endTime}
                 </Tag>
               ))
@@ -150,28 +183,25 @@ const FormSchedule = ({ doctorId = null }) => {
             <div className="row form-row hours-cont">
               {
                 selectedTimeSlots && selectedTimeSlots?.map((item, index) => (
-                  <>
-                    {/* {JSON.stringify(item)} */}
-                    <div className="col-12 col-md-10 d-flex align-items-center justify-content-between" key={index + item.id}>
-                      <div className="row form-row">
-                        <div className="col-12 col-md-6">
-                          <div className="form-group">
-                            <label>Start Time</label>
-                            <TimePicer showValue={true} handleFunction={handleEditTime} time={item.startTime} key="start" id={item.id} minuteStep={15} />
-                          </div>
-                        </div>
-                        <div className="col-12 col-md-6">
-                          <div className="form-group">
-                            <label>End Time</label>
-                            <TimePicer showValue={true} handleFunction={handleEditTime} time={item.endTime} key="end" id={item.id} minuteStep={15} />
-                          </div>
+                  <div className="col-12 col-md-10 d-flex align-items-center justify-content-between" key={index + item.id}>
+                    <div className="row form-row">
+                      <div className="col-12 col-md-6">
+                        <div className="form-group">
+                          <label>Start Time</label>
+                          <TimePicer showTimeAsPlaceHolder={true} handleFunction={handleChangeStartTime} time={item.startTime} key="start" id={item.id} minuteStep={15} />
                         </div>
                       </div>
-                      <Button type="primary" size='small' htmlType="submit"
-                        onClick={() => remove(item?.id)} block icon={<FaWindowClose />}>
-                      </Button>
+                      <div className="col-12 col-md-6">
+                        <div className="form-group">
+                          <label>End Time</label>
+                          <TimePicer showTimeAsPlaceHolder={true} handleFunction={handleChangeEndTime} time={item.endTime} key="end" id={item.id} minuteStep={15} />
+                        </div>
+                      </div>
                     </div>
-                  </>
+                    <Button type="primary" size='small' htmlType="submit"
+                      onClick={() => remove(item?.id)} block icon={<FaWindowClose />}>
+                    </Button>
+                  </div>
                 ))
               }
             </div>
@@ -183,6 +213,14 @@ const FormSchedule = ({ doctorId = null }) => {
             </Button>
           </div>
         </form>
+      </UseModal>
+      <UseModal
+        title="Do you want to remove shcedule"
+        isModaOpen={isRemoveShceduleModal}
+        handleOk={removeSchedule}
+        handleCancel={() => setIsRemoveShceduleModal(false)}
+        z-index={2000}
+      >
       </UseModal>
     </>
   )
