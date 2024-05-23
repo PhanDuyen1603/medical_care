@@ -56,9 +56,9 @@ const Header = () => {
     );
     return (
         <>
-            {/* <div className={`navbar navbar-expand-lg navbar-light ${!show && "hideTopHeader"}`} expand="lg">
-                <TopHeader />
-            </div> */}
+            {/*<div className={`navbar navbar-expand-lg navbar-light ${!show && "hideTopHeader"}`} expand="lg">*/}
+            {/*    <TopHeader />*/}
+            {/*</div>*/}
             <header id="header" className={`fixed-top ${!show && "stickyHeader"}`}>
                 <div className="container d-flex align-items-center">
 

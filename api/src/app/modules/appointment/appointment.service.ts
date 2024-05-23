@@ -21,12 +21,13 @@ const createAppointment = async (payload: any): Promise<Appointments | null | an
             patientInfo['patientId'] = null
         }
     }
-
+    console.log(1)
     const isDoctorExist = await prisma.doctor.findUnique({
         where: {
             id: patientInfo.doctorId
         }
     });
+    console.log(2)
 
     if (!isDoctorExist) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Doctor Account is not found !!')
@@ -74,6 +75,8 @@ const createAppointment = async (payload: any): Promise<Appointments | null | an
                 }
             })
         }
+        console.log(5)
+
         const pathName = path.join(__dirname, '../../../../template/appointment.html')
         const appointmentObj = {
             created: moment(appointment.createdAt).format('LL'),
@@ -102,7 +105,8 @@ const createAppointment = async (payload: any): Promise<Appointments | null | an
         const replacementObj = appointmentObj;
         const subject = `Appointment Confirm With Dr ${appointment?.doctor?.firstName + ' ' + appointment?.doctor?.lastName} at ${appointment.scheduleDate} + ' ' + ${appointment.scheduleTime}`
         const toMail = `${appointment.email + ',' + appointment.doctor?.email}`;
-        // EmailtTransporter({ pathName, replacementObj, toMail, subject })
+        EmailtTransporter({ pathName, replacementObj, toMail, subject })
+
         return appointment;
     });
     return result;
