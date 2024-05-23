@@ -3,6 +3,8 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { TimeSlotService } from "./doctorTimeSlot.service";
 import { DoctorTimeSlot } from "@prisma/client";
+import pick from "../../../shared/pick";
+import { IDoctorFiltersData } from './doctorTimeSlot.interface'
 
 const createTimeSlot = catchAsync(async (req: Request, res: Response) => {
     const result = await TimeSlotService.createTimeSlot(req.user, req.body);
@@ -15,7 +17,8 @@ const createTimeSlot = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllTimeSlot = catchAsync(async (req: Request, res: Response) => {
-    const result = await TimeSlotService.getAllTimeSlot();
+    const filter = pick(req.query, IDoctorFiltersData);
+    const result = await TimeSlotService.getAllTimeSlot(filter);
     sendResponse<DoctorTimeSlot[]>(res, {
         statusCode: 200,
         message: 'Successfully  get all Time Slot !!',

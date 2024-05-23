@@ -5,10 +5,14 @@ import { DoctorTimeSlot, ScheduleDay } from "@prisma/client";
 import moment from "moment";
 
 const createTimeSlot = async (user: any, payload: any): Promise<DoctorTimeSlot | null> => {
-    const { userId } = user;
+    const { userId = null } = user;
+    const { doctorId = null } = payload
+    if (!userId || !doctorId) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Doctor ID is not found !!')
+    }
     const isDoctor = await prisma.doctor.findUnique({
         where: {
-            id: userId
+            id: doctorId || userId
         }
     })
     if (!isDoctor) {
@@ -17,12 +21,12 @@ const createTimeSlot = async (user: any, payload: any): Promise<DoctorTimeSlot |
 
     const result = await prisma.$transaction(async (tx) => {
         const isAlreadyExist = await tx.doctorTimeSlot.findFirst({
-            where:{
+            where: {
                 doctorId: isDoctor.id,
                 day: payload.day
             }
         })
-        if(isAlreadyExist){
+        if (isAlreadyExist) {
             throw new ApiError(404, 'Time Slot Already Exist Please update or try another day')
         }
 
@@ -105,8 +109,10 @@ const getMyTimeSlot = async (user: any, filter: any): Promise<DoctorTimeSlot[] |
     return result;
 }
 
-const getAllTimeSlot = async (): Promise<DoctorTimeSlot[] | null> => {
+const getAllTimeSlot = async (filter: any): Promise<DoctorTimeSlot[] | null> => {
+    const query = filter.doctorId ? { doctorId: filter.doctorId } : {}
     const result = await prisma.doctorTimeSlot.findMany({
+        where: query,
         include: {
             timeSlot: true,
             doctor: {

@@ -4,14 +4,15 @@ import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
 import { Input, Flex, Table, Space, Button, Form, Steps, Popover, message } from 'antd';
 import swal from 'sweetalert';
 import { FaPlus } from "react-icons/fa";
-import Modal from 'react-bootstrap/Modal';
 import FormEducationInfo from './FormEducationInfo';
 import FormBasicInfo from './FormBasicInfo';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
 import { useGetDoctorsQuery } from '@/redux/api/doctorApi';
 import { useDoctorSignUpMutation } from '@/redux/api/authApi';
 import { useUpdateDoctorMutation } from '@/redux/api/doctorApi';
+import UseModal from '@/components/UI/UseModal';
 import './Doctors.css';
+import FormSchedule from './FormSchedule';
 
 const initData = {
   firstName: '',
@@ -55,8 +56,6 @@ const Doctors = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
-
-
   const [showModal, setShowModal] = useState(false)
   const [submitType, setSubmitType] = useState('create')
   const [current, setCurrent] = useState(0);
@@ -173,6 +172,9 @@ const Doctors = () => {
     {
       title: 'education',
     },
+    {
+      title: 'schedule',
+    },
   ]
   const onFinish = (type = 'create') => {
     // TODO: sumbit
@@ -228,65 +230,63 @@ const Doctors = () => {
           pagination={pagination}
           onChange={handleTableChange}
         />
-        <Modal
-          show={showModal}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-          size="lg"
+        <UseModal title="Doctor create"
+          isModaOpen={showModal}
+          width={600}
+          handleCancel={handleClose}
+          footer={null}
         >
-          <div className='modal-doctor'>
-            <Modal.Header closeButton>
-              <Modal.Title>Doctor create</Modal.Title>
-            </Modal.Header>
-            <Modal.Body >
-              <div className="row">
-                <div className="col-12">
-                  <h5>Basic information</h5>
+          <div className="row">
+            <div className="col-12">
+              <h5>Basic information</h5>
 
-                  <div className="row">
-                    <div className="col-3">
-                      <Steps current={current} direction="vertical" progressDot={customDot} onChange={onStepChange}>
-                        <Steps.Step key={0} title="profile" />
-                        <Steps.Step key={1} title="education" />
-                        {/* <Steps.Step key={2} title="Success" /> */}
-                      </Steps>
+              <div className="row">
+                <div className="col-3">
+                  <Steps current={current} direction="vertical" progressDot={customDot} onChange={onStepChange}>
+                    <Steps.Step key={0} title="profile" />
+                    <Steps.Step key={1} title="education" />
+                    <Steps.Step key={2} title="schedule" />
+                  </Steps>
+                </div>
+                <div className="col-9">
+                  <Form
+                    layout='vertical'
+                    form={form}
+                    initialValues={initialValues}
+                    className='custom-form mb-5 mt-3 mx-1'
+                    onFinish={onFinish}
+                    onFieldsChange={onFieldsChange}
+                  >
+                    <div className='col-12'>
+                      {current === 0 && (
+                        <FormBasicInfo
+                          submitType={submitType}
+                        />
+                      )}
+                      {current === 1 && (
+                        <FormEducationInfo
+                          form={form}
+                        />
+                      )}
+                      {current === 2 && (
+                        <FormSchedule
+                          form={form}
+                          doctorId={initialValues.id}
+                        />
+                      )}
                     </div>
-                    <div className="col-9">
-                      <Form
-                        layout='vertical'
-                        form={form}
-                        initialValues={initialValues}
-                        className='custom-form mb-5 mt-3 mx-1'
-                        onFinish={onFinish}
-                        onFieldsChange={onFieldsChange}
-                      >
-                        <div className='col-12'>
-                          {current === 0 && (
-                            <FormBasicInfo
-                              submitType={submitType}
-                            />
-                          )}
-                          {current === 1 && (
-                            <FormEducationInfo
-                              form={form}
-                            />
-                          )}
-                        </div>
-                        <div className='col-12 d-flex justify-content-end' >
-                          {current < steps.length - 1 && (
-                            <Button type="primary" size="large" onClick={() => next()}>Next</Button>)}
-                          {current === steps.length - 1 && (<Button size="large" loading={isLoading} type="primary" htmlType="submit">Confirm</Button>)}
-                          {current > 0 && (<Button style={{ margin: '0 8px', }} size="large" onClick={() => prev()} >Previous</Button>)}
-                        </div>
-                      </Form>
+                    <div className='col-12 d-flex justify-content-end' >
+                      {current < steps.length - 1 && (
+                        <Button type="primary" size="large" onClick={() => next()}>Next</Button>)}
+                      {current === steps.length - 1 && (<Button size="large" loading={isLoading} type="primary" htmlType="submit">Confirm</Button>)}
+                      {current > 0 && (<Button style={{ margin: '0 8px', }} size="large" onClick={() => prev()} >Previous</Button>)}
                     </div>
-                  </div>
+                  </Form>
                 </div>
               </div>
-            </Modal.Body>
+            </div>
           </div>
-        </Modal>
+        </UseModal>
       </AdminLayout>
     </>
   )
