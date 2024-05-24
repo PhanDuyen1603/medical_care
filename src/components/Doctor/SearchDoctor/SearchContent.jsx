@@ -13,12 +13,13 @@ const SearchContent = ({ data }) => {
             <div className='d-flex p-3 justify-content-between'>
                 <div className='d-flex gap-3'>
                     <div className='doc-img-fluid d-flex align-items-center'>
-                        <Image src={data?.img || 'images/avatar.jpg'} preview={false} width={200} className="" alt="User Image" />
+                        <Image src={data?.img || '/images/avatar.jpg'} preview={false} width={200} height={200} className="" alt="User Image" />
                     </div>
                     <div className="doc-info">
                         <h5 className='mb-0'><Link to={`/doctors/profile/${data?.id}`}>Dr. {data?.firstName + ' ' + data?.lastName}</Link></h5>
                         <p className='m-0 form-text'>{data?.designation}</p>
-                        <p className="doc-department m-0"><img src={showImg} className="img-fluid" alt="Speciality" />Urology</p>
+                        {/* <p className="doc-department m-0"><img src={showImg} className="img-fluid" alt="Speciality" />Urology</p> */}
+                        <div className="doc-department m-0"><Image src={`/images/specialist/${services[0]}.png`} preview={false} width={30} height={30} /><p>{services[0]}</p></div>
 
                         <div className='d-flex align-items-center'>
                             <div>
@@ -36,7 +37,7 @@ const SearchContent = ({ data }) => {
 
                         <div className="clinic-details">
                             <p className="form-text text-secondary"><FaLocationArrow /> {data?.address}, {data?.country}</p>
-                            <ul className="clinic-gallery mt-3">
+                            {/* <ul className="clinic-gallery mt-3">
                                 <li>
                                     <img src={showImg} alt="Feature" style={{ maxWidth: "30px" }} />
                                 </li>
@@ -50,7 +51,7 @@ const SearchContent = ({ data }) => {
                                 <li>
                                     <img src={showImg} alt="Feature" style={{ maxWidth: "30px" }} />
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                         {
                             services?.map((item, id) => (
@@ -66,7 +67,7 @@ const SearchContent = ({ data }) => {
                             <li><FaRegThumbsUp />  97%</li>
                             <li><FaComment /> 4 Feedback</li>
                             <li><FaLocationArrow /> Newyork, USA</li>
-                            <li><FaDollarSign /> $150 - $250</li>
+                            <li><FaDollarSign /> ${data.price}</li>
                         </ul>
                     </div>
                     <div className="clinic-booking">

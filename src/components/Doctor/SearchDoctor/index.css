@@ -7,6 +7,18 @@
     object-fit: cover;
     object-position: top;
 }
-.doc-info a{
+
+.doc-info a {
     color: #1977cc !important;
+}
+
+.doc-department {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.doc-department p {
+    margin: 0;
 }

@@ -43,14 +43,14 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
           <Search placeholder="Search..." onSearch={onSearch} enterButton allowClear />
         </div>
 
-        <div className='mb-3'>
+        {/* <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Date Range</h6>
           <DatePicker
             style={{ width: "100%" }}
             format="YYYY-MM-DD HH:mm:ss"
             onChange={handleDateChange}
           />
-        </div>
+        </div> */}
 
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Gender</h6>
@@ -71,9 +71,9 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
           </div>
         </div>
 
-        <Button className='w-100 mt-4 mb-2' type="primary" style={{backgroundColor:'#1977cc'}} shape="round" icon={<FaSearch />} size="sm">Search</Button>
+        <Button className='w-100 mt-4 mb-2' type="primary" style={{ backgroundColor: '#1977cc' }} shape="round" icon={<FaSearch />} size="sm">Search</Button>
         {
-          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{backgroundColor:'#1977cc'}} onClick={resetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
+          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={resetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
         }
       </div>
 
