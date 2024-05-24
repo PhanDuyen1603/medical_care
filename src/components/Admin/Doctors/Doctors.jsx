@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import AdminLayout from '@/components/Admin/AdminLayout/AdminLayout'
 import { Input, Flex, Table, Space, Button, Form, Steps, Popover, message } from 'antd';
-import swal from 'sweetalert';
 import { FaPlus } from "react-icons/fa";
 import FormEducationInfo from './FormEducationInfo';
 import FormBasicInfo from './FormBasicInfo';
+import FormImage from './FormImage';
 import useSearchColumn from '@/components/common/antd/useSearchColumn'
 import { useGetDoctorsQuery, useDeleteDoctorMutation } from '@/redux/api/doctorApi';
 import { useDoctorSignUpMutation } from '@/redux/api/authApi';
@@ -59,6 +59,9 @@ const Doctors = () => {
   // 
   const [showModal, setShowModal] = useState(false)
   const [target, setTarget] = useState(null)
+  // image
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [file, setFile] = useState(null);
 
   const [showRemoveModal, setShowRemoveModal] = useState(false)
   const [submitType, setSubmitType] = useState('create')
@@ -91,7 +94,7 @@ const Doctors = () => {
   }
   const handleClose = () => {
     setShowModal(false)
-
+    setShowRemoveModal(false)
     form.resetFields();
     setInitialValues(initData)
   }
@@ -106,6 +109,7 @@ const Doctors = () => {
     const onUpdate = () => {
       handleShow('update')
       const updateData = Object.assign({}, ...keys.map(key => ({ [key]: initialValues[key] || data[key] })))
+      setSelectedImage(data.img)
       setInitialValues({ ...updateData, id: data.id })
     }
     return (
@@ -185,13 +189,20 @@ const Doctors = () => {
     {
       title: 'schedule',
     },
+    {
+      title: 'avatar',
+    },
   ]
   const onFinish = (type = 'create') => {
     // TODO: sumbit
     if (submitType === 'create') {
       doctorCreate({ ...initialValues, price: initialValues.price ? initialValues.price + '' : '' });
     } else if (submitType === 'update') {
-      updateDoctor({ id: initialValues.id, data: initialValues })
+      const formData = new FormData();
+      selectedImage && formData.append('file', file);
+      const changeData = JSON.stringify(initialValues);
+      formData.append('data', changeData)
+      updateDoctor({ id: initialValues.id, data: formData })
     }
   }
   const onFieldsChange = (changedFields, allFields) => {
@@ -207,22 +218,14 @@ const Doctors = () => {
 
     if (!dIsError && dIsSuccess) {
       handleClose()
-      swal({
-        icon: 'success',
-        text: `Successfully Doctor Created, Please Verify email`,
-        timer: 5000
-      })
+      message.success("Successfully Doctor Created, Please Verify email")
     }
 
-    if (!updateIsError && updateSuccess) {
+    if (updateSuccess) {
       handleClose()
-      swal({
-        icon: 'success',
-        text: `Successfully Doctor Updated`,
-        timer: 5000
-      })
+      message.success("Successfully Doctor Updated")
     }
-  })
+  }, [dIsError, dError, dIsSuccess, updateIsError, updateSuccess])
 
   return (
     <>
@@ -256,6 +259,7 @@ const Doctors = () => {
                     <Steps.Step key={0} title="profile" />
                     <Steps.Step key={1} title="education" />
                     <Steps.Step key={2} title="schedule" />
+                    <Steps.Step key={3} title="avatar" />
                   </Steps>
                 </div>
                 <div className="col-9">
@@ -282,6 +286,14 @@ const Doctors = () => {
                         <FormSchedule
                           form={form}
                           doctorId={initialValues.id}
+                        />
+                      )}
+                      {current === 3 && (
+                        <FormImage
+                          setSelectedImage={setSelectedImage}
+                          selectedImage={selectedImage}
+                          setFile={setFile}
+                          file={file}
                         />
                       )}
                     </div>
