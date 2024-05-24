@@ -27,7 +27,7 @@ const SelectSpecialist = ({ specialist, setSpecialist }) => {
                   {
                     options.map((item, id) => (
                       <Radio value={item.value} key={id} className='image-checkbox'>
-                        <label for="myCheckbox1">
+                        <label htmlFor="myCheckbox1">
                           <Image src={`/images/specialist/${item.img}.png`} preview={false} width={120} height={120} />
                         </label>
                         {item.label}

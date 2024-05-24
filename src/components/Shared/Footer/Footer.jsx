@@ -18,7 +18,7 @@ const Footer = () => {
 									</Link>
 								</div>
 								<div className="footer-about-content">
-									<p className='form-text' style={{maxWidth:200}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<p className='form-text' style={{ maxWidth: 200 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 								</div>
 							</div>
 						</div>
@@ -71,7 +71,7 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-			<div className="footer-bottom">
+			{/* <div className="footer-bottom">
 				<div className="container-fluid">
 
 					<div className="copyright">
@@ -96,7 +96,7 @@ const Footer = () => {
 					</div>
 
 				</div>
-			</div>
+			</div> */}
 
 		</footer>
 	);
