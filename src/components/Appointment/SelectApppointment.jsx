@@ -22,7 +22,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
             <dir className="p-3" style={{ background: '#f8f9fa' }}>
                 <div className="row">
                     <div className="col-md-3 col-sm-12 mt-3 info-part border-end">
-                        <p className='py-2 border-bottom info-head-date'>Would you like to schedule an Intervewi? Pick a Date & Time</p>
+                        <p className='py-2 border-bottom info-head-date'>Would you like to schedule an Interview? Pick a Date & Time</p>
                         <div className='icon-box'>
                             <div className='d-flex gap-3'>
                                 <FaBriefcase className='icon' />

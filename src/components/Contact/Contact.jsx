@@ -9,25 +9,25 @@ import { useContactMutation } from '../../redux/api/contactApi';
 import { message } from 'antd';
 
 const Contact = () => {
-    const [contact, {isLoading, isError, error, isSuccess}]= useContactMutation();
+    const [contact, { isLoading, isError, error, isSuccess }] = useContactMutation();
     const { register, handleSubmit, reset } = useForm({});
     const onSubmit = (data) => {
         contact(data);
         reset();
     };
-    
+
     useEffect(() => {
-        if(isSuccess){
+        if (isSuccess) {
             message.success("Successfully Message Send !");
         }
-        if(isError && error){
+        if (isError && error) {
             message.error(error?.data?.message);
         }
     }, [isSuccess, isError, error])
     return (
         <>
             <Header />
-            <SubHeader title="Contact us" subtitle="Lorem ipsum dolor sit amet consectetur adipisicing." />
+            <SubHeader title="Contact us" />
             <section id="contact" className="contact mt-5 mb-5">
                 <div className="container" style={{ marginTop: 80, marginBottom: 120 }}>
                     <div className="row">
@@ -67,14 +67,14 @@ const Contact = () => {
                                     <div className="col-md-6">
                                         <div className="form-group mb-2 card-label">
                                             <label>First Name</label>
-                                            <input required {...register("firstName")} className="form-control" placeholder='First Name'/>
+                                            <input required {...register("firstName")} className="form-control" placeholder='First Name' />
                                         </div>
                                     </div>
 
                                     <div className="col-md-6">
                                         <div className="form-group mb-2 card-label">
                                             <label>Last Name</label>
-                                            <input required {...register("lastName")} className="form-control" placeholder='Last Name'/>
+                                            <input required {...register("lastName")} className="form-control" placeholder='Last Name' />
                                         </div>
                                     </div>
 
@@ -88,14 +88,14 @@ const Contact = () => {
                                     <div className="col-md-12">
                                         <div className="form-group mb-2 card-label">
                                             <label>Subject</label>
-                                            <input required {...register("subject")} className="form-control" placeholder="Enter your subject"/>
+                                            <input required {...register("subject")} className="form-control" placeholder="Enter your subject" />
                                         </div>
                                     </div>
 
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label className='form-label'>Message</label>
-                                            <textarea required {...register("text")} className="form-control mb-3" cols="30" rows="10" placeholder="enter your message"/>
+                                            <textarea required {...register("text")} className="form-control mb-3" cols="30" rows="10" placeholder="enter your message" />
                                         </div>
                                     </div>
 

@@ -35,7 +35,7 @@ const DoctorProfile = () => {
         {
             key: '3',
             label: 'Reviews',
-            children: <Review doctorId={id}/>,
+            children: <Review doctorId={id} />,
         },
         {
             key: '4',
@@ -44,11 +44,11 @@ const DoctorProfile = () => {
         },
     ];
 
-    
+
     return (
         <>
             <Header />
-            <SubHeader title='Doctor Details' subtitle='Lorem ipsum dolor sit amet.' />
+            <SubHeader title='Doctor Details' />
             <div className="container" style={{ marginBottom: '4rem', marginTop: '6rem' }}>
                 {content}
                 <div className='p-4 rounded' style={{ marginBottom: '7rem', backgroundColor: '#f3f3f3' }}>

@@ -17,9 +17,9 @@ const Footer = () => {
 										<img src={logo} alt="logo" style={{ maxWidth: '160px' }} />
 									</Link>
 								</div>
-								<div className="footer-about-content">
+								{/* <div className="footer-about-content">
 									<p className='form-text' style={{ maxWidth: 200 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-								</div>
+								</div> */}
 							</div>
 						</div>
 

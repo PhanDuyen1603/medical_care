@@ -45,7 +45,7 @@ const BookingInvoice = () => {
                                 <div className="invoice-info">
                                     <strong className="customer-text">Invoice From</strong>
                                     <p className="invoice-details invoice-details-two">
-                                        Dr. {data?.appointment?.doctor?.firstName ? `${data?.appointment?.doctor?.firstName} ${data?.appointment?.doctor?.lastName}`: ' Of DoctorOnCall'} <br />
+                                        Dr. {data?.appointment?.doctor?.firstName ? `${data?.appointment?.doctor?.firstName} ${data?.appointment?.doctor?.lastName}` : ' Of DoctorOnCall'} <br />
                                         {data?.appointment?.doctor?.address ? data?.appointment?.doctor?.address : "Sylhet, Dhaka ,BD,3214"}, {data?.appointment?.doctor?.city && data?.appointment?.doctor?.city},<br />
                                         {data?.appointment?.doctor?.country && data?.appointment?.doctor?.country} <br />
                                     </p>
@@ -125,7 +125,7 @@ const BookingInvoice = () => {
                     </div>
                     <div className="other-info">
                         <h4>Other information</h4>
-                        <p className="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed dictum ligula, cursus blandit risus. Maecenas eget metus non tellus dignissim aliquam ut a ex. Maecenas sed vehicula dui, ac suscipit lacus. Sed finibus leo vitae lorem interdum, eu scelerisque tellus fermentum. Curabitur sit amet lacinia lorem. Nullam finibus pellentesque libero.</p>
+                        <p className="text-muted mb-0">Please contact doctor with extra information</p>
                     </div>
 
                 </div>
@@ -134,7 +134,7 @@ const BookingInvoice = () => {
     return (
         <>
             <Header />
-            <div className="content" style={{ marginBottom: '7rem', marginTop:'10rem' }}>
+            <div className="content" style={{ marginBottom: '7rem', marginTop: '10rem' }}>
                 <div className="d-flex justify-content-end mb-4" style={{ marginRight: '8rem' }}>
                     <ReactToPrint
                         bodyClass="print-agreement"

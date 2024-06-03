@@ -21,7 +21,7 @@ const Service = () => {
   return (
     <>
       <Header />
-      <SubHeader title="Service" subtitle="Lorem ipsum dolor sit amet consectetur adipisicing." />
+      <SubHeader title="Service" subtitle="Browse our complete list of services and schedule a visit with a doctor virtually or in person." />
 
       <div className="container" style={{ marginTop: 200, marginBottom: 100 }}>
         <div className="row">

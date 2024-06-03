@@ -99,7 +99,7 @@ const BookDoctor = () => {
 					<div className="col-12 col-md-3 col-lg-3">
 						<div className='mb-2 section-title text-center'>
 							<h2>Book Our Doctor</h2>
-							<p className='m-0 text-secondary'>Lorem ipsum dolor sit.</p>
+							<p className='m-0 text-secondary'>Search over 100 care providers and schedule an in-person or virtual appointment.</p>
 						</div>
 						<div className="form-text">
 							<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.</p>

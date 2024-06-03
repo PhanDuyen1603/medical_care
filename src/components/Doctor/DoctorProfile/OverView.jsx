@@ -6,10 +6,10 @@ import { FaBriefcase } from "react-icons/fa";
 const OverView = () => {
     return (
         <div className="col-md-12 col-lg-9">
-            <div className='mb-3'>
+            {/* <div className='mb-3'>
                 <h5 className='overview-text'>About Me</h5>
                 <p className='text-secondary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
+            </div> */}
 
             <div>
                 <h5 className='overview-text'>Education</h5>
@@ -97,10 +97,10 @@ const OverView = () => {
                     </VerticalTimelineElement>
 
 
-                  
+
 
                 </VerticalTimeline>
-                
+
             </div>
             <div >
                 <h5 className='overview-text'>Awards</h5>
@@ -116,7 +116,7 @@ const OverView = () => {
                     >
                         <h5 className="text-white">Humanitarian Award</h5>
                         <h6 className="text-white">Miami, FL</h6>
-                        <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                        {/* <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p> */}
                     </VerticalTimelineElement>
 
                     <VerticalTimelineElement
@@ -129,7 +129,7 @@ const OverView = () => {
                     >
                         <h5 className="text-white">Certificate for International Volunteer Service</h5>
                         <h6 className="text-white">Miami, FL</h6>
-                        <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                        {/* <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p> */}
                     </VerticalTimelineElement>
 
                     <VerticalTimelineElement
@@ -142,7 +142,7 @@ const OverView = () => {
                     >
                         <h5 className="text-white">The Dental Professional of The Year Award</h5>
                         <h6 className="text-white">Miami, FL</h6>
-                        <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                        {/* <p style={{ fontSize: '14px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p> */}
                     </VerticalTimelineElement>
 
                 </VerticalTimeline>
