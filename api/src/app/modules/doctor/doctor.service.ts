@@ -70,8 +70,7 @@ const create = async (payload: any): Promise<any> => {
 
 const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise<IGenericResponse<Doctor[]>> => {
     const { limit, page, skip } = calculatePagination(options);
-    const { searchTerm, max, min, specialist, ...filterData } = filters;
-
+    const { searchTerm, max, min, specialist, gender, ...filterData } = filters;
     const andCondition = [];
     if (searchTerm) {
         andCondition.push({
@@ -113,13 +112,20 @@ const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise
         })
     }
 
-    const whereCondition = andCondition.length > 0 ? { AND: andCondition } : {};
+    if (gender && ['male', 'female'].includes(gender)) {
+        andCondition.push({
+            AND: ({
+                gender: gender
+            })
+        })
+    }
+
+    const whereCondition = andCondition.length > 0 ? andCondition.reduce((acc, curr) => ({ ...acc, ...curr }), {}) : {};
     const result = await prisma.doctor.findMany({
         skip,
         take: limit,
         where: whereCondition,
     });
-
     const total = await prisma.doctor.count({ where: whereCondition });
     return {
         meta: {

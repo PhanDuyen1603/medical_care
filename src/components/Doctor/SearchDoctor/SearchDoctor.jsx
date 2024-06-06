@@ -17,6 +17,7 @@ const initQuery = {
     searchTerm: '',
     sortByGender: '',
     specialist: '',
+    gender: '',
     priceRange: {},
     min: null,
     max: null,
@@ -61,6 +62,9 @@ const SearchDoctor = () => {
         setSQuery({
             ...sQuery,
         })
+        query['searchTerm'] = ''
+        query['min'] = null
+        query['max'] = null
     }
 
     const { data, isFetching, isError, refetch } = useGetDoctorsQuery({ ...sQuery, min: query.min, max: query.max, searchTerm: query.searchTerm }, { skip: !canRefetch })
@@ -124,7 +128,7 @@ const SearchDoctor = () => {
                             setPriceRange={setPriceRange}
                             resetFilter={resetFilter}
                             handleSearch={handleSearch}
-                            query={query}
+                            query={{ ...sQuery, ...query }}
                         />
                         <div className="col-md-12 col-lg-8 col-xl-9">
                             {content}

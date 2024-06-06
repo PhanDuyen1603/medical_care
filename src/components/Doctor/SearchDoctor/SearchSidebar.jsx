@@ -1,24 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Slider, Button, DatePicker, Radio } from 'antd';
 import { FaSearch, FaRedoAlt } from "react-icons/fa";
 import Search from 'antd/es/input/Search';
-import { doctorSpecialistOptions } from '../../../constant/global';
+import { doctorSpecialistOptions, genderOptions } from '@/constant/global';
 
 const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceRange, resetFilter, query, handleSearch, setCanRefetch }) => {
+  const [searchGender, setSearchGender] = useState(null)
   const handleDateChange = (_date, _dateString) => { }
-  const options = [
-    {
-      label: 'Male',
-      value: 'male',
-    },
-    {
-      label: 'Female',
-      value: 'female',
-    },
-  ];
-  const onSelectGender = (e) => setSorByGender(e.target.value)
+  const onSelectGender = (e) => {
+    setSearchGender(e?.target.value)
+    setSorByGender(e?.target.value)
+  }
 
-  const onSelectSepcialist = (e) => setSpecialist(e.target.value)
+  const onSelectSepcialist = (e) => setSpecialist(e?.target.value)
 
   const onRangeChange = (range) => {
     setCanRefetch(false)
@@ -32,6 +26,10 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
     const value = e.target.value
     setCanRefetch(false)
     setSearchTerm(value);
+  }
+  const onResetFilter = () => {
+    setSearchGender(null)
+    resetFilter()
   }
   return (
     <div className="col-md-12 col-lg-4 col-xl-3">
@@ -54,7 +52,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Gender</h6>
           <div className='d-flex flex-column'>
-            <Radio.Group options={options} onChange={onSelectGender} />
+            <Radio.Group options={genderOptions} value={searchGender} onChange={onSelectGender} />
           </div>
         </div>
 
@@ -66,13 +64,13 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Select Specialist</h6>
           <div className='d-flex flex-column'>
-            <Radio.Group options={doctorSpecialistOptions} onChange={onSelectSepcialist} />
+            <Radio.Group options={[{ label: "All", value: "" }, ...doctorSpecialistOptions]} onChange={onSelectSepcialist} />
           </div>
         </div>
 
         <Button className='w-100 mt-4 mb-2' type="primary" style={{ backgroundColor: '#1977cc' }} shape="round" icon={<FaSearch />} size="sm" onClick={handleSearch}>Search</Button>
         {
-          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={resetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
+          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={onResetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
         }
       </div>
 

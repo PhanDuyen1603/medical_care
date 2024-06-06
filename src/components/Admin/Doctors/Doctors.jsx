@@ -18,6 +18,7 @@ const initData = {
   firstName: '',
   lastName: '',
   email: '',
+  gender: '',
   phone: '',
   address: '',
   price: 0,

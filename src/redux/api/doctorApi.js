@@ -4,6 +4,7 @@ import { baseApi } from "./baseApi"
 const DOC_URL = '/doctor'
 
 export const doctorApi = baseApi.injectEndpoints({
+    refetchOnFocus: false,
     endpoints: (build) => ({
         getDoctors: build.query({
             query: (arg) => ({

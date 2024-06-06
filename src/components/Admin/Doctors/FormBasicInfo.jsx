@@ -1,5 +1,5 @@
 import { Form, Input, Select, InputNumber } from 'antd';
-import { doctorSpecialistArray } from '@/constant/global'
+import { doctorSpecialistArray, genderOptions } from '@/constant/global'
 
 const FormBasicInfo = ({ submitType = 'create' }) => {
   return (
@@ -31,6 +31,28 @@ const FormBasicInfo = ({ submitType = 'create' }) => {
             ]}
           >
             <Input />
+          </Form.Item>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-6'>
+          <Form.Item
+            label="gender"
+            name="gender"
+            rules={[
+              {
+                required: true,
+                message: 'Please select Gender!',
+              },
+            ]}
+          >
+            <Select>
+              {
+                genderOptions.map((x, index) => (
+                  <Select.Option value={x.value} key={`select_${index}`}>{x.value}</Select.Option>
+                ))
+              }
+            </Select>
           </Form.Item>
         </div>
       </div>
