@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import SearchSidebar from './SearchSidebar';
 import SearchContent from './SearchContent';
@@ -9,57 +9,82 @@ import { Pagination } from 'antd';
 import Header from '../../Shared/Header/Header';
 import SubHeader from '../../Shared/SubHeader';
 
+const initQuery = {
+    size: 10,
+    page: 1,
+    sortBy: '',
+    sortOrder: '',
+    searchTerm: '',
+    sortByGender: '',
+    specialist: '',
+    priceRange: {},
+    min: null,
+    max: null,
+}
+
 const SearchDoctor = () => {
     const query = {};
+    const [canRefetch, setCanRefetch] = useState(true)
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
     const [sortBy, setSortBy] = useState("");
     const [sortOrder, setSortOrder] = useState("");
+    const [priceRange, setPriceRange] = useState({})
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortByGender, setSorByGender] = useState("");
-    const [specialist, setSpecialist] = useState("");
-    const [priceRange, setPriceRange] = useState({});
+    const [sQuery, setSQuery] = useState(initQuery);
 
-    query["limit"] = size;
-    query["page"] = page;
-    query["sortBy"] = sortBy;
-    query["sortOrder"] = sortOrder;
+    const setQuery = (key, val) => {
+        setCanRefetch(false)
+        setSQuery({
+            ...sQuery,
+            [key]: val
+        })
+    }
 
-    sortByGender !== '' && (query["gender"] = sortByGender);
-    specialist !== '' && (query["specialist"] = specialist);
+    const setSorByGender = (x) => setQuery('gender', x)
+    const setSpecialist = (x) => setQuery('specialist', x)
 
-    const priceDebounced = useDebounced({ searchQuery: priceRange, delay: 600 });
+    const priceDebounced = useDebounced({ searchQuery: priceRange, delay: 1000 });
     const debounced = useDebounced({ searchQuery: searchTerm, delay: 600 })
 
-    if (Object.keys(priceDebounced).length !== 0 && !!priceDebounced) {
+    if (!!priceDebounced && Object.keys(priceDebounced)?.length !== 0) {
         const { min, max } = priceDebounced
         query["min"] = min;
         query["max"] = max;
     }
 
-    const resetFilter = () => {
-        setPage(1);
-        setSize(10);
-        setSortOrder("");
-        setSearchTerm("");
-        setSortOrder("");
-        setSorByGender("");
-        setSpecialist("");
-        setPriceRange({});
+    if (!!debounced) {
+        query['searchTerm'] = debounced
     }
 
-    if (!!debounced) { query.searchTerm = debounced }
+    const resetFilter = () => {
+        setSQuery({
+            ...sQuery,
+        })
+    }
 
-    const { data, isLoading, isError } = useGetDoctorsQuery({ ...query })
+    const { data, isFetching, isError, refetch } = useGetDoctorsQuery({ ...sQuery, min: query.min, max: query.max, searchTerm: query.searchTerm }, { skip: !canRefetch })
     const doctorsData = data?.doctors;
     const meta = data?.meta;
 
+    const handleSearch = () => {
+        setQuery('limit', size);
+        setQuery('page', page);
+        setQuery('sortBy', sortBy);
+        setQuery('sortOrder', sortOrder);
+        setQuery('searchTerm', query.searchTerm);
+        setCanRefetch(true)
+        setTimeout(() => {
+            refetch()
+        }, 500)
+    }
+
     // render
     let content = null;
-    if (isLoading) content = <>Loading ...</>;
-    if (!isLoading && isError) content = <div>Something Went Wrong !</div>
-    if (!isLoading && !isError && doctorsData.length === 0) content = <div><Empty /></div>
-    if (!isLoading && !isError && doctorsData.length > 0) content =
+    if (isFetching) content = <>Loading ...</>;
+    if (!isFetching && isError) content = <div>Something Went Wrong !</div>
+    if (!isFetching && !isError && doctorsData?.length === 0) content = <div><Empty /></div>
+    if (!isFetching && !isError && doctorsData?.length > 0) content =
         <>
             {
                 doctorsData && doctorsData?.map((item, id) => (
@@ -69,8 +94,19 @@ const SearchDoctor = () => {
         </>
 
     const onShowSizeChange = (current, pageSize) => {
+        setQuery('page', 1);
+        setQuery('pageSize', pageSize);
+        setCanRefetch(true)
+        refetch()
+    }
+
+    const changePage = (page) => {
         setPage(page);
-        setSize(pageSize)
+        setQuery('page', page);
+        setCanRefetch(true)
+        setTimeout(() => {
+            refetch()
+        }, 500)
     }
 
     return (
@@ -81,11 +117,13 @@ const SearchDoctor = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <SearchSidebar
+                            setCanRefetch={setCanRefetch}
                             setSearchTerm={setSearchTerm}
                             setSorByGender={setSorByGender}
                             setSpecialist={setSpecialist}
                             setPriceRange={setPriceRange}
                             resetFilter={resetFilter}
+                            handleSearch={handleSearch}
                             query={query}
                         />
                         <div className="col-md-12 col-lg-8 col-xl-9">
@@ -95,7 +133,9 @@ const SearchDoctor = () => {
                                     showSizeChanger
                                     onShowSizeChange={onShowSizeChange}
                                     total={meta?.total}
+                                    defaultCurrent={page}
                                     pageSize={size}
+                                    onChange={changePage}
                                 />
                             </div>
                         </div>

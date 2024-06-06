@@ -92,7 +92,7 @@ const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise
         })
     }
 
-    if (min || max) {
+    if (min && max) {
         andCondition.push({
             AND: ({
                 price: {

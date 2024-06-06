@@ -4,7 +4,7 @@ import { FaSearch, FaRedoAlt } from "react-icons/fa";
 import Search from 'antd/es/input/Search';
 import { doctorSpecialistOptions } from '../../../constant/global';
 
-const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceRange, resetFilter, query }) => {
+const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceRange, resetFilter, query, handleSearch, setCanRefetch }) => {
   const handleDateChange = (_date, _dateString) => { }
   const options = [
     {
@@ -15,23 +15,22 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
       label: 'Female',
       value: 'female',
     },
-    {
-      label: 'Shemale',
-      value: 'shemale',
-    },
   ];
   const onSelectGender = (e) => setSorByGender(e.target.value)
 
   const onSelectSepcialist = (e) => setSpecialist(e.target.value)
 
   const onRangeChange = (range) => {
+    setCanRefetch(false)
     const obj = {
       min: range[0],
       max: range[1]
     }
     setPriceRange(obj)
   }
-  const onSearch = (value) => {
+  const onChangeSearchTerm = (e) => {
+    const value = e.target.value
+    setCanRefetch(false)
     setSearchTerm(value);
   }
   return (
@@ -40,7 +39,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
       <div className="p-3 rounded" style={{ background: '#f3f3f3' }}>
         <h5 className='text-center mb-3' style={{ color: '#05335c' }}>Doctor Filter</h5>
         <div className="mb-3">
-          <Search placeholder="Search..." onSearch={onSearch} enterButton allowClear />
+          <Search placeholder="Search..." enterButton onChange={onChangeSearchTerm} onSearch={handleSearch} allowClear />
         </div>
 
         {/* <div className='mb-3'>
@@ -61,7 +60,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
 
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Price Range</h6>
-          <Slider range defaultValue={[75, 150]} onChange={onRangeChange} />
+          <Slider range min={1} max={1500} defaultValue={[1, 5]} onChange={onRangeChange} />
         </div>
 
         <div className='mb-3'>
@@ -71,7 +70,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
           </div>
         </div>
 
-        <Button className='w-100 mt-4 mb-2' type="primary" style={{ backgroundColor: '#1977cc' }} shape="round" icon={<FaSearch />} size="sm">Search</Button>
+        <Button className='w-100 mt-4 mb-2' type="primary" style={{ backgroundColor: '#1977cc' }} shape="round" icon={<FaSearch />} size="sm" onClick={handleSearch}>Search</Button>
         {
           Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={resetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
         }

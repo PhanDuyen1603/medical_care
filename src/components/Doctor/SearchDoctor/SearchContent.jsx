@@ -7,7 +7,7 @@ import './index.css';
 import { FaLocationArrow, FaRegThumbsUp, FaDollarSign, FaComment } from "react-icons/fa";
 
 const SearchContent = ({ data }) => {
-    const services = data?.services?.split(',')
+    const services = data?.services?.split(',') || []
     return (
         <div className="mb-4 rounded" style={{ background: '#f3f3f3' }}>
             <div className='d-flex p-3 justify-content-between'>
@@ -19,7 +19,11 @@ const SearchContent = ({ data }) => {
                         <h5 className='mb-0'><Link to={`/doctors/profile/${data?.id}`}>Dr. {data?.firstName + ' ' + data?.lastName}</Link></h5>
                         <p className='m-0 form-text'>{data?.designation}</p>
                         {/* <p className="doc-department m-0"><img src={showImg} className="img-fluid" alt="Speciality" />Urology</p> */}
-                        <div className="doc-department m-0"><Image src={`/images/specialist/${services[0]}.png`} preview={false} width={30} height={30} /><p>{services[0]}</p></div>
+                        <div className="doc-department m-0">
+                            {
+                                services && services.length && <><Image src={`/images/specialist/${services[0]}.png`} preview={false} width={30} height={30} /><p>{services[0]}</p></>
+                            }
+                        </div>
 
                         <div className='d-flex align-items-center'>
                             <div>
