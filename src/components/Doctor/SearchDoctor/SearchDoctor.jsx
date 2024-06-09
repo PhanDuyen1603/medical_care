@@ -22,9 +22,14 @@ const initQuery = {
     min: null,
     max: null,
 }
+const debouncedQuery = {
+    min: null,
+    max: null,
+    searchTerm: '',
+}
 
 const SearchDoctor = () => {
-    const query = {};
+    let query = debouncedQuery;
     const [canRefetch, setCanRefetch] = useState(true)
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
@@ -59,12 +64,14 @@ const SearchDoctor = () => {
     }
 
     const resetFilter = () => {
+        setCanRefetch(false)
         setSQuery({
-            ...sQuery,
+            ...initQuery,
         })
-        query['searchTerm'] = ''
-        query['min'] = null
-        query['max'] = null
+        query = debouncedQuery;
+        setTimeout(() => {
+            setCanRefetch(true)
+        }, 500)
     }
 
     const { data, isFetching, isError, refetch } = useGetDoctorsQuery({ ...sQuery, min: query.min, max: query.max, searchTerm: query.searchTerm }, { skip: !canRefetch })
@@ -112,6 +119,7 @@ const SearchDoctor = () => {
     useCallback(() => {
         if (canRefetch) {
             refetch();
+            setCanRefetch(false)
         }
     }, [canRefetch, refetch]);
 

@@ -6,13 +6,17 @@ import { doctorSpecialistOptions, genderOptions } from '@/constant/global';
 
 const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceRange, resetFilter, query, handleSearch, setCanRefetch }) => {
   const [searchGender, setSearchGender] = useState(null)
+  const [searchSpecialist, setSearchSpecialist] = useState(null)
   const handleDateChange = (_date, _dateString) => { }
   const onSelectGender = (e) => {
     setSearchGender(e?.target.value)
     setSorByGender(e?.target.value)
   }
 
-  const onSelectSepcialist = (e) => setSpecialist(e?.target.value)
+  const onSelectSepcialist = (e) => {
+    setSearchSpecialist(e?.target.value)
+    setSpecialist(e?.target.value)
+  }
 
   const onRangeChange = (range) => {
     setCanRefetch(false)
@@ -29,6 +33,8 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
   }
   const onResetFilter = () => {
     setSearchGender(null)
+    setSearchSpecialist(null)
+    onChangeSearchTerm({ target: { value: '' } })
     resetFilter()
   }
   return (
@@ -37,7 +43,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
       <div className="p-3 rounded" style={{ background: '#f3f3f3' }}>
         <h5 className='text-center mb-3' style={{ color: '#05335c' }}>Doctor Filter</h5>
         <div className="mb-3">
-          <Search placeholder="Search..." enterButton onChange={onChangeSearchTerm} onSearch={handleSearch} allowClear />
+          <Search placeholder="Search..." enterButton onChange={onChangeSearchTerm} onSearch={handleSearch} />
         </div>
 
         {/* <div className='mb-3'>
@@ -52,7 +58,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Gender</h6>
           <div className='d-flex flex-column'>
-            <Radio.Group options={genderOptions} value={searchGender} onChange={onSelectGender} />
+            <Radio.Group options={[{ label: "All", value: null }, ...genderOptions]} value={searchGender} onChange={onSelectGender} />
           </div>
         </div>
 
@@ -64,13 +70,13 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Select Specialist</h6>
           <div className='d-flex flex-column'>
-            <Radio.Group options={[{ label: "All", value: "" }, ...doctorSpecialistOptions]} onChange={onSelectSepcialist} />
+            <Radio.Group options={[{ label: "All", value: null }, ...doctorSpecialistOptions]} value={searchSpecialist} onChange={onSelectSepcialist} />
           </div>
         </div>
 
         <Button className='w-100 mt-4 mb-2' type="primary" style={{ backgroundColor: '#1977cc' }} shape="round" icon={<FaSearch />} size="sm" onClick={handleSearch}>Search</Button>
         {
-          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={onResetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
+          (query.min || query.max || query.gender || query.searchTerm || query.specialist) && <Button className='w-100 mt-4 mb-2' style={{ backgroundColor: '#1977cc' }} onClick={onResetFilter} type="primary" shape="round" icon={<FaRedoAlt />} size="sm">Reset</Button>
         }
       </div>
 

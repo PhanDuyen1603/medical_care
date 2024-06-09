@@ -18,7 +18,7 @@ export const IDoctorFiltersData = ['searchTerm', 'firstName', 'lastName', 'gende
 export const IDoctorFiltersWithAppointmentData = ['specialist', 'appointmentDate', 'time']
 export const IDoctorOptions = ['limit', 'page', 'sortBy', 'sortOrder']
 
-export const DoctorSearchableFields = ['firstName', 'lastName', 'address', 'specialization', 'degree']
+export const DoctorSearchableFields = ['firstName', 'lastName']
 export const doctorSpecialists = [
     // tim mach
     { id: 1, value: "Cardiologist" },

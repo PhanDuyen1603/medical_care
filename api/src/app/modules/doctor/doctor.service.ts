@@ -71,63 +71,63 @@ const create = async (payload: any): Promise<any> => {
 const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise<IGenericResponse<Doctor[]>> => {
     const { limit, page, skip } = calculatePagination(options);
     const { searchTerm, max, min, specialist, gender, ...filterData } = filters;
-    const andCondition = [];
+    let andCondition: any[] = [];
+    let orCondition: any[] = [];
     if (searchTerm) {
-        andCondition.push({
-            OR: DoctorSearchableFields.map((field) => ({
+        DoctorSearchableFields.map((field) => {
+            orCondition.push({
                 [field]: {
                     contains: searchTerm,
-                    mode: 'insensitive'
+                    mode: "insensitive"
                 }
-            }))
+            })
         })
     }
 
     if (Object.keys(filterData).length > 0) {
-        andCondition.push({
-            AND: Object.entries(filterData).map(([key, value]) => ({
+        const conditions = Object.entries(filterData).map(([key, value]) => ({
                 [key]: { equals: value }
             }))
-        })
+        andCondition = [...andCondition, ...conditions]
     }
 
     if (min && max) {
         andCondition.push({
-            AND: ({
                 price: {
                     gte: min,
                     lte: max
                 }
-            })
         })
     }
 
     if (specialist) {
         andCondition.push({
-            AND: ({
                 services: {
-                    contains: specialist
+                contains: specialist,
+                mode: "insensitive"
                 }
-            })
         })
     }
 
     if (gender && ['male', 'female'].includes(gender)) {
         andCondition.push({
-            AND: ({
                 gender: {
                     equals: gender
                 }
             })
+    }
+    let whereCondition: any = {
+        AND: andCondition || []
+    }
+    if (orCondition.length > 0) {
+        whereCondition.AND.push({
+            OR: orCondition
         })
     }
-
-    const whereCondition = andCondition.length > 0 ? andCondition.reduce((acc: any, curr: any) => {
-        const condition = Object.keys(curr)[0]
-        return {
-            ...acc, [condition]: { ...acc[condition], ...curr[condition] }
-        }
-    }, {}) : {};
+    console.log({
+        constion: JSON.stringify(andCondition),
+        where: JSON.stringify(whereCondition)
+    })
     const result = await prisma.doctor.findMany({
         skip,
         take: limit,
