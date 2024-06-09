@@ -124,10 +124,6 @@ const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise
             OR: orCondition
         })
     }
-    console.log({
-        constion: JSON.stringify(andCondition),
-        where: JSON.stringify(whereCondition)
-    })
     const result = await prisma.doctor.findMany({
         skip,
         take: limit,
