@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import SearchSidebar from './SearchSidebar';
 import SearchContent from './SearchContent';
@@ -72,14 +72,13 @@ const SearchDoctor = () => {
     const meta = data?.meta;
 
     const handleSearch = () => {
+        setCanRefetch(false)
         setQuery('limit', size);
         setQuery('page', page);
         setQuery('sortBy', sortBy);
         setQuery('sortOrder', sortOrder);
-        setQuery('searchTerm', query.searchTerm);
-        setCanRefetch(true)
         setTimeout(() => {
-            refetch()
+            setCanRefetch(true)
         }, 500)
     }
 
@@ -108,10 +107,13 @@ const SearchDoctor = () => {
         setPage(page);
         setQuery('page', page);
         setCanRefetch(true)
-        setTimeout(() => {
-            refetch()
-        }, 500)
     }
+
+    useCallback(() => {
+        if (canRefetch) {
+            refetch();
+        }
+    }, [canRefetch, refetch]);
 
     return (
         <div>

@@ -115,12 +115,19 @@ const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise
     if (gender && ['male', 'female'].includes(gender)) {
         andCondition.push({
             AND: ({
-                gender: gender
+                gender: {
+                    equals: gender
+                }
             })
         })
     }
 
-    const whereCondition = andCondition.length > 0 ? andCondition.reduce((acc, curr) => ({ ...acc, ...curr }), {}) : {};
+    const whereCondition = andCondition.length > 0 ? andCondition.reduce((acc: any, curr: any) => {
+        const condition = Object.keys(curr)[0]
+        return {
+            ...acc, [condition]: { ...acc[condition], ...curr[condition] }
+        }
+    }, {}) : {};
     const result = await prisma.doctor.findMany({
         skip,
         take: limit,

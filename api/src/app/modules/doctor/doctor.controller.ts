@@ -20,7 +20,12 @@ const createDoctor = catchAsync(async (req: Request, res: Response) => {
 const getAllDoctors = catchAsync(async (req: Request, res: Response) => {
     const filter = pick(req.query, IDoctorFiltersData);
     const options = pick(req.query, IDoctorOptions);
-    const result = await DoctorService.getAllDoctors(filter, options);
+    let result = null
+    try {
+        result = await DoctorService.getAllDoctors(filter, options);
+    } catch (error) {
+        console.log(error);
+    }
     sendResponse(res, {
         statusCode: 200,
         message: 'Successfully Retrieve doctors !!',
