@@ -36,10 +36,10 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                                 <FaLocationArrow className='icon' />
                                 <p>Sylhet, Bangladesh<br /><span className="form-text">1020BD, Amertam, NorthEast,Srimongol</span></p>
                             </div>
-                            <div className='d-flex gap-3'>
+                            {/* <div className='d-flex gap-3'>
                                 <FaLink className='icon' />
                                 <p>Zoom Meeting</p>
-                            </div>
+                            </div> */}
                             <div className='d-flex gap-3'>
                                 <FaCalendarAlt className='icon' />
                                 <p>{(selectedDate && selectTime) && moment(selectedDate).format('LL') + ' ' + selectTime}</p>
