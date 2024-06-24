@@ -151,7 +151,7 @@ const SignUp = ({ setSignUp }) => {
                 <span className="fIcon"><FaLock /></span>
                 <input type="password" name="password" placeholder="password" onChange={(e) => hanldeOnChange(e)} value={user.password} />
             </div>
-            <div className='input-field d-flex align-items-center gap-2 justify-content-center'>
+            {/* <div className='input-field d-flex align-items-center gap-2 justify-content-center'>
                 <div className='text-nowrap'>I'M A</div>
                 <select
                     className="form-select w-50"
@@ -162,7 +162,7 @@ const SignUp = ({ setSignUp }) => {
                     <option value="patient">Patient</option>
                     <option value="doctor">Doctor</option>
                 </select>
-            </div>
+            </div> */}
             {error.length && <h6 className="text-danger text-center">{error}</h6>}
             {infoError && <h6 className="text-danger text-center">{infoError}</h6>}
             <button type="submit"
@@ -202,8 +202,8 @@ const SignUp = ({ setSignUp }) => {
                 </div>
             </div>
 
-            <p className="social-text">Or Sign up with social account</p>
-            <SocialSignUp />
+            {/* <p className="social-text">Or Sign up with social account</p> */}
+            {/* <SocialSignUp /> */}
         </form>
 
     );

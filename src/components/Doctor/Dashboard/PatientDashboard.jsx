@@ -159,6 +159,14 @@ const PatientDashboard = () => {
     ];
     const appointmentColumns = [
         {
+            title: 'Tracking ID',
+            key: 20,
+            width: 100,
+            render: function (data) {
+                return <div>{data.trackingId}</div>
+            }
+        },
+        {
             title: 'Doctor',
             key: 20,
             width: 150,
