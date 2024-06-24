@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import img from '../../images/avatar.jpg';
 import './DashboardSidebar.css';
 import { Link, NavLink } from 'react-router-dom';
@@ -16,6 +17,17 @@ import {
 
 const DashboardSidebar = () => {
     const { data, role } = useAuthCheck();
+    const [user, setUser] = useState({ country: 'USA', city: 'New Yourk', dob: '1997-01-01' });
+
+    useEffect(() => {
+        if (data) {
+            setUser({
+                country: data?.country,
+                city: data?.city,
+                dob: data?.dateOfBirth,
+            })
+        }
+    }, [data?.id])
 
     return (
         <div className="profile-sidebar p-3 rounded">
@@ -37,8 +49,8 @@ const DashboardSidebar = () => {
                             <div className='profile-details'>
                                 <h5 className='mb-0'>{data?.firstName + " " + data?.lastName}</h5>
                                 <div className='mt-2'>
-                                    <p className=' form-text m-0'>24 Jul 1983, 38 Years</p>
-                                    <p className=' form-text m-0'> New Yourk , USA</p>
+                                    <p className=' form-text m-0'>{moment(user.dob).format('LL')}, {parseInt(moment().format('Y')) - parseInt(moment(user.dob).format('Y'))} Years</p>
+                                    <p className=' form-text m-0 text-capitalize'> {user.city} , {user.country}</p>
                                     <p className=' form-text m-0'>{data?.email}</p>
                                 </div>
                             </div>

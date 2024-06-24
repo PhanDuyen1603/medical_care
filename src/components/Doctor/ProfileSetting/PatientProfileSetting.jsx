@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { bloodGrupOptions, genderOptions } from '@/constant/global';
@@ -23,7 +23,7 @@ const PatientProfileSetting = () => {
     const [file, setFile] = useState(null);
 
     const onChange = (date, dateString) => {
-        setDate(moment(dateString).format());
+        setDate(dayjs(dateString).format());
     };
 
     useEffect(() => {
@@ -107,10 +107,10 @@ const PatientProfileSetting = () => {
 
                                 <div className="col-md-6">
                                     <div className="form-group mb-2 card-label">
-                                        <label>Date of Birth {data?.dateOfBirth && moment(data?.dateOfBirth).format('LL')}</label>
+                                        <label>Date of Birth {data?.dateOfBirth && dayjs(data?.dateOfBirth).format('LL')}</label>
                                         {
                                             data?.dateOfBirth ?
-                                                <DatePicker defaultValue={moment(data.dateOfBirth)} onChange={onChange} format={"YYYY-MM-DD"} style={{ width: '100%', padding: '6px' }} /> :
+                                                <DatePicker defaultValue={dayjs(data.dateOfBirth)} onChange={onChange} style={{ width: '100%', padding: '6px' }} /> :
                                                 <DatePicker onChange={onChange} format={"YYYY-MM-DD"} style={{ width: '100%', padding: '6px' }} />
                                         }
                                     </div>
