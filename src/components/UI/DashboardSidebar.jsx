@@ -22,9 +22,9 @@ const DashboardSidebar = () => {
     useEffect(() => {
         if (data) {
             setUser({
-                country: data?.country,
-                city: data?.city,
-                dob: data?.dateOfBirth,
+                country: data?.country || 'USA',
+                city: data?.city || 'New Yourk',
+                dob: data?.dateOfBirth || '1997-01-01',
             })
         }
     }, [data?.id])
