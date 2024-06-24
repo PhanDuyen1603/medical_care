@@ -107,7 +107,7 @@ const PatientProfileSetting = () => {
 
                                 <div className="col-md-6">
                                     <div className="form-group mb-2 card-label">
-                                        <label>Date of Birth {data?.dateOfBirth && dayjs(data?.dateOfBirth).format('LL')}</label>
+                                        <label>Date of Birth</label>
                                         {
                                             data?.dateOfBirth ?
                                                 <DatePicker defaultValue={dayjs(data.dateOfBirth)} onChange={onChange} style={{ width: '100%', padding: '6px' }} /> :
