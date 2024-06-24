@@ -205,6 +205,9 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
             timeSlot: true
         },
     })
+    console.log({
+        doctorTimSlot
+    })
 
     const allSlots = doctorTimSlot.map((item) => {
         const { day, timeSlot, ...others } = item;
@@ -223,7 +226,7 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
                 const { startTime, endTime } = slot;
                 const startDate = moment(startTime, 'hh:mm a');
                 const endDate = moment(endTime, 'hh:mm a');
-
+                console.log({ startDate, endDate, startTime, endTime });
                 while (startDate < endDate) {
                     const selectableTime = {
                         id: newTimeSlots.length + 1,
@@ -237,6 +240,7 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
                 const newTime = newTimeSlots.filter((item) => item.day === filter.day);
                 selectedTime.push(newTime);
             }
+            console.log({ newTimeSlots })
         })
         return selectedTime.flat();
     }

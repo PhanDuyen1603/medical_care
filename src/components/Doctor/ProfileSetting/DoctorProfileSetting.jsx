@@ -120,7 +120,7 @@ const DoctorProfileSetting = () => {
 
                     <div className="col-md-6">
                         <div className="form-group mb-2 card-label">
-                            <label>Date of Birth {moment(data?.dob).format('LL')}</label>
+                            <label>Date of Birth {data?.dob && moment(data?.dob).format('LL')}</label>
                             <DatePicker onChange={onChange} format={"YYYY-MM-DD"} style={{ width: '100%', padding: '6px' }} />
                         </div>
                     </div>
