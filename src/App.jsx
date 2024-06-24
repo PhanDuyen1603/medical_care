@@ -67,8 +67,6 @@ function App() {
         </Route>
         <Route path='/login' element={<SignInForm />} />
         <Route path='/' element={<Home />} />
-        {/* <Route path='/blog' element={<Blog />} /> */}
-        {/* <Route path='/blog/:id' element={<BlogDetails />} /> */}
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/service' element={<Service />} />
