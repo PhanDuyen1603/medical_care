@@ -42,6 +42,7 @@ const AppointmentPage = () => {
   const [isConfirmDisable, setIsConfirmDisable] = useState(true);
   const [patientId, setPatientId] = useState('');
   const [doctorId, setDoctorId] = useState("");
+  const [doctorPrice, setDoctorPrice] = useState(0);
   const [specialist, setSpecialist] = useState('')
   const navigation = useNavigate();
 
@@ -117,6 +118,7 @@ const AppointmentPage = () => {
       content: <SelectDoctor
         specialist={specialist}
         setDoctorId={setDoctorId}
+        setDoctorPrice={setDoctorPrice}
         doctorId={doctorId}
         setSelectValue={setSelectValue}
         selectValue={selectValue}
@@ -133,6 +135,7 @@ const AppointmentPage = () => {
       content: <CheckoutPage
         handleChange={handleChange}
         selectValue={selectValue}
+        doctorPrice={doctorPrice}
         isCheck={isCheck}
         setIsChecked={setIsChecked}
         data={false}

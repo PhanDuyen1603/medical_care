@@ -3,7 +3,7 @@ import { Empty, Pagination } from 'antd';
 import { useGetDoctorsAvailableQuery } from '@/redux/api/doctorApi';
 import CardDoctor from '@/components/Appointment/CardDoctor';
 
-const SelectDoctor = ({ specialist, doctorId, setDoctorId, time, appointmentDate }) => {
+const SelectDoctor = ({ specialist, doctorId, setDoctorId, time, appointmentDate, setDoctorPrice }) => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(1000);
 
@@ -18,8 +18,9 @@ const SelectDoctor = ({ specialist, doctorId, setDoctorId, time, appointmentDate
   const doctorsData = data?.doctors;
   const meta = data?.meta;
 
-  const handleSelectDoctor = (item) => {
-    setDoctorId(item.id);
+  const handleSelectDoctor = (doctor) => {
+    setDoctorId(doctor.id);
+    setDoctorPrice(doctor.price)
     // handleSetQuery('doctor', item.id);
   }
 

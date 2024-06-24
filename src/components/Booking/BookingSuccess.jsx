@@ -30,14 +30,14 @@ const BookingSuccess = () => {
                 {
                     data?.id ?
 
-                        <div className=" p-3" style={{ marginTop: '8rem', marginBottom: '5rem', height: '60vh', background: '#f8f9fa', maxWidth: '400px' }}>
+                        <div className=" p-3" style={{ marginTop: '8rem', marginBottom: '5rem', background: '#f8f9fa', maxWidth: '400px' }}>
                             <div className='border-bottom my-2'>
                                 <FaCalendarCheck style={{ fontSize: '2.5rem' }} className='text-success' />
                                 <h6 className='py-2'>Meeting is scheduled</h6>
                                 <p className='text-secondary border rounded-pill form-text text-success border-success'>Check your Inbox an email with all details!</p>
                             </div>
 
-                            <div className='card border-0 p-3 rounded mb-5'>
+                            <div className='card border-0 p-3 rounded'>
                                 <div className='d-flex gap-3 mb-1'>
                                     <FaBriefcase style={{ fontSize: '1rem' }} />
                                     <p>With Doctor</p>

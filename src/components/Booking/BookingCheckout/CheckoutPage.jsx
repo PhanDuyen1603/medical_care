@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './BookingCheckout.css';
 
-const CheckoutPage = ({ handleChange, selectValue, isCheck, setIsChecked, data, selectedDate, selectTime }) => {
+const CheckoutPage = ({ handleChange, selectValue, isCheck, setIsChecked, data, selectedDate, selectTime, doctorPrice }) => {
     const { nameOnCard, cardNumber, expiredMonth, cardExpiredYear, cvv, paymentType, paymentMethod } = selectValue;
     const handleCheck = () => {
         setIsChecked(!isCheck)
     }
 
-    let price = data?.price ? data.price : 60;
+    let price = data?.price ? data.price : doctorPrice ? doctorPrice : 60;
 
     const vat = (15 / 100) * (Number(price))
     return (
