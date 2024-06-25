@@ -59,7 +59,7 @@ const SearchDoctor = () => {
         query["max"] = max;
     }
 
-    if (!!debounced) {
+    if (debounced !== null) {
         query['searchTerm'] = debounced
     }
 
