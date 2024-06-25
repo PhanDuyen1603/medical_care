@@ -113,6 +113,8 @@ const SearchDoctor = () => {
     }
 
     const changePage = (page) => {
+        document.body.scrollTop = 150; // For Safari
+        document.documentElement.scrollTop = 150;
         setPage(page);
         setQuery('page', page);
         setCanRefetch(true)

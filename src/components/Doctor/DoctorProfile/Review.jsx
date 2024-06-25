@@ -98,9 +98,14 @@ const Review = ({ doctorId }) => {
                     {content}
                 </div>
 
-                <div className="text-center">
-                    <Link to={'/'} className='more-btn'>Show all feedback <strong>(167)</strong></Link>
-                </div>
+                {
+                    (!isLoading && !isError && data?.length > 0) &&
+                    <div className="text-center">
+                        <Link to={'/'} className='more-btn'>Show all feedback 
+                        {/* <strong>(167)</strong> */}
+                        </Link>
+                    </div>
+                }
 
                 <div className="mt-5">
                     <h4>Write a review..</h4>

@@ -35,10 +35,10 @@ const PrescriptionView = () => {
             title: 'Period',
             key: 'duration',
             render: function (data) {
-                const duratinDate = data.duration.split(',');
-                const endDate = moment(duratinDate[0]);
-                const startDate = moment(duratinDate[1]);
-                const getDiffrent = endDate.diff(startDate, "days");
+                const duratinDate = data?.duration?.split(',');
+                const endDate = duratinDate && duratinDate.length && moment(duratinDate[0]);
+                const startDate = duratinDate && duratinDate.length && moment(duratinDate[1]);
+                const getDiffrent = startDate && endDate && endDate.diff(startDate, "days");
                 return (
                     <>{getDiffrent} days</>
                 )
