@@ -68,9 +68,11 @@ const SearchDoctor = () => {
         setSQuery({
             ...initQuery,
         })
-        query = debouncedQuery;
         setTimeout(() => {
             setCanRefetch(true)
+            query.searchTerm = ''
+            query.min = null
+            query.max = null
         }, 500)
     }
 
@@ -132,6 +134,7 @@ const SearchDoctor = () => {
                     <div className="row">
                         <SearchSidebar
                             setCanRefetch={setCanRefetch}
+                            searchTerm={searchTerm}
                             setSearchTerm={setSearchTerm}
                             setSorByGender={setSorByGender}
                             setSpecialist={setSpecialist}
