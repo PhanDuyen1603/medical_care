@@ -43,10 +43,12 @@ import Dashboard from './components/Doctor/Dashboard/Dashboard';
 import PrivateOutlet from './components/Shared/PrivateOutlet';
 import Adminmiddleware from './components/Shared/AdminMiddleware';
 import NotFound from './components/UI/NotFound';
+import ScrollToTop from './utils/scrollToTop'
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route element={<PrivateOutlet />}>
           <Route path='/dashboard/blogs' element={<Blogs />} />
