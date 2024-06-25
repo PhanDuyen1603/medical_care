@@ -38,7 +38,7 @@ const DoctorProfileSetting = () => {
 
     const onSubmit = (data) => {
         const obj = data
-        obj.price = parseInt(obj.price);
+        if (obj.price) obj.price = parseInt(obj.price);
         const newObj = { ...obj, ...selectValue };
         date && (newObj['dob'] = date);
         newObj["services"] = Array.isArray(selectedItems) ? selectedItems.join(',') : null;
