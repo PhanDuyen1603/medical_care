@@ -8,6 +8,7 @@ const SearchSidebar = ({ searchTerm, setSearchTerm, setSorByGender, setSpecialis
   const [searchGender, setSearchGender] = useState(null)
   const [searchSpecialist, setSearchSpecialist] = useState(null)
   const [showClearIcon, setShowClearIcon] = useState(false)
+  const [price, setPrice] = useState([1, 5])
   const handleDateChange = (_date, _dateString) => { }
   const onSelectGender = (e) => {
     setSearchGender(e?.target.value)
@@ -25,6 +26,7 @@ const SearchSidebar = ({ searchTerm, setSearchTerm, setSorByGender, setSpecialis
       min: range[0],
       max: range[1]
     }
+    setPrice([range[0], range[1]])
     setPriceRange(obj)
   }
   const onChangeSearchTerm = (e) => {
@@ -36,6 +38,12 @@ const SearchSidebar = ({ searchTerm, setSearchTerm, setSorByGender, setSpecialis
     setSearchGender(null)
     setSearchSpecialist(null)
     setSearchTerm('');
+    setPriceRange({
+      min: null,
+      max: null
+    })
+    query.searchTerm = ''
+    setPrice([1, 5])
     resetFilter()
   }
   // input handle
@@ -90,7 +98,7 @@ const SearchSidebar = ({ searchTerm, setSearchTerm, setSorByGender, setSpecialis
 
         <div className='mb-3'>
           <h6 style={{ color: '#05335c' }}>Price Range</h6>
-          <Slider range min={1} max={1500} defaultValue={[1, 5]} onChange={onRangeChange} />
+          <Slider range min={1} max={1500} value={price} onChange={onRangeChange} />
         </div>
 
         <div className='mb-3'>
