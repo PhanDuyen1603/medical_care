@@ -99,12 +99,25 @@ const ViewAppointment = () => {
         <>
             <Header />
             {
-                data?.status === 'pending' && <PatientModalChangeAppoimentInfo showModal={showModal} handleClose={handleClose} setShowModal={setShowModal} doctorId={data?.doctor?.id} appoinment={data} />
+                data?.status === 'pending' && data?.doctor?.id && data.scheduleDate && data?.scheduleTime &&
+                <PatientModalChangeAppoimentInfo
+                    showModal={showModal}
+                    handleClose={handleClose}
+                    setShowModal={setShowModal}
+                    doctorId={data?.doctor?.id}
+                    appoinment={data}
+                />
             }
             <div style={{ margin: '10rem 7rem' }}>
                 <div className="d-flex justify-content-end mb-4" style={{ marginRight: '8rem' }}>
                     {
-                        data?.status === 'pending' && <Button type="primary" style={{ marginRight: '1rem' }} icon={<FaCalendarDay />} onClick={() => setShowModal(true)}> Change Date</Button>
+                        data?.status === 'pending' && data?.doctor?.id && data.scheduleDate && data?.scheduleTime &&
+                        <Button
+                            type="primary"
+                            style={{ marginRight: '1rem' }}
+                            icon={<FaCalendarDay />}
+                            onClick={() => setShowModal(true)}
+                        > Change Date</Button>
                     }
                     <ReactToPrint
                         bodyClass="print-agreement"

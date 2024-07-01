@@ -38,7 +38,7 @@ const PatientModalChangeAppoimentInfo = ({
   useEffect(() => {
     if (appoinment && appoinment.scheduleDate) {
       setSelectedDate(moment(appoinment?.scheduleDate).format('MM-DD-YYYY'))
-      setSelecDay(moment(appoinment?.scheduleDate).format('dddd'))
+      setSelecDay(moment(appoinment?.scheduleDate).format('dddd').toLowerCase())
     }
     if (appoinment && appoinment.scheduleTime) {
       setSelectTime(appoinment.scheduleTime)
