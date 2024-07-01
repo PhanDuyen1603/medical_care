@@ -82,13 +82,17 @@ const deleteDoctor = catchAsync(async (req: Request, res: Response) => {
 })
 
 const updateDoctor = catchAsync(async (req: Request, res: Response) => {
-    const result = await DoctorService.updateDoctor(req);
-    sendResponse<Doctor>(res, {
-        statusCode: 200,
-        message: 'Successfully Updated Doctor !!',
-        success: true,
-        data: result,
-    })
+    try {
+        const result = await DoctorService.updateDoctor(req);
+        sendResponse<Doctor>(res, {
+            statusCode: 200,
+            message: 'Successfully Updated Doctor !!',
+            success: true,
+            data: result,
+        })
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 export const DoctorController = {

@@ -1,19 +1,22 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useGetSingleAppointmentQuery } from '../../../redux/api/appointmentApi';
+import { useGetSingleAppointmentQuery } from '@/redux/api/appointmentApi';
 import Header from '../../Shared/Header/Header';
 import Footer from '../../Shared/Footer/Footer';
 import moment from 'moment';
 import './index.css';
 import { Button, Tag, Tooltip } from 'antd';
-import { clickToCopyClipBoard } from '../../../utils/copyClipBoard';
-import { FaPrint } from "react-icons/fa";
+import { clickToCopyClipBoard } from '@/utils/copyClipBoard';
+import { FaPrint, FaCalendarDay } from "react-icons/fa";
+import PatientModalChangeAppoimentInfo from './PatientModalChangeAppoimentInfo'
 import ReactToPrint from "react-to-print";
 
 const ViewAppointment = () => {
     const ref = useRef();
     const { id } = useParams();
     const { data, isLoading, isError } = useGetSingleAppointmentQuery(id);
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
 
     let content = null;
     if (!isLoading && isError) content = <div>Something Went Wrong!</div>
@@ -95,8 +98,14 @@ const ViewAppointment = () => {
     return (
         <>
             <Header />
+            {
+                data?.status === 'pending' && <PatientModalChangeAppoimentInfo showModal={showModal} handleClose={handleClose} setShowModal={setShowModal} doctorId={data?.doctor?.id} appoinment={data} />
+            }
             <div style={{ margin: '10rem 7rem' }}>
                 <div className="d-flex justify-content-end mb-4" style={{ marginRight: '8rem' }}>
+                    {
+                        data?.status === 'pending' && <Button type="primary" style={{ marginRight: '1rem' }} icon={<FaCalendarDay />} onClick={() => setShowModal(true)}> Change Date</Button>
+                    }
                     <ReactToPrint
                         bodyClass="print-agreement"
                         content={() => ref.current}

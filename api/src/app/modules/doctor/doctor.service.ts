@@ -86,35 +86,35 @@ const getAllDoctors = async (filters: IDoctorFilters, options: IOption): Promise
 
     if (Object.keys(filterData).length > 0) {
         const conditions = Object.entries(filterData).map(([key, value]) => ({
-                [key]: { equals: value }
-            }))
+            [key]: { equals: value }
+        }))
         andCondition = [...andCondition, ...conditions]
     }
 
     if (min && max) {
         andCondition.push({
-                price: {
+            price: {
                 gt: parseInt(min),
                 lt: parseInt(max)
-                }
+            }
         })
     }
 
     if (specialist) {
         andCondition.push({
-                services: {
+            services: {
                 contains: specialist,
                 mode: "insensitive"
-                }
+            }
         })
     }
 
     if (gender && ['male', 'female'].includes(gender)) {
         andCondition.push({
-                gender: {
-                    equals: gender
-                }
-            })
+            gender: {
+                equals: gender
+            }
+        })
     }
     let whereCondition: any = {
         AND: andCondition || []
