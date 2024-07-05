@@ -65,7 +65,7 @@ const ViewAppointment = () => {
                             </div>
                             <div>
                                 <h4 className="mb-1">{data?.doctor?.firstName && data?.doctor?.lastName ? `${data.doctor.firstName} ${data.doctor.lastName}` : (data?.doctor?.firstName || data?.doctor?.lastName)}</h4>
-                                <p className="mb-1">{data?.doctor?.specialization}</p>
+                                <p className="mb-1"><strong>specialist:</strong> {data?.doctor?.specialization}</p>
                                 <p className="mb-1 form-text">{data?.doctor?.designation}</p>
                                 <p className="mb-1 form-text">{data?.doctor?.college}</p>
                             </div>
@@ -83,8 +83,13 @@ const ViewAppointment = () => {
 
                             <h4 className="mb-1">{data?.patient?.firstName + ' ' + data?.patient?.lastName}</h4>
                             <p className="mb-1 form-text">Age : {moment().diff(moment(data?.patient?.dateOfBirth), 'years')}</p>
-                            <p className="mb-1 form-text">Blood Group : {data?.patient?.bloodGroup}</p>
-                            <p className="mb-1 form-text">{data?.patient?.city + ' , ' + data?.patient?.state + ' , ' + data?.patient?.country}</p>
+                            {
+                                data?.patient?.bloodGroup && <p className="mb-1 form-text">Blood Group : {data?.patient?.bloodGroup}</p>
+                            }
+                            {
+                                (data?.patient?.city || data?.patient?.country) &&
+                                <p className="mb-1 form-text">{data?.patient?.city + ' , ' + data?.patient?.state + ' , ' + data?.patient?.country}</p>
+                            }
 
                             <div className='mt-2'>
                                 <p>Reason for Visit - <span className='text-warning'>{data?.reasonForVisit}</span></p>
@@ -108,8 +113,8 @@ const ViewAppointment = () => {
                     appoinment={data}
                 />
             }
-            <div style={{ margin: '10rem 7rem' }}>
-                <div className="d-flex justify-content-end mb-4" style={{ marginRight: '8rem' }}>
+            <div className='container mx-auto' style={{ margin: '10rem 7rem' }}>
+                <div className="d-flex justify-content-end mb-4">
                     {
                         data?.status === 'pending' && data?.doctor?.id && data.scheduleDate && data?.scheduleTime &&
                         <Button

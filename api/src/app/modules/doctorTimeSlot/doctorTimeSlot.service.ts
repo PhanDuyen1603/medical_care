@@ -205,9 +205,6 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
             timeSlot: true
         },
     })
-    console.log({
-        doctorTimSlot
-    })
 
     const allSlots = doctorTimSlot.map((item) => {
         const { day, timeSlot, ...others } = item;
@@ -226,7 +223,6 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
                 const { startTime, endTime } = slot;
                 const startDate = moment(startTime, 'hh:mm a');
                 const endDate = moment(endTime, 'hh:mm a');
-                console.log({ startDate, endDate, startTime, endTime });
                 while (startDate < endDate) {
                     const selectableTime = {
                         id: newTimeSlots.length + 1,
@@ -240,9 +236,50 @@ const getAppointmentTimeOfEachDoctor = async (id: string, filter: any): Promise<
                 const newTime = newTimeSlots.filter((item) => item.day === filter.day);
                 selectedTime.push(newTime);
             }
-            console.log({ newTimeSlots })
         })
         return selectedTime.flat();
+    }
+    const result = generateTimeSlot(allSlots)
+    return result
+}
+
+const getAppointmentTimeSlot = async (id: string): Promise<any> => {
+    const doctorTimSlot = await prisma.doctorTimeSlot.findMany({
+        where: {
+            doctorId: id
+        },
+        include: {
+            timeSlot: true
+        },
+    })
+    const allSlots = doctorTimSlot.map((item) => {
+        const { day, timeSlot, ...others } = item;
+        return { day, timeSlot }
+    })
+
+    const generateTimeSlot = (timeSlot: any) => {
+        const selectedTime: any = {};
+        timeSlot.forEach((item: any) => {
+            const interval = 30;
+            const newTimeSlots: any[] = [];
+            const day: string = item?.day;
+
+            item?.timeSlot.map((slot: ScheduleDay) => {
+                const { startTime, endTime } = slot;
+                const startDate = moment(startTime, 'hh:mm a');
+                const endDate = moment(endTime, 'hh:mm a');
+                while (startDate < endDate) {
+                    const selectableTime = {
+                        id: newTimeSlots.length + 1,
+                        time: startDate.format('hh:mm a')
+                    }
+                    newTimeSlots.push({ day: day, slot: selectableTime });
+                    startDate.add(interval, 'minutes');
+                }
+            })
+            selectedTime[day] = newTimeSlots;
+        })
+        return selectedTime;
     }
     const result = generateTimeSlot(allSlots)
     return result
@@ -256,5 +293,6 @@ export const TimeSlotService = {
     deleteTimeSlot,
     deleteTimeShcedule,
     getMyTimeSlot,
-    getAppointmentTimeOfEachDoctor
+    getAppointmentTimeOfEachDoctor,
+    getAppointmentTimeSlot
 }

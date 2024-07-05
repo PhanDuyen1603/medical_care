@@ -13,5 +13,6 @@ router.delete('/:id', auth(AuthUser.ADMIN, AuthUser.DOCTOR), doctorTimeSlotContr
 router.delete('/schedule/:id', auth(AuthUser.ADMIN, AuthUser.DOCTOR), doctorTimeSlotController.deleteTimeShcedule);
 router.get('/:id', auth(AuthUser.ADMIN, AuthUser.DOCTOR), doctorTimeSlotController.getTimeSlot);
 router.get('/appointment-time/:id', doctorTimeSlotController.getAppointmentTimeOfEachDoctor);
+router.get('/appointment-times/:id', doctorTimeSlotController.getAllAppointmnetTimeSlot);
 
 export const DoctorTimeSlotRouter = router;

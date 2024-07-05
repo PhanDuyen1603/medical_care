@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import UseModal from '@/components/UI/UseModal';
 import { message, Button, Empty } from 'antd';
 import moment from 'moment';
-import { useGetAppointmentTimeQuery } from '@/redux/api/timeSlotApi';
+import { useGetAllAppointmentTimesQuery } from '@/redux/api/timeSlotApi';
 import { useUpdateAppointmentMutation } from '../../../redux/api/appointmentApi';
 
 import "./Appointments.css"
@@ -14,7 +14,7 @@ const PatientModalChangeAppoimentInfo = ({
   const [selectDay, setSelecDay] = useState('');
   const [selectTime, setSelectTime] = useState('');
 
-  const { data: time, refetch, isFetching: dIsLoading, isError: dIsError, error: dError } = useGetAppointmentTimeQuery({ day: selectDay, id: doctorId });
+  const { data: times, refetch, isFetching: dIsLoading, isError: dIsError, error: dError } = useGetAllAppointmentTimesQuery({ id: doctorId });
   const [updateAppointment, { isError: updateIsError, isSuccess, error, isLoading }] = useUpdateAppointmentMutation();
 
   const availableDates = Array.from({ length: 7 }, (_, index) => moment().clone().add(index, 'days'))
@@ -59,11 +59,10 @@ const PatientModalChangeAppoimentInfo = ({
   let dContent = null;
   if (dIsLoading) dContent = <div>Loading ...</div>
   if (!dIsLoading && dIsError) dContent = <div>Something went Wrong!</div>
-  if (!dIsLoading && !dIsError && time.length === 0) dContent = <Empty children="Doctor Is not Available" />
-  if (!dIsLoading && !dIsError && time.length > 0) dContent =
+  if (!dIsLoading && !dIsError && Object.keys(times).length > 0) dContent =
     <>
       {
-        time && time.map((item, id) => (
+        times && selectDay && times[selectDay] && times[selectDay].map((item, id) => (
           <div className="col-md-4" key={id + 155}>
             <Button type={item?.slot?.time === selectTime ? "primary" : "default"} shape="round" size='large' className='mb-3' onClick={() => handleSelectTime(item?.slot?.time)}> {item?.slot?.time} </Button>
           </div>
@@ -89,7 +88,11 @@ const PatientModalChangeAppoimentInfo = ({
                 <div className='info-date-card row'>
                   {
                     availableDates.map((item, index) => (
-                      <div key={index + 5} className="mb-3 col-md-6" onClick={() => handleDateChange(item)}>
+                      <div
+                        key={index + 5}
+                        className={`mb-3 col-md-6 ${!times?.[moment(item).format('dddd').toLowerCase()]?.length ? 'disabled' : ''}`}
+                        onClick={() => !!times?.[moment(item).format('dddd').toLowerCase()]?.length && handleDateChange(item)}
+                      >
                         <div className={`p-3 mb-3 rounded text-center select-date ${moment(item).format('LL') === moment(selectedDate).format('LL') ? 'active' : ''}`}>
                           <div className='select-month'>{moment(item).format('MMMM YYYY')}</div>
                           <div className='select-day-num'>{moment(item).format('D')}</div>
@@ -114,7 +117,6 @@ const PatientModalChangeAppoimentInfo = ({
             </div>
           </div>
           <div className="col-12 d-flex justify-content-end mt-2">
-            {/* <Button type="primary" disabled={IsConfirmDisable} loading={createIsLoading} onClick={handleConfirmSchedule}>Confirm</Button> */}
             <Button type="primary" onClick={handleConfirmSchedule}>Confirm</Button>
           </div>
         </div>
