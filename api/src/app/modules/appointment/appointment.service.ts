@@ -516,6 +516,11 @@ const getDoctorAppointmentsById = async (user: any, filter: any): Promise<Appoin
 
     const result = await prisma.appointments.findMany({
         where: whereConditions,
+        orderBy: [
+            {
+                scheduleDate: 'desc',
+            }
+        ],
         include: {
             patient: true,
             prescription: {

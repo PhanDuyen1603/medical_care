@@ -20,7 +20,7 @@ const PatientModalChangeAppoimentInfo = ({
   const availableDates = Array.from({ length: 7 }, (_, index) => moment().clone().add(index, 'days'))
 
   const handleDateChange = (date) => {
-    setSelectedDate(moment(date).format('MM-DD-YYYY'))
+    setSelectedDate(moment(date).format('YYYY-MM-DD HH:mm:ss'))
     setSelecDay(moment(date).format('dddd').toLowerCase())
   }
 
@@ -37,7 +37,7 @@ const PatientModalChangeAppoimentInfo = ({
 
   useEffect(() => {
     if (appoinment && appoinment.scheduleDate) {
-      setSelectedDate(moment(appoinment?.scheduleDate).format('MM-DD-YYYY'))
+      setSelectedDate(moment(appoinment?.scheduleDate).format('YYYY-MM-DD HH:mm:ss'))
       setSelecDay(moment(appoinment?.scheduleDate).format('dddd').toLowerCase())
     }
     if (appoinment && appoinment.scheduleTime) {
