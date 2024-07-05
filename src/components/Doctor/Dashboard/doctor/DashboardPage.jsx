@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import img from '../../../../images/avatar.jpg';
-import { FaEye, FaCheck, FaTimes, FaBriefcaseMedical } from "react-icons/fa";
-import { useGetDoctorAppointmentsQuery, useUpdateAppointmentMutation } from '../../../../redux/api/appointmentApi';
+import img from '@/images/avatar.jpg';
+import { FaEye, FaCheck, FaTimes, FaBriefcaseMedical, FaEnvelope } from "react-icons/fa";
+import { useGetDoctorAppointmentsQuery, useUpdateAppointmentMutation } from '@/redux/api/appointmentApi';
 import moment from 'moment';
 import { Button, message } from 'antd';
 import CustomTable from '../../../UI/component/CustomTable';
+import ModalSendMail from '@/components/Admin/Patients/ModalSendMail';
 import { Tabs } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './index.css'
 
 const DashboardPage = () => {
     const [sortBy, setSortBy] = useState("upcoming");
+    const [showModal, setShowModal] = useState(false);
+    const [selectedPatient, setSelectedPatient] = useState({});
     const { data, refetch, isLoading } = useGetDoctorAppointmentsQuery({ sortBy });
     const [updateAppointment, { isError, isSuccess, error }] = useUpdateAppointmentMutation();
-
+    const navigate = useNavigate();
     const handleOnselect = (value) => {
         // eslint-disable-next-line eqeqeq
         setSortBy(value == 1 ? 'upcoming' : value == 2 ? 'today' : sortBy)
@@ -29,6 +33,11 @@ const DashboardPage = () => {
         }
     }
 
+    const openSendingMailModal = (data) => {
+        setShowModal(true)
+        setSelectedPatient(data)
+    }
+
     useEffect(() => {
         if (isSuccess) {
             message.success("Succcessfully Appointment Updated")
@@ -42,7 +51,7 @@ const DashboardPage = () => {
         {
             title: 'Patient Name',
             key: '1',
-            width: 100,
+            width: 200,
             render: function (data) {
                 return <>
                     <div className="table-avatar">
@@ -58,9 +67,19 @@ const DashboardPage = () => {
             }
         },
         {
-            title: 'App Date',
+            title: 'Email',
             key: '2',
-            width: 100,
+            width: 200,
+            render: function (data) {
+                return (
+                    <div className='d-flex align-items-center'><span>{data.email}</span></div>
+                )
+            }
+        },
+        {
+            title: 'App Date',
+            key: '3',
+            width: 200,
             render: function (data) {
                 return (
                     <div>{moment(data?.scheduleDate).format("LL")} <span className="d-block text-info">{data?.scheduleTime}</span></div>
@@ -70,7 +89,7 @@ const DashboardPage = () => {
         {
             title: 'Status',
             key: '4',
-            width: 100,
+            width: 200,
             render: function (data) {
                 return <div>{data?.status && data?.status === 'pending' ? 'Booking' : data?.status}</div>
             }
@@ -78,20 +97,26 @@ const DashboardPage = () => {
         {
             title: 'Action',
             key: '5',
-            width: 100,
+            // width: 500,
             render: function (data) {
                 return (
-                    <div className='d-flex gap-2'>
+                    <div className='d-flex gap-2 flex-wrap'>
+                        <Link to={`/dashboard/appointments/${data?.id}`}>
+                            <Button type="primary" icon={<FaEye />} size="medium">View</Button>
+                        </Link>
+                        <Button type="primary" icon={<FaEnvelope />} size="medium" onClick={() => openSendingMailModal(data)}>Mail</Button>
                         {
                             data.prescriptionStatus === 'notIssued'
                                 ?
-                                <Link to={`/dashboard/appointment/treatment/${data?.id}`}>
-                                    <Button type="primary" icon={<FaBriefcaseMedical />} size="small">Treatment</Button>
-                                </Link>
-
+                                <Button
+                                    type="primary"
+                                    icon={<FaBriefcaseMedical />}
+                                    size="medium"
+                                    onClick={() => navigate(`/dashboard/appointment/treatment/${data?.id}`)}
+                                >Treatment</Button>
                                 :
                                 <Link to={`/dashboard/prescription/${data?.prescription[0]?.id}`}>
-                                    <Button type="primary" shape="circle" icon={<FaEye />} size="small" />
+                                    <Button type="primary" shape="circle" icon={<FaEye />} size="medium" />
                                 </Link>
                         }
                         {
@@ -135,7 +160,10 @@ const DashboardPage = () => {
     ];
 
     return (
-        <Tabs defaultActiveKey="1" items={items} onChange={handleOnselect} />
+        <>
+            <ModalSendMail showModal={showModal} setShowModal={setShowModal} data={selectedPatient} />
+            <Tabs defaultActiveKey="1" items={items} onChange={handleOnselect} />
+        </>
     )
 }
 

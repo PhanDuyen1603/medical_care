@@ -48,10 +48,6 @@ const createAppointment = async (payload: any): Promise<Appointments | null | an
         const day = (moment().dayOfYear()).toString().padStart(2, '0');
         const trackingId = first3DigitName + year + month + day + lastDigit || '001';
         patientInfo['trackingId'] = trackingId;
-        console.log({
-            trackingId,
-            patientInfo
-        })
         const appointment = await tx.appointments.create({
             data: patientInfo,
             include: {
@@ -197,6 +193,11 @@ const getAllAppointments = async (filters: IAppointmentFilters, options: IOption
                 }
             },
         },
+        orderBy: [
+            {
+                scheduleDate: 'desc',
+            }
+        ],
     }
     if (start_date && !end_date) query.where = {
         scheduleDate: {

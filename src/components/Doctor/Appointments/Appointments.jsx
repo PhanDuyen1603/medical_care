@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../DashboardLayout/DashboardLayout'
-import img from '../../../images/doc/doctor 3.jpg';
+import img from '@/images/doc/doctor 3.jpg';
 import './Appointments.css';
-import { useGetDoctorAppointmentsQuery, useUpdateAppointmentMutation } from '../../../redux/api/appointmentApi';
+import { useGetDoctorAppointmentsQuery, useUpdateAppointmentMutation } from '@/redux/api/appointmentApi';
 import moment from 'moment';
 import { Button, Empty, message, Tag, Tooltip } from 'antd';
 import { FaEye, FaCheck, FaTimes } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaClock, FaEnvelope, FaLocationArrow, FaPhoneAlt, FaBriefcaseMedical } from "react-icons/fa";
-import { clickToCopyClipBoard } from '../../../utils/copyClipBoard';
+import { clickToCopyClipBoard } from '@/utils/copyClipBoard';
 import { statusColor, paymentStatusColor, prescriptionStatusColor } from "@/constant/global"
 
 const Appointments = () => {
@@ -22,6 +22,11 @@ const Appointments = () => {
         if (id) {
             updateAppointment({ id, data: changeObj })
         }
+    }
+
+    const getPatientName = (item) => {
+        const patientObj = item?.patient ? item.patient : item
+        return patientObj.firstName + '' + patientObj.lastName;
     }
 
     useEffect(() => {
@@ -41,13 +46,13 @@ const Appointments = () => {
             {
                 data && data.map((item) => (
                     <div className="w-100 mb-3 rounded p-3" style={{ background: '#f8f9fa' }} key={item.id}>
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div className="d-flex align-items-center gap-3">
+                        <div className="row d-flex justify-content-between align-items-center">
+                            <div className="col-12 col-lg-9 d-flex align-items-center gap-3">
                                 <Link to={`/`} className="patient-img">
                                     <img src={img} alt="" />
                                 </Link>
                                 <div className="patients-info">
-                                    <h5>{item?.patient?.firstName + ' ' + item?.patient?.lastName}</h5>
+                                    <h5>{getPatientName(item)}</h5>
                                     <Tooltip title="Copy Tracking Id">
                                         <Button>
                                             <h6>Tracking<Tag color="#87d068" className='ms-2 text-uppercase' onClick={() => clickToCopyClipBoard(item?.trackingId)}>{item?.trackingId}</Tag></h6>
@@ -55,10 +60,10 @@ const Appointments = () => {
                                     </Tooltip>
 
                                     <div className="info">
-                                        <p><FaClock className='icon' /> {moment(item?.appointmentTime).format("MMM Do YY")} </p>
-                                        <p><FaLocationArrow className='icon' /> {item?.patient?.address}</p>
-                                        <p><FaEnvelope className='icon' /> {item?.patient?.email}</p>
-                                        <p><FaPhoneAlt className='icon' /> {item?.patient?.mobile}</p>
+                                        <p><FaClock className='icon' /> {moment(item?.scheduleDate).format("LL")} </p>
+                                        <p><FaLocationArrow className='icon' /> {item?.address || item?.patient?.address}</p>
+                                        <p><FaEnvelope className='icon' /> {item?.email || item?.patient?.email}</p>
+                                        <p><FaPhoneAlt className='icon' /> {item?.phone}</p>
 
                                     </div>
                                 </div>
@@ -70,7 +75,7 @@ const Appointments = () => {
                                     <p> Prescribed - <Tag color={prescriptionStatusColor[item.prescriptionStatus]} className='text-uppercase'>{item?.prescriptionStatus}</Tag></p>
                                 </div>
                             </div>
-                            <div className='d-flex gap-2'>
+                            <div className='col-12 col-lg-3 d-flex gap-2 flex-wrap'>
                                 <Link to={`/dashboard/appointments/${item?.id}`}>
                                     <Button type="primary" icon={<FaEye />} size="small">View</Button>
                                 </Link>

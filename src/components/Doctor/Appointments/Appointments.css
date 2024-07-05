@@ -39,6 +39,10 @@
     transform: scale(1.1);
 }
 
+.appointment-status {
+    min-width: 230px !important;
+}
+
 .appointment-status>p {
     font-size: 14px;
     font-weight: 600;
