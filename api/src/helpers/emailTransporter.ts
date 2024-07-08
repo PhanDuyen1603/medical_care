@@ -24,8 +24,16 @@ export const EmailtTransporter = async ({ pathName, replacementObj, toMail, subj
     };
 
     try {
-        await Transporter.sendMail(mailOptions);
+        await Transporter.sendMail(mailOptions, (err, res) => {
+            if (err) {
+                console.log("Unable to send Email !", err);
+            }
+            else {
+                console.log(`Message sent: ${res.messageId}`);
+            }
+        });
     } catch (error) {
+        console.log("Unable to send Email !");
         console.log(error);
         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Unable to send Email !");
     }

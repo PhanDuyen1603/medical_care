@@ -27,18 +27,11 @@ app.get('/', (req: Request, res: Response) => {
     res.send(config.clientUrl)
 })
 
-app.use('/api/v1', router);
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof ApiError) {
-        res.status(err.statusCode).json({ success: false, message: err.message })
-    } else {
-        res.status(httpStatus.NOT_FOUND).json({
-            success: false,
-            message: 'Something Went Wrong',
-        });
-    }
+app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`)
     next();
 })
+
+app.use('/api/v1', router);
 
 export default app;
