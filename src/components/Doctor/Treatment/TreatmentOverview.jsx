@@ -3,6 +3,7 @@ import profileImg from '../../../images/avatar.jpg';
 import { FaClock, FaEnvelope, FaLocationArrow, FaPhoneAlt } from "react-icons/fa";
 import moment from "moment";
 import { Tag } from "antd";
+import { getPatientName } from '@/utils/string/patient';
 
 const TreatmentOverview = ({ data, isAppointment = false }) => {
     return (
@@ -14,7 +15,7 @@ const TreatmentOverview = ({ data, isAppointment = false }) => {
                             <img src={data?.patient?.img ? data?.patient?.img : profileImg} alt="" style={{ height: '90px', width: '90px' }} />
                         </Link>
                         <div className="patients-info mt-3">
-                            <h5>{data?.patient?.firstName + ' ' + data?.patient?.lastName}</h5>
+                            <h5>{getPatientName(data)}</h5>
                             <div className="info">
                                 <p><FaClock className='icon' /> {moment(data?.createdAt).format('LL')} </p>
                                 <p><FaLocationArrow className='icon' /> {data?.address + data?.city}</p>

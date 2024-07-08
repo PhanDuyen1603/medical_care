@@ -9,6 +9,7 @@ import './index.css';
 import { useRef } from "react";
 import { FaPrint } from "react-icons/fa";
 import ReactToPrint from "react-to-print";
+import { getPatientName } from '@/utils/string/patient';
 
 const PrescriptionView = () => {
     const ref = useRef();
@@ -89,7 +90,7 @@ const PrescriptionView = () => {
                                     <div className="invoice-details invoice-details-two">
                                         <div className="d-flex justify-content-between patient-name">
                                             <div>
-                                                <h5 style={{ fontWeight: 700 }}>Patient Name : {data?.patient?.firstName + ' ' + data?.patient?.lastName}</h5>
+                                                <h5 style={{ fontWeight: 700 }}>Patient Name : {getPatientName(data)}</h5>
                                                 <p className="form-text">Address: {data?.patient?.address}, {data?.patient?.city}, {data?.patient?.country}</p>
                                             </div>
                                             <div>

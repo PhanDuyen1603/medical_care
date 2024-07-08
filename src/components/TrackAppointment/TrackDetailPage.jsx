@@ -7,10 +7,9 @@ import AppointmentTimeLine from './AppointmentTimeLine';
 import { appointStatusDsc } from '../../constant/appointmentStatus';
 import moment from 'moment';
 import { Button } from 'antd';
+import { getPatientName } from '@/utils/string/patient';
 
 const TrackDetailPage = ({ data, setShowInfo }) => {
-  const patinetFirstName = data?.patient?.firstName ? data?.patient?.firstName : data?.firstName;
-  const patinetLastName = data?.patient?.lastName ? data?.patient?.lastName : data?.lastName
   const doctorFirstName = data?.doctor?.firstName ? data?.doctor?.firstName : 'Not Setup yet'
   const doctorLastName = data?.doctor?.lastName ? data?.doctor?.lastName : ''
   return (
@@ -36,8 +35,12 @@ const TrackDetailPage = ({ data, setShowInfo }) => {
                       {data?.patient?.img ? <img src={data?.patient?.img} alt='' /> : <img src={img} alt='' />}
                     </div>
                     <div className='text-start'>
-                      <h6 className='mb-0 text-white'>{patinetFirstName + ' ' + patinetLastName}</h6>
-                      <p className='form-text text-white'>{data?.patient?.address && data?.patient?.address + ',' + data?.patient?.city && data?.patient?.city}<br /> {data?.patient?.state + ',' + data?.patient?.country && data?.patient?.country}</p>
+                      <h6 className='mb-0 text-white'>{getPatientName(data)}</h6>
+                      {
+                        data?.patient
+                          ? <p className='form-text text-white'>{data?.patient?.address && data?.patient?.address + ',' + data?.patient?.city && data?.patient?.city}<br /> {data?.patient?.state + ',' + data?.patient?.country && data?.patient?.country}</p>
+                          : <p className='form-text text-white'>{data.address}</p>
+                      }
                     </div>
                   </div>
                 </div>

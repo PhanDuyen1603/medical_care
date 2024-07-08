@@ -7,6 +7,7 @@ import img from '../../../images/avatar.jpg';
 import DashboardLayout from '../DashboardLayout/DashboardLayout';
 import { FaEye } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { getPatientName } from '@/utils/string/patient';
 
 const DoctorInvoice = () => {
     const { data, isLoading } = useGetDoctorInvoicesQuery();
@@ -20,7 +21,7 @@ const DoctorInvoice = () => {
                     <div className="table-avatar">
                         <a className="avatar avatar-sm mr-2 d-flex gap-2">
                             <img className="avatar-img rounded-circle" src={img} alt="" />
-                            <p className='p-0 m-0 text-nowrap'>{data?.appointment?.patient?.firstName + ' ' + data?.appointment?.patient?.lastName}</p>
+                            <p className='p-0 m-0 text-nowrap'>{getPatientName(data?.appointment)}</p>
                         </a>
                     </div>
                 )

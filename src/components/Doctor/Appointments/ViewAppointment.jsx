@@ -9,6 +9,7 @@ import { Button, Tag, Tooltip } from 'antd';
 import { clickToCopyClipBoard } from '@/utils/copyClipBoard';
 import { FaPrint, FaCalendarDay } from "react-icons/fa";
 import PatientModalChangeAppoimentInfo from './PatientModalChangeAppoimentInfo'
+import { getPatientName } from '@/utils/string/patient';
 import ReactToPrint from "react-to-print";
 
 const ViewAppointment = () => {
@@ -81,8 +82,10 @@ const ViewAppointment = () => {
                         </div>
                         <div>
 
-                            <h4 className="mb-1">{data?.patient?.firstName + ' ' + data?.patient?.lastName}</h4>
-                            <p className="mb-1 form-text">Age : {moment().diff(moment(data?.patient?.dateOfBirth), 'years')}</p>
+                            <h4 className="mb-1">{getPatientName(data)}</h4>
+                            {
+                                data?.patient?.dateOfBirth && <p className="mb-1 form-text">Age : {moment().diff(moment(data?.patient?.dateOfBirth), 'years')}</p>
+                            }
                             {
                                 data?.patient?.bloodGroup && <p className="mb-1 form-text">Blood Group : {data?.patient?.bloodGroup}</p>
                             }

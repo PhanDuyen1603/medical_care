@@ -8,14 +8,15 @@ import moment from 'moment';
 import StarRatings from 'react-star-ratings';
 import useAuthCheck from '../../../redux/hooks/useAuthCheck';
 import { Empty } from 'antd';
+import { getPatientName } from '@/utils/string/patient';
 
 const Reviews = () => {
-    const {data: loginInfo} = useAuthCheck();
+    const { data: loginInfo } = useAuthCheck();
     const { data, isError, isLoading } = useGetDoctorReviewsQuery(loginInfo?.id);
 
     let content = null;
     if (!isLoading && isError) content = <div>Something Went Wrong !</div>
-    if (!isLoading && !isError && data?.length === 0) content = <Empty/>
+    if (!isLoading && !isError && data?.length === 0) content = <Empty />
     if (!isLoading && !isError && data?.length > 0) content =
         <>
             {
@@ -27,7 +28,7 @@ const Reviews = () => {
                                     <img className="" alt="" src={img} />
                                 </div>
                                 <div>
-                                    <h5 className="text-nowrap">{item?.patient?.firstName + ' ' + item?.patient?.lastName}</h5>
+                                    <h5 className="text-nowrap">{getPatientName(item)}</h5>
                                     <p className="text-success"><FaRegThumbsUp /> {item?.isRecommended ? 'I recommend the doctor' : 'I do not recommend the doctor'}</p>
                                 </div>
                             </div>

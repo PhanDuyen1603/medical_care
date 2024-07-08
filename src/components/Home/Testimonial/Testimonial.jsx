@@ -6,6 +6,7 @@ import { truncate } from '../../../utils/truncate';
 import { FaCheckDouble } from "react-icons/fa";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { getPatientName } from '@/utils/string/patient';
 
 const Testimonial = () => {
     const { data, isLoading, isError } = useGetAllReviewsQuery({});
@@ -20,14 +21,14 @@ const Testimonial = () => {
                         <div className="card shadow p-3 border-0 my-5" key={item?.id + key} style={{ maxWidth: '600px' }}>
                             <div className='d-flex gap-2'>
                                 <div className='review-img'>
-                                    {item.patient.img &&<img src={item.patient.img} alt="" className='shadow' />}
+                                    {item.patient.img && <img src={item.patient.img} alt="" className='shadow' />}
                                 </div>
                                 <div>
-                                    <h5 className='text-secondary'>{item?.patient?.firstName + ' ' + item?.patient?.lastName}</h5>
+                                    <h5 className='text-secondary'>{getPatientName(item)}</h5>
                                 </div>
                             </div>
 
-                            <p className="text-start text-secondary" style={{minHeight:'72px', overflow:'hidden'}}> {truncate(item?.description, 150)}</p>
+                            <p className="text-start text-secondary" style={{ minHeight: '72px', overflow: 'hidden' }}> {truncate(item?.description, 150)}</p>
                             <div>
                                 <p className='recomended'><FaCheckDouble /> Recomended</p>
                                 <StarRatings

@@ -9,6 +9,7 @@ import Header from '../../Shared/Header/Header';
 import { useRef } from "react";
 import { FaPrint } from "react-icons/fa";
 import ReactToPrint from "react-to-print";
+import { getPatientName } from '@/utils/string/patient';
 
 const BookingInvoice = () => {
     const ref = useRef();
@@ -55,7 +56,7 @@ const BookingInvoice = () => {
                                 <div className="invoice-info invoice-info2">
                                     <strong className="customer-text">Invoice To</strong>
                                     <p className="invoice-details">
-                                        {data?.appointment?.patient?.firstName + ' ' + data?.appointment?.patient?.lastName} <br />
+                                        {getPatientName(data?.appointment)} <br />
                                         {data?.appointment?.patient?.address}, {data?.appointment?.patient?.city} ,<br />
                                         {data?.appointment?.patient?.country} <br />
                                     </p>

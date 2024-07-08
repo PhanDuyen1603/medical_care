@@ -7,6 +7,8 @@ import StarRatings from 'react-star-ratings';
 import { useCreateReviewMutation, useGetDoctorReviewsQuery } from '../../../redux/api/reviewsApi';
 import { Button, Radio, message, Space, Rate } from 'antd';
 import { useForm } from 'react-hook-form';
+import { getPatientName } from '@/utils/string/patient';
+
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 const Review = ({ doctorId }) => {
@@ -65,7 +67,7 @@ const Review = ({ doctorId }) => {
                                     <img className="" alt="" src={img} />
                                 </div>
                                 <div>
-                                    <h5 className="text-nowrap">{item?.patient?.firstName + ' ' + item?.patient?.lastName}</h5>
+                                    <h5 className="text-nowrap">{getPatientName(item)}</h5>
                                     <p className="text-success"><FaRegThumbsUp /> {item?.isRecommended ? 'I recommend the doctor' : 'I do not recommend the doctor'}</p>
                                 </div>
                             </div>
@@ -101,8 +103,8 @@ const Review = ({ doctorId }) => {
                 {
                     (!isLoading && !isError && data?.length > 0) &&
                     <div className="text-center">
-                        <Link to={'/'} className='more-btn'>Show all feedback 
-                        {/* <strong>(167)</strong> */}
+                        <Link to={'/'} className='more-btn'>Show all feedback
+                            {/* <strong>(167)</strong> */}
                         </Link>
                     </div>
                 }
