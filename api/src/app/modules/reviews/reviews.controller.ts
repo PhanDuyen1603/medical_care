@@ -76,6 +76,16 @@ const replyReviewByDoctor = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const countAllReviews = catchAsync(async (req: Request, res: Response) => {
+    const result = await ReviewService.countAllReviews();
+    sendResponse(res, {
+        statusCode: 200,
+        message: 'Successfully count review !!',
+        success: true,
+        data: result,
+    })
+})
+
 export const ReviewController = {
     creatReview,
     updateReview,
@@ -83,5 +93,6 @@ export const ReviewController = {
     getDoctorReviews,
     deleteReview,
     getSingleReview,
-    replyReviewByDoctor
+    replyReviewByDoctor,
+    countAllReviews
 }

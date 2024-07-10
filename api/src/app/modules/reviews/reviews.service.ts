@@ -18,7 +18,7 @@ const create = async (user: any, payload: Reviews): Promise<Reviews> => {
             id: payload.doctorId
         }
     })
-    if(isUserExist){
+    if (isUserExist) {
         payload.patientId = isUserExist.id;
     }
     if (!isDoctorExist) {
@@ -33,7 +33,7 @@ const create = async (user: any, payload: Reviews): Promise<Reviews> => {
 const getAllReviews = async (options: IOption): Promise<Reviews[] | null> => {
     const limit = Number(options.limit) || 10;
     const result = await prisma.reviews.findMany({
-        take: limit,
+        // take: limit,
         include: {
             doctor: {
                 select: {
@@ -148,6 +148,22 @@ const replyReviewByDoctor = async (user: any, id: string, payload: Partial<Revie
     return result;
 }
 
+const countAllReviews = async () => {
+    const listStar = ['1', '2', '3', '4', '5']
+    const count = async (rating: any) => await prisma.reviews.count({
+        where: {
+            star: rating
+        }
+    })
+    const countTotal = async () => await prisma.reviews.count()
+    const promises = listStar.map(async (num) => {
+        const response = await count(num);
+        return response;
+    });
+    const result = await Promise.all([...promises, countTotal()]);
+    const [rate1, rate2, rate3, rate4, rate5, total] = result
+    return { rate1, rate2, rate3, rate4, rate5, total }
+}
 
 export const ReviewService = {
     create,
@@ -156,5 +172,6 @@ export const ReviewService = {
     deleteReviews,
     updateReview,
     getSingleReview,
-    replyReviewByDoctor
+    replyReviewByDoctor,
+    countAllReviews
 }

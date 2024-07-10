@@ -1,9 +1,9 @@
 import React from 'react'
-import { useGetDoctorInvoicesQuery } from '../../../redux/api/appointmentApi';
+import { useGetDoctorInvoicesQuery } from '@/redux/api/appointmentApi';
 import CustomTable from '../../UI/component/CustomTable';
 import { Button } from 'antd';
 import moment from 'moment';
-import img from '../../../images/avatar.jpg';
+import img from '@/images/avatar.jpg';
 import DashboardLayout from '../DashboardLayout/DashboardLayout';
 import { FaEye } from "react-icons/fa";
 import { Link } from 'react-router-dom';

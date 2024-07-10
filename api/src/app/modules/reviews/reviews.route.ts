@@ -5,6 +5,7 @@ import { AuthUser } from '../../../enums';
 
 const router = express.Router();
 router.get('/doctor-review/:id', ReviewController.getDoctorReviews);
+router.get('/count', ReviewController.countAllReviews);
 router.get('/:id', ReviewController.getSingleReview);
 router.post('/', auth(AuthUser.PATIENT), ReviewController.creatReview);
 router.get('/', ReviewController.getAllReview);
